@@ -1,0 +1,136 @@
+<div class="wrapper">
+    <div class="mx-auto">
+        <div class="card">
+            <div class="card-body">
+                <form [formGroup]="paymentForm">
+                    <!-- {{this.errmessage}} -->
+                    @if (errmessage.length !=0) {
+                    <!-- <alert type="warning" [dismissible]="dismissible" [isOpen]="open" [dismissOnTimeout]="timeout"> -->
+                    <alert type="warning" [dismissible]="dismissible" [isOpen]="open">
+                        <strong>{{this.errmessage}}</strong>
+                    </alert>
+                    }
+                    <!-- <h2 style="color: black;">Payment Plan</h2> -->
+                    <div class="card-header">
+                        <h4 class="card-title">or choose your own payment plan (€ {{amount}}) </h4>
+                    </div>
+                    <div class="container mt-4">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="mb-1">
+                                    How much would you like to pay per month in euros? <input type="number" min="0"
+                                        class="form-control" formControlName="monthly_amount">
+
+                                </div>
+                            </div>
+                            <div class="col-md-6 d-flex align-items-end justify-content-center">
+                                <div class="mb-1 align-bottom"><button type="button" (click)="getpaymentplan()"
+                                        class="btn btn-primary">{{'Submit'}}</button></div>
+                            </div>
+                            <!-- <div class="col-md-6">
+                                <div class="mb-1">
+                                    repayment amount <input type="number" min="0" class="form-control"
+                                        formControlName="monthly_amount" (ngModelChange)="getpaymentplan()">
+                                </div>
+                            </div> -->
+                            @if(paymentplan){
+                            <div class="col-md-6">
+                                <div class="mb-1">
+                                    Total Months <input type="number" readonly min="0" class="form-control"
+                                        formControlName="totalmonths">
+                                </div>
+                                <div class="mb-1">
+                                    remaining amount for another month
+                                    <input type="number" readonly min="0" formControlName="remainingamount"
+                                        class="form-control">
+                                </div>
+
+                            </div>
+                            <div class="col-md-6  d-flex align-items-end justify-content-center">
+                                <div class="mb-1 "><button type="button" (click)="enablepaymentplan()"
+                                        class="btn btn-primary">{{'Click to proceed with this plan'}}</button></div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-1" *ngIf="this.paymentForm.controls['totalmonths'].value!='' &&
+                                this.paymentForm.controls['totalmonths'].value!=null && enablepayment&&
+                                this.paymentForm.controls['remainingamount'].value!=null">
+                                    <span> Select payment date</span><input type="date" placeholder="yyyy-mm-dd"
+                                        formControlName="paymentDate" class="form-control" [min]="minDate"
+                                        [max]="maxDate" (change)="enablefinalsubmit()">
+
+                                </div>
+                                <div class="invalid-feedback">
+                                    <div *ngIf="paymentForm.controls['paymentDate'].errors">{{'payment Date is required'
+                                        }}</div>
+                                </div>
+                            </div>
+                            }
+                        </div>
+
+                    </div>
+                </form>
+                <div class="col-12 modal-footer">
+                    <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{'Close'}}</button> -->
+                    <button type="button" class="btn btn-primary" *ngIf="finalsubmit" data-bs-toggle="modal"
+                        data-bs-target="#paymentconfirmed">{{'Submit'}}</button>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="modal fade" id="paymentconfirmed" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="" aria-hidden="true">
+    <div class="modal-dialog ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id=""><b>
+                    Please reconfirm the details of the payment plan</b>
+                </h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="paymentForm">
+                    <table>
+                      <tbody>
+                        <tr>
+                          <th>Payment Months</th>
+                          <td>
+                            <input type="date" formControlName="dateOfBirth">
+                          </td>
+                        </tr>
+                        <tr>
+                          <th>Monthly payment amount</th>
+                          <td>
+                            <input type="number" formControlName="amount" min="0">
+                          </td>
+                        </tr>
+                        <tr>
+                          <th>IBAN (From which account did you pay?)</th>
+                          <td>
+                            <input type="text" formControlName="ibanFrom">
+                          </td>
+                        </tr>
+                        <tr>
+                          <th>IBAN (To which account did you transfer?)</th>
+                          <td>
+                            <input type="text" formControlName="ibanTo">
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </form> 
+            </div>            
+            <div class="col-12 modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">{{'Cancel'}}</button>
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal">{{'Submit'}}</button>
+            </div>
+        </div>
+    </div>
+</div>

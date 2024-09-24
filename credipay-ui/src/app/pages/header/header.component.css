@@ -1,0 +1,27 @@
+.navbar-toggler {
+  background-color: rgb(1, 1, 13) !important;
+}
+
+.modal-title {
+  color: #ce0405 !important;
+}
+
+.btn-close {
+  color: #fff !important;
+}
+
+.navbar {
+  background-color: #ce0405 !important;
+}
+
+
+.card {
+  background: #f7f7fa;
+}
+
+.multi{
+  background-color: black !important;
+}
+.context-menu {cursor: context-menu;}
+
+

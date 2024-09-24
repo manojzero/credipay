@@ -1,0 +1,175 @@
+<div class="wrapper">
+    <br> <br> <br> <br> <br>
+    <div class="card card-frame">
+        <div class="card-header">
+            <h4 class="card-title ">{{'Profile'|translate}}</h4>
+        </div>
+        @if (checkmesage && message!='') {
+        <alert type="success" [dismissible]="dismissible" [isOpen]="open" [dismissOnTimeout]="timeout">
+            <strong>{{this.message}}</strong>
+        </alert>
+        }@else if (!checkmesage && message!='') {
+        <alert type="warning" [dismissible]="dismissible" [isOpen]="open" [dismissOnTimeout]="timeout">
+            <strong>{{this.message}}</strong>
+        </alert>
+        }
+        <div class="card-body ">
+            <form class="row g-3 needs-validation" [formGroup]="profileForm">
+                <div class="col-md-4">
+                    <label for="Firmanaam (For B2B)" class="form-label">{{'Firmanaam (For B2B)'|translate}} </label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="tim-icons icon-caps-small"></i></span>
+
+                        <input class="form-control" formControlName="firmanaam"
+                            placeholder="{{'Firmanaam (For B2B)'|translate}}" type="text" (focus)="focus = true"
+                            (blur)="focus = false" readonly />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label for="Fullname" class="form-label">{{'Full Name'|translate}}</label>
+                    <div class="input-group">
+                        <span class="input-group-text" id="inputGroupPrepend2"><i
+                                class="tim-icons icon-single-02"></i></span>
+                        <input type="text" class="form-control" id="Fullname" formControlName="fullname"
+                            placeholder="{{'Full Name'|translate}}" aria-describedby="inputGroupPrepend2" readonly>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label for="lastname" class="form-label">{{'Last Name'|translate}}</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="tim-icons icon-single-02"></i></span>
+
+                        <input class="form-control" placeholder="{{'last Name'|translate}}" type="text"
+                            formControlName="lastname" (focus)="focus = true" (blur)="focus = false" readonly />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label for="emailaddress" class="form-label">{{'Email address'|translate}}</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="tim-icons icon-email-85"></i></span>
+                        <input class="form-control" placeholder="{{'Email'|translate}}" type="text"
+                            formControlName="email" (focus)="focus1 = true" (blur)="focus1 = false"
+                            [ngClass]="{ 'is-invalid': submitted && profileForm.controls['email'].errors }" />
+                        <div *ngIf="submitted && profileForm.controls['email'].errors" class="invalid-feedback">
+                            <div *ngIf="profileForm.controls['email'].errors.required">Email address is required</div>
+                            <div *ngIf="profileForm.controls['email'].errors.pattern">Email address is Invalid</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label for="Telephone" class="form-label">{{'Telephone'|translate}} </label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="tim-icons icon-mobile"></i></span>
+                        <input class="form-control" placeholder="{{'Telephone'|translate}}" type="text"
+                            formControlName="telephone" (focus)="focus2 = true" (blur)="focus2 = false"
+                            [ngClass]="{ 'is-invalid': submitted && profileForm.controls['telephone'].errors }" />
+                        <div *ngIf="submitted && profileForm.controls['telephone'].errors" class="invalid-feedback">
+                            <div *ngIf="profileForm.controls['telephone'].errors.required">Telephone is required</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label for="BTW Nummer (For B2B)" class="form-label">{{'BTW Number (For B2B)'|translate}}</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="tim-icons icon-caps-small"></i></span>
+
+                        <input class="form-control" placeholder="{{'BTW Number (For B2B)'|translate}}" type="text"
+                            formControlName="btw_number" readonly (focus)="focus2 = true" (blur)="focus2 = false" />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label for="Mobile" class="form-label">{{'Mobile'|translate}} </label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="tim-icons icon-mobile"></i></span>
+
+                        <input class="form-control" placeholder="{{'Mobile'|translate}}" type="text"
+                            formControlName="mobile" (focus)="focus2 = true" (blur)="focus2 = false"
+                            [ngClass]="{ 'is-invalid': submitted && profileForm.controls['mobile'].errors }" />
+                        <div *ngIf="submitted && profileForm.controls['mobile'].errors" class="invalid-feedback">
+                            <div *ngIf="profileForm.controls['mobile'].errors.required">Mobile is required</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label for="Fax" class="form-label">{{'Fax'|translate}} </label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="tim-icons icon-delivery-fast"></i></span>
+
+                        <input class="form-control" placeholder="{{'Fax'|translate}}" type="text"
+                            (focus)="focus2 = true" formControlName="fax" (blur)="focus2 = false" readonly />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label for="Address" class="form-label">{{'Address'|translate}} </label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="tim-icons icon-notes"></i></span>
+
+                        <input class="form-control" placeholder="{{'Address'|translate}}" type="text" readonly
+                            formControlName="address" (focus)="focus2 = true" (blur)="focus2 = false" />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label for="Address1" class="form-label">{{'Address1'|translate}}</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="tim-icons icon-single-copy-04"></i></span>
+
+                        <input class="form-control" placeholder="{{'Address1'|translate}}" type="text" readonly
+                            formControlName="address1" (focus)="focus2 = true" (blur)="focus2 = false" />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label for="City" class="form-label">{{'City'|translate}} </label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="tim-icons icon-bus-front-12"></i></span>
+
+                        <input class="form-control" placeholder="{{'City'|translate}}" type="text"
+                            formControlName="city" (focus)="focus2 = true" readonly (blur)="focus2 = false" />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label for="Zipcode" class="form-label">{{'Zipcode'|translate}} </label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="tim-icons icon-delivery-fast"></i></span>
+
+                        <input class="form-control" placeholder="{{'Zipcode'|translate}}" type="text" readonly
+                            formControlName="zipcode" (focus)="focus2 = true" (blur)="focus2 = false" />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label for="Country" class="form-label">{{'Country' | translate}}</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="tim-icons icon-pin"></i></span>
+
+                        <input class="form-control" placeholder="{{'Country' | translate}}" type="text"
+                            formControlName="country" (focus)="focus2 = true" readonly (blur)="focus2 = false" />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label for="Language" class="form-label">{{'Language'|translate}}</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="tim-icons icon-bold"></i></span>
+
+                        <input class="form-control" placeholder="{{'Language'|translate}}" type="text"
+                            formControlName="language" (focus)="focus2 = true" (blur)="focus2 = false"
+                            [ngClass]="{ 'is-invalid': submitted && profileForm.controls['language'].errors }" />
+                        <div *ngIf="submitted && profileForm.controls['language'].errors" class="invalid-feedback">
+                            <div *ngIf="profileForm.controls['language'].errors.required">Language is required</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label for="Reference no" class="form-label">{{'Reference no'|translate}}</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="tim-icons icon-caps-small"></i></span>
+
+                        <input class="form-control" placeholder="{{'Reference no'|translate}}" type="text" readonly
+                            formControlName="reference_no" (focus)="focus2 = true" (blur)="focus2 = false" />
+                    </div>
+                </div>
+                <div class="col-10 modal-footer">
+                    <button class="btn btn-primary" type="button" (click)="onSubmit()">{{'save'|translate}}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

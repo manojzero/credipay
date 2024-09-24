@@ -1,0 +1,129 @@
+/* table {
+    width: 100%;
+} */
+
+
+
+.table {
+    color: #0c0101;
+
+}
+
+.table-bold0 {
+    font-weight: 500 !important;
+}
+
+.table>thead>tr>th {
+    /* background-color: #ce0405; */
+    background-color: #070000;
+    color: rgb(249, 246, 246);
+    font-size: 12px;
+    text-transform: none;
+}
+
+/* .table>tbody>tr>td {
+    border-color: #ce0405;
+} */
+
+table.my-table>tbody>tr>td {
+    color: rgb(18, 1, 1);
+    font-size: 9px;
+}
+
+
+.wrapper {
+    margin-top: 100px;
+}
+
+.card {
+    margin-left: 3%;
+    margin-top: 6%;
+    width: 50%;
+    background-color: #FFF;
+    color: black !important;
+    border-radius: 1.2857rem;
+    box-shadow: 0 0px 30px 14px rgba(0, 0, 0, 0.2) !important;
+    margin: 0 auto;
+    /* Added */
+    float: none;
+    /* Added */
+}
+
+.table-bold {
+    font-weight: bold !important;
+}
+
+.form-control {
+    color: black !important;
+}
+
+.header {
+    float: inline-end !important;
+}
+
+.card-title {
+    background-color: #090101;
+    text-align: center;
+    font-weight: 500;
+    font-size: 30px;
+}
+
+
+
+/* Example using Classic Blue and White */
+
+.payment-plan {
+    font-family: Arial, sans-serif;
+    border: 1px solid #007bff;
+    border-radius: 8px;
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    color: #007bff;
+    margin-bottom: 15px;
+    font-size: 24px;
+}
+
+.installment {
+    padding: 12px;
+    margin-bottom: 12px;
+    border: 1px solid #007bff;
+    border-radius: 4px;
+    background-color: #f0f0f0;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.installment span {
+    display: block;
+    margin-bottom: 8px;
+    width: fit-content;
+}
+
+.installment span:first-child {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.installment span:last-child {
+    background-color: #888;
+}
+
+.installment span:nth-child(2) {
+    font-size: 14px;
+}
+
+.mx-auto {
+    margin: 0 auto;
+    /* Added */
+    float: none;
+    /* Added */
+}
+
+.input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

@@ -1,0 +1,95 @@
+/* table {
+    width: 100%;
+} */
+
+
+
+.table {
+    color: #0c0101;
+
+}
+
+.table-bold0 {
+    font-weight: 500 !important;
+}
+
+.table>thead>tr>th {
+    /* background-color: #ce0405; */
+    background-color: #070000;
+    color: rgb(249, 246, 246);
+    font-size: 12px;
+    text-transform: none;
+}
+
+.table>tbody>tr>td {
+    border-color: #ce0405;
+}
+
+table.my-table>tbody>tr>td {
+    color: rgb(18, 1, 1);
+    font-size: 9px;
+}
+
+/* a {
+    color: #0430ce;
+    font-weight: 300;
+} */
+
+
+.custom-header {
+    background-color: #ce0405;
+    color: rgb(18, 1, 1);
+    font-size: 9px;
+}
+
+
+
+.wrapper {
+    margin-top: 100px;
+}
+
+.link {
+    color: blue;
+    /* Change the color to your desired color */
+    text-decoration: underline;
+    /* Add underline style */
+    /* font-weight: 300; */
+    font-size: 9px;
+}
+
+.link:hover {
+    color: darkblue;
+    /* Change the color when hovering over the link */
+}
+
+
+.card {
+    margin-left: 3%;
+    margin-top: 6%;
+    width: 95%;
+    background-color: #FFF;
+    color: black !important;
+    border-radius: 1.2857rem;
+    box-shadow: 0 0px 30px 14px rgba(0, 0, 0, 0.2) !important;
+}
+
+
+.modal-body {
+    margin-left: 5%;
+}
+
+.table-bold {
+    font-weight: bold !important;
+}
+/* .modal.show .modal-dialog {
+    -webkit-transform: translate(0, 30%);
+    transform: translate(0, 30%);
+    float: down;
+    height: -webkit-fill-available;
+} */
+
+.input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

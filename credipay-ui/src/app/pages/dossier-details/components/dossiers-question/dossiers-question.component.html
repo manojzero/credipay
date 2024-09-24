@@ -1,0 +1,236 @@
+<div class="wrapper">
+    <div class="card" >
+        @if(value=="disagree"){
+        <div class="card-body"><br>
+            <div class="card-header">
+                <h4 class="card-title ">{{'Do you have any questions - Disagree/Dispute'|translate}}</h4>
+            </div><br>
+            <div style="overflow-x:auto;">
+                <form novalidate >
+                    <!-- Gender -->
+                    <div class="col-12">
+                        <div class="col-md-10 ">
+                            <h4 class="mb-3">Do you disagree with the open invoice(s)?</h4>
+                            <div class="custom-control custom-radio">
+                                <input id="Yes" type="radio" value="Yes" name="invoice" [(ngModel)]="selectedOption"
+                                    required>&nbsp;
+                                <label class="custom-control-label" for="Yes">Yes</label>&nbsp;
+                                <input id="No" type="radio" value="No" [(ngModel)]="selectedOption" name="invoice"
+                                    ngModel required>&nbsp;
+                                <label class="custom-control-label" for="No">No</label>
+                                <!-- <div class="invalid-feedback" *ngIf="isSubmitted && myForm.invalid">
+                                <p>Please select either value</p>
+                            </div> -->
+                            </div><br>
+                        </div>
+                        @if(selectedOption=='Yes'){
+                        <div class="col-md-10 ">
+                            <h4 class="mb-3">Did you confirm the disagreement to {{this.client_name}} ?</h4>
+                            <div class="custom-control custom-radio">
+                                <input id="disagreementYes" type="radio" value="disagreementYes" name="disagreement"
+                                    [(ngModel)]="disagreement" required>&nbsp;
+                                <label class="custom-control-label" for="disagreementYes">Yes</label>&nbsp;
+                                <input id="disagreementNo" type="radio" value="disagreementNo"
+                                    [(ngModel)]="disagreement" name="disagreement" ngModel required>&nbsp;
+                                <label class="custom-control-label" for="disagreementNo">No</label>
+                            </div>
+                        </div><br>
+                        }
+
+
+                        @if(selectedOption=='Yes'&& disagreement=='disagreementYes'){
+                        <div class="col-md-10 " [formGroup]="credisolvform">
+                            <h4 class="mb-3"> Please upload a copy of your mail opr letter (jpeg, png, pdf) herewith.
+                                The letter will be checked.
+                                If your dispute is acceptable to the {{this.client_name}} - your dossier will be
+                                closed.
+                                If not your dossier will be continued.</h4>
+                            <div class="custom-control custom-radio">
+                                <input type="file" name="disputeletter" (change)="uploadfiles($event,'disagrementletter')"required>&nbsp;
+                            </div>
+                        </div><br>
+                        }
+                        @if (selectedOption=='Yes'&& disagreement=='disagreementNo') {
+                        <div class="col-md-10 ">
+                            <h4 class="mb-3"> Please confirm your disagreement to {{this.client_name}} by letter or
+                                email and please upload the copy of the letter in this portal.
+                                In the meanwhile your dossier can not be changed and will be continued.</h4>
+                            <div class="custom-control custom-radio">
+                                <input id="confirmdisagreementYes" type="radio" value="confirmdisagreementYes"
+                                    name="confirmdisagreement" [(ngModel)]="confirmdisagreement" required>&nbsp;
+                                <label class="custom-control-label" for="confirmdisagreementYes">Yes</label>&nbsp;&nbsp;
+                                <input id="confirmdisagreementNo" type="radio" value="confirmdisagreementNo"
+                                    [(ngModel)]="confirmdisagreement" name="confirmdisagreement" ngModel required>&nbsp;
+                                <label class="custom-control-label" for="confirmdisagreementNo">No</label>
+                            </div>
+                        </div><br>
+                        }
+
+                        @if (selectedOption=='Yes'&& disagreement=='disagreementNo'&&
+                        confirmdisagreement=='confirmdisagreementYes') {
+                        <div class="col-md-10 " [formGroup]="credisolvform">
+                            <h4 class="mb-3"> please upload the copy of the letter</h4>
+                            <div class="custom-control custom-radio">
+                                <input type="file" name="disputeletter" formControlName="file" (change)="uploadfiles($event,'disputeletter')" required>&nbsp;
+                            </div>
+                        </div><br>
+                        }
+                        @if (selectedOption=='Yes'&&
+                        disagreement=='disagreementNo'&&confirmdisagreement=='confirmdisagreementNo') {
+                        <div class="col-md-10 ">
+                            <div class="card inner">
+                                <h4 class="mb-3"> We can only help you further after you have informed
+                                    {{this.client_name}} of this in writing or by mail. As long as we do not receive
+                                    confirmation, your procedure will continue</h4>
+                            </div>
+                        </div><br>
+                        }
+                    </div>
+                    @if
+                    (confirmdisagreement=='confirmdisagreementYes'||confirmdisagreement=='confirmdisagreementNo'||(selectedOption=='Yes'&&
+                    disagreement=='disagreementYes'))
+                    {<button type="submit" class="btn btn-primary"
+                        (click)="submit('disagree')">Submit</button><br>}
+
+                </form>
+
+            </div>
+        </div>}
+        @if(value=="alreadypaid"){
+        <div class="card-body"><br>
+            <div class="card-header">
+                <h4 class="card-title ">{{'Do you have any questions - Already Paid'|translate}}</h4>
+            </div><br>
+            <div style="overflow-x:auto;">
+                <form novalidate>
+                    <!-- Gender -->
+                    <div class="col-8 row">
+                        <div class="row">
+                            <label class="col-sm-6 col-form-label">Whom did you pay to ?</label>
+                            <div class="col-sm-6 d-flex justify-content-end d-flex align-items-center">
+                                <input id="Yes" type="radio" value="Yes" name="paid" [(ngModel)]="selectedOption"
+                                    required>&nbsp;
+                                <label class="custom-control-label" for="Yes">Credisolv</label>&nbsp;&nbsp;
+                                <input id="No" type="radio" value="No" [(ngModel)]="selectedOption" name="paid" ngModel
+                                    required>&nbsp;
+                                <label class="custom-control-label" for="No">Client</label>
+                                <!-- <div class="invalid-feedback" *ngIf="isSubmitted && myForm.invalid">
+                                <p>Please select either value</p>
+                            </div> -->
+                            </div><br>
+                        </div>
+                        @if(selectedOption=='Yes'){
+                        <div class="body">
+                            <form [formGroup]="credisolvform">
+                                <table>
+                                    <!-- <thead> -->
+                                    <h4 class="row" style="color: black;margin-left: -45px;" id="">
+                                        Please provide the below details
+                                    </h4>
+                                    <!-- </thead>
+                                    <tbody> -->
+                                    <tr>
+                                        <th>Date of Birth</th>
+                                        <td>
+                                            <input type="date" formControlName="dateOfBirth">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Amount in Euros</th>
+                                        <td>
+                                            <input type="number" formControlName="amount" min="0">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>IBAN (From which account did you pay?)</th>
+                                        <td>
+                                            <input type="text" formControlName="ibanFrom">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>IBAN (To which account did you transfer?)</th>
+                                        <td>
+                                            <input type="text" formControlName="ibanTo">
+                                        </td>
+                                    </tr>
+                                    <!-- </tbody> -->
+                                </table>
+                            </form>
+
+                        </div><br>
+                        }
+
+
+                        @if(selectedOption=='No'){
+                        <div class="col-md-10 ">
+                            <div class="card inner">
+                                <h4 class="mb-3"> Your payment with the {{this.client_name}} was has not been
+                                    booked on these open
+                                    invoices in this file. Please contact {{this.client_name}}
+                                    to resolve this further with them. As long as we do not receive confirmation of
+                                    receipt
+                                    of payment, the dossiers will continue</h4>
+                            </div>
+                        </div>
+                        }
+                    </div>
+                    @if (selectedOption=='Yes'|| selectedOption=='No') {<button type="submit"
+                        class="btn btn-primary" (click)="submit('alreadypaid')">Submit</button><br>}
+
+                </form>
+
+            </div>
+        </div>}
+        @if(value=="deceased"){
+        <div class="card-body"><br>
+            <div class="card-header">
+                <h4 class="card-title ">{{'Do you have any questions - Debtor deceased'|translate}}</h4>
+            </div><br>
+            <div style="overflow-x:auto;">
+                <form novalidate>
+                    <!-- Gender -->
+                    <div class="col-12">
+                        <div class="col-md-10 ">
+                            <h4 class="mb-3">Do you want to report death?</h4>
+                            <div class="custom-control custom-radio">
+                                <input id="Yes" type="radio" value="Yes" name="deceased" [(ngModel)]="selectedOption"
+                                    required>&nbsp;
+                                <label class="custom-control-label" for="Yes">Yes</label>&nbsp;
+                                <input id="No" type="radio" value="No" [(ngModel)]="selectedOption" name="deceased"
+                                    ngModel required>&nbsp;
+                                <label class="custom-control-label" for="No">No</label>
+                                <!-- <div class="invalid-feedback" *ngIf="isSubmitted && myForm.invalid">
+                                <p>Please select either value</p>
+                            </div> -->
+                            </div><br>
+                        </div>
+                        @if(selectedOption=='Yes'){
+                        <div class="col-md-10 " [formGroup]="credisolvform">
+                            <h4 class="mb-3">
+                                Kindly upload the death certificate below
+                            </h4>
+                            <div class="custom-control custom-radio">
+                                <input type="file" name="deathcertificate"  formControlName="file"   accept=".pdf" (change)="uploadfiles($event,'deathcertificate')">&nbsp;
+                            </div>
+                        </div><br>
+                        }
+
+                        @if(selectedOption=='No'){
+                        <div class="col-md-10 ">
+                            <div class="card inner">
+                                <h4 class="mb-3">Please visit your local city council and file for the death certificate
+                                </h4>
+                            </div>
+                        </div>
+                        }
+                    </div>
+                    @if (selectedOption==='No'||selectedOption=='Yes') {<button type="submit"
+                        class="btn btn-primary" (click)="submit('deathcertificate')"
+                        [disabled]="">Submit</button><br>}
+
+                </form>
+
+            </div>
+        </div>}
+    </div>
+</div>

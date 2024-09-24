@@ -1,0 +1,93 @@
+table {
+    margin-left: 5%;
+    width: 90%;
+}
+
+
+
+td,
+th {
+    width: 25%;
+}
+
+.table {
+    color: #0c0101;
+}
+
+.table>thead>tr>th {
+    /* background-color: #ce0405; */
+    background-color: #070000;
+    color: rgb(249, 246, 246);
+    font-size: 13px;
+    text-transform: none;
+}
+
+.table>tbody>tr>td {
+    border-color: #ce0405;
+}
+
+table.my-table>tbody>tr>td {
+    color: rgb(18, 1, 1);
+    font-size: 11px;
+}
+
+/* a {
+    color: #0430ce;
+    font-weight: 300;
+} */
+
+.text-file{
+    color: #0a0000 !important;
+    font-weight: 600;
+    margin-left: 5%;
+}
+
+.text-value{
+    color: #0c0101 !important;
+    font-weight: 500;
+    margin-left: 5%;
+}
+.text-total{
+    color: #f11515 !important;
+    font-weight: 500;
+    margin-left: 5%;
+}
+
+.custom-header {
+    background-color: #ce0405;
+    color: rgb(18, 1, 1);
+    font-size: 11px;
+}
+
+
+
+.wrapper {
+    margin-top: 100px;
+}
+
+.link {
+    color: blue; /* Change the color to your desired color */
+    text-decoration: underline; /* Add underline style */
+    /* font-weight: 300; */
+    font-size: 13px;
+}
+
+.link:hover {
+    color: darkblue; /* Change the color when hovering over the link */
+}
+
+.card{
+    margin-left: 5%;
+    margin-top: 3%;
+    width: 90%;
+    background-color: #FFF;
+    color: black !important;
+    border-radius: 1.2857rem;
+    box-shadow: 0 0px 30px 14px rgba(0, 0, 0, 0.2) !important;
+}
+
+.card-body{
+    color: black !important;
+    padding: 1%;
+    text-wrap: wrap;
+}

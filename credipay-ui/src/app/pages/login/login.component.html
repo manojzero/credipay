@@ -1,0 +1,100 @@
+<!-- <div class="alert alert-danger alert-dismissible iserror" id="iserror" role="alert" style="display:none;">
+    <button type="button" class="close" aria-label="Close"><span aria-hidden="true"
+            id="btnclose">&times;</span></button>
+    <strong>userID / Password is Invalid</strong>
+</div>
+<div class="container loginstyle">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)" class="form">
+        <h2 mat-dialog-title> <div mat-dialog-content>
+            Login
+        </div></h2>
+        <mat-form-field floatLabel="always" class="form-element">
+            <input type="text" matInput placeholder="Username " formControlName="user_id" autocomplete="off">
+            <mat-error *ngIf="loginForm.controls.user_id.hasError('required')">
+                Please enter Username
+            </mat-error>
+            <mat-error *ngIf="loginForm.controls.user_id.hasError('pattern')">
+                Please enter valid Username
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field floatLabel="always" id="txtpass" class="form-element">
+            <input type="password" matInput placeholder="Password" formControlName="password" autocomplete="off">
+            <mat-error *ngIf="loginForm.controls.password.hasError('required')">
+                Please enter password
+            </mat-error>
+            <mat-error *ngIf="loginForm.controls.password.hasError('pattern')">
+                Please enter valid password
+            </mat-error>
+        </mat-form-field>
+        <div class="btn-sec">
+            <button mat-raised-button  type="submit" class="Update-btn">login In</button>
+            <button mat-raised-button type="submit" color="gray" class="Discard-btn" (click)="cancel()">Cancel</button>
+        </div>
+
+    </form>
+</div> -->
+
+
+
+<div class="container">
+
+
+    <div class="">
+        <div class="card-block">
+            <div> @if (checklogin) {
+                <!-- <p style="color: #ce0405;text-align: center;">{{this.message}}</p> -->
+                <alert type="warning" [dismissible]="dismissible" [isOpen]="open"
+                [dismissOnTimeout]="timeout">
+                    <strong>{{this.message | translate}}</strong>
+                </alert>                   
+                }
+                <form class="col" [formGroup]="loginForm" autocomplete="off">
+                    <div class="">
+                        <label for="validationDefaultDossiersID" class="form-label">{{'Dossiers ID' | translate}}</label>
+                        <div class="input-group">
+                            <!-- <span class="input-group-text" id="inputGroupPrepend2">&#64;</span> icon-pencil-->
+                            <span class="input-group-text" id="inputGroupPrepend2"><i class="tim-icons icon-pencil"></i></span>
+                            <input type="text" class="form-control" id="validationDefaultDossiersID" autocomplete="off"
+                                formControlName="dossier_id" aria-describedby="inputGroupPrepend2" style="color: black;"
+                                [ngClass]="{ 'is-invalid': submitted && loginForm.controls['dossier_id'].errors }">
+                            <div *ngIf="submitted && loginForm.controls['dossier_id'].errors" class="invalid-feedback">
+                                <div *ngIf="loginForm.controls['dossier_id'].errors.required">{{'Dossiers ID is required' | translate}}</div>
+                                <div *ngIf="loginForm.controls['dossier_id'].errors.pattern">{{'Dossiers ID only numberic' | translate}}c</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="">
+                        <label for="validationDefault03" class="form-label">{{'Password' | translate}}</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="tim-icons icon-key-25"></i></span>
+                            <input type="password" class="form-control" id="validationDefaultDossiersID"
+                                style="color: black;" formControlName="password" aria-describedby="inputGroupPrepend2"
+                                [ngClass]="{ 'is-invalid': submitted && loginForm.controls['password'].errors }">
+
+                            <div *ngIf="submitted && loginForm.controls['password'].errors" class="invalid-feedback">
+                                <div *ngIf="loginForm.controls['password'].errors.required">{{'Password is required' | translate}}</div>
+                                <div *ngIf="loginForm.controls['password'].errors.minlength">
+                                    {{'Password must be at least 6 characters' | translate}}
+                                </div>
+                                <div *ngIf="loginForm.controls['password'].errors.maxlength">
+                                    {{'Password must not exceed 40 characters' | translate}} 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                   
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                            (click)="close()">{{'Close' | translate}}</button>
+                        <button type="button" class="btn btn-primary" 
+                            (click)="onSubmit()">{{'Submit' | translate}}</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+</div>

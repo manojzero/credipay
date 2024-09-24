@@ -1,0 +1,141 @@
+<!-- <mat-toolbar class="mat-elevation-z8" fxLayout="row" fxLayoutAlign="space-between center">
+    <h1 class="og">
+      <span class="credi">Credi</span>
+      <span class="solv">Pay</span>
+    </h1>  
+    <div fxLayout fxLayoutGap="10px">
+      <a routerLink="home" mat-button class="credit">Home</a>
+      <a routerLink="dossier-detail" mat-button class="credit">Dossiers details</a>
+      <a (click)="openDialog()" mat-button class="credit">Login</a>
+    </div>
+  </mat-toolbar> -->
+
+
+<nav class="navbar navbar-expand-lg fixed-top navbar-transparent" color-on-scroll="100" id="navbar-top">
+    <div class="container">
+        <div class="navbar-translate">
+            <a class="navbar-brand" placement="bottom" (click)="nav('')" tooltip="{{'Designed and Coded by Zeroone'|translate}}">
+                <span class="credi"> {{'credi' | translate}}</span>
+                <span class="solve">{{'Pay' | translate}}</span>
+            </a>
+            <button class="navbar-toggler" type="button" aria-controls="navbarNav" aria-expanded="false"
+                aria-label="Toggle navigation" (click)="toggleNavbar()" style="color: white;">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+        <div class="collapse navbar-collapse justify-content-end" [ngClass]="{'show': !isCollapsed}"
+            (click)="toggleCollapse()" id="navigation">
+            <div class="navbar-collapse-header">
+                <div class="row">
+                    <div class="col-6 collapse-brand"><a> {{'CrediPay' | translate}} </a></div>
+                    <div class="col-6 collapse-close text-right">
+                        <button aria-controls="navigation-index" aria-label="Toggle navigation" class="navbar-toggler"
+                            [attr.aria-expanded]="!isCollapsed" (click)="isCollapsed = !isCollapsed" id="navigation"
+                            type="button">
+                            <i class="tim-icons icon-simple-remove"> </i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <ul class="navbar-nav">
+                <li class="nav-item p-0">
+                    <a class="nav-link" href="#" placement="bottom" target="_blank" tooltip="{{'Follow us on Twitter'|translate}}">
+                        <i class="fab fa-twitter"> </i>
+                        <p class="d-lg-none d-xl-none"> {{'Twitter' | translate}}</p>
+                    </a>
+                </li>
+                <li class="nav-item p-0">
+                    <a class="nav-link" href="#" placement="bottom" target="_blank" tooltip="{{'Like us on Facebook'|translate}}">
+                        <i class="fab fa-facebook-square"> </i>
+                        <p class="d-lg-none d-xl-none"> {{'Facebook' | translate}}</p>
+                    </a>
+                </li>
+                <li class="nav-item p-0">
+                    <a class="nav-link" href="#" placement="bottom" target="_blank" tooltip="{{'Follow us on Instagram'|translate}}">
+                        <i class="fab fa-instagram"> </i>
+                        <p class="d-lg-none d-xl-none"> {{'Instagram' | translate}}</p>
+                    </a>
+                </li>
+                @if (username != null) {
+                <li class="nav-item p-0">
+                    <a class="nav-link" data-bs-toggle="tooltip" data-bs-placement="bottom" routerLink="/dossier-details"
+                        data-bs-title="Dossiers details" tooltip="{{'Dossiers details'|translate}}" (click)="nav('dossier-details')">
+                        {{'Dossiers details' | translate}}
+                    </a>
+                </li> 
+                <li class="nav-item p-0" >
+                    <a class="nav-link" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="My profile" 
+                        tooltip="{{'My profile'|translate}}" routerLink="/my-profile" (click)="nav('my-profile')">
+                        {{'My profile' | translate}}
+                    </a>
+                </li>
+                <li class="nav-item p-0">
+                    <a class="nav-link" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="logout"
+                        tooltip="{{'logout'|translate}}"  routerLink="/logout" (click)="nav('logout')">
+                        {{'Logout' | translate}}
+                    </a>
+                </li>
+                }@else if (username === null) {
+                <li class="nav-item  p-0">
+                    <a class="nav-link" placement="bottom" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                        data-bs-title="home" tooltip="home" routerLink="" (click)="nav('')">
+                        {{'Home' | translate}}
+                    </a>
+                </li>
+                <li class="nav-item  p-0">
+                    <a class="nav-link" placement="bottom" data-bs-toggle="modal" data-bs-target="#loginModal" 
+                        data-bs-placement="bottom"  data-bs-title="login" tooltip="login">
+                        {{'Login' | translate}}
+                    </a>
+                </li>
+                }
+
+                <li class="nav-item  p-0">
+                    <select name="language" id="language" class="nav-link" placement="bottom"
+                        (change)="language($event)">
+                        <option [selected]="lang === 'en'" value="en" class="multi">English</option>
+                        <option [selected]="lang === 'fr'" value="fr" class="multi">French</option>
+                        <option [selected]="lang === 'du'" value="du" class="multi">Dutch</option>
+                    </select>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+
+
+
+
+<div class="modal fade " id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content card">
+            <div class="modal-header justify-content-center">
+                <div class="text-muted text-center ml-auto mr-auto">
+                    <h3 class="modal-title mb-0" id="loginModalLabel">{{'Login' | translate}}</h3>
+                </div>
+                <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    style="color: white;"></button> -->
+            </div>
+            <div class="modal-body ">
+                <app-login></app-login>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<!-- 
+<app-home></app-home> -->
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="large" color="#fff" type="ball-atom" [fullScreen]="true">
+    <p style="color: white"> Loading... </p>
+</ngx-spinner>
+<router-outlet></router-outlet>
+<br><br><br><br>
+<app-footer></app-footer>

@@ -1,0 +1,69 @@
+section {
+    display: table;
+  }
+  
+  .example-label {
+    display: table-cell;
+    font-size: 14px;
+    margin-left: 8px;
+    min-width: 120px;
+  }
+  
+  .example-button-row {
+    display: table-cell;
+    max-width: 600px;
+  }
+  
+  .example-button-row .mat-mdc-button-base {
+    margin: 8px 8px 8px 0;
+  }
+  
+  .example-flex-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  
+  .example-button-container {
+    display: flex;
+    justify-content: center;
+    width: 120px;
+  }
+  
+
+  .custom-dialog-background {
+    background-color: #ce0405 !important;
+  }
+
+  .mat-elevation-z8{
+    color: white !important ;
+    background-color: black !important;
+  }
+
+  /* .og{
+    color: #ce0405;
+    font-size: 150%;
+  } */
+
+  .credi {
+    color: white !important;
+    font-size: 150% !important;
+  }
+  .credit {
+    color: white !important;
+  }
+  
+  .solv {
+    color: #ce0405 !important;
+    font-size: 150% !important;
+  }
+
+
+  #popup {
+    position: absolute;
+    top: 25%;
+    left: 25%;
+    background: lightblue;
+    padding: 20px;
+    width: 300px;
+  }

@@ -1,0 +1,27 @@
+
+.footer-row3{
+    color: #ce0405 !important;
+}
+
+.credi {
+    color: white !important;
+    font-size: 150% !important;
+  }
+.navs {
+    color: white !important;
+  }
+  
+  .solv {
+    color: #ce0405 !important;
+    font-size: 100% !important;
+  }
+  .solve {
+    color: #0e0202 !important;
+    font-size: 150% !important;
+  }
+
+  .form-control:focus {
+    border-color: #0acc31 !important;
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset,
+      0px 0px 8px rgba(9, 174, 75, 0.5) !important;
+  }

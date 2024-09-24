@@ -1,0 +1,39 @@
+.divboxzwart {
+    background-color: #2E2E2E;
+    border: 1px solid #000000;
+    padding: 10px;
+    color: #FFF;
+    margin-top: 10%;
+    width: 90%;
+    margin-left:5%;
+    border-radius: 1.2857rem;
+}
+
+.card{
+    margin-left: 6%;
+    margin-top: 3%;
+    width: 39rem;
+    background-color: #FFF;
+    color: black !important;
+    border-radius: 1.2857rem;
+}
+
+.card-body{
+    color: black !important;
+}
+
+.card-title{
+    color: #ce0405 !important;
+    font-size: 100% !important;
+    font-weight: 500 !important;
+}
+
+.row{
+    --bs-gutter-x:0rem;
+    margin-right: 0px !important;
+}
+
+.details{
+    font-size: 100% !important;
+    font-weight: 500 !important;
+}
