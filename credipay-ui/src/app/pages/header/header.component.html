@@ -57,18 +57,18 @@
                     </a>
                 </li>
                 @if (username != null) {
+                    <li class="nav-item p-0" >
+                        <a class="nav-link" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="My profile" 
+                            tooltip="{{'My profile'|translate}}" routerLink="/my-profile" (click)="nav('my-profile')">
+                            {{'My profile' | translate}}
+                        </a>
+                    </li>
                 <li class="nav-item p-0">
                     <a class="nav-link" data-bs-toggle="tooltip" data-bs-placement="bottom" routerLink="/dossier-details"
-                        data-bs-title="Dossiers details" tooltip="{{'Dossiers details'|translate}}" (click)="nav('dossier-details')">
-                        {{'Dossiers details' | translate}}
+                        data-bs-title="My Dossiers" tooltip="{{'My Dossiers'|translate}}" (click)="nav('dossier-details')">
+                        {{'My Dossiers' | translate}}
                     </a>
-                </li> 
-                <li class="nav-item p-0" >
-                    <a class="nav-link" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="My profile" 
-                        tooltip="{{'My profile'|translate}}" routerLink="/my-profile" (click)="nav('my-profile')">
-                        {{'My profile' | translate}}
-                    </a>
-                </li>
+                </li>                 
                 <li class="nav-item p-0">
                     <a class="nav-link" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="logout"
                         tooltip="{{'logout'|translate}}"  routerLink="/logout" (click)="nav('logout')">

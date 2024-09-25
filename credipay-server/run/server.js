@@ -8,18 +8,14 @@ const cookieParser = require('cookie-parser');
 const passport = require('passport');
 const app = express();
 // const port = process.env.HOST;
-
+const config = require("../app/config/config.js");
 const xss = require('xss-clean');
 const compression = require('compression');
 const nocache = require("nocache");
 const jwt = require('jsonwebtoken');
 const auth = require('../app/middleware/auth.js')
 const errorHandler=require('../app/utils/error-handler.js');
-const dotenv = require("dotenv");
-
-// dotenv.config({ path: path.join(__dirname, "../../../.env") });
-dotenv.config();
-const port = process.env.HOST || 2000;
+const port = config.port;
 
 // sanitize request data
 app.use(xss());

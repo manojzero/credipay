@@ -6,8 +6,7 @@ const { tokenTypes } = require("../config/token_types");
 const jwt = require("jsonwebtoken");
 const moment = require("moment");
 const OP = Sequelize.Op;
-const dotenv = require("dotenv");
-dotenv.config();
+const config=require('../config/config');
 
 
 const userLogin = async (dossier_no, debitor_no) => {
@@ -21,7 +20,8 @@ const userLogin = async (dossier_no, debitor_no) => {
         attributes: ['id']
     });
     if (!dossier) {
-        throw new ApiError(httpStatus.UNAUTHORIZED, "Invalid dossier id");
+        // throw new ApiError(httpStatus.UNAUTHORIZED, "Invalid dossier id");
+        throw new ApiError(httpStatus.UNAUTHORIZED, "Invalid login credentials");
     }
     const debiteur = await debiteurs.findOne({
         where: {
@@ -31,7 +31,8 @@ const userLogin = async (dossier_no, debitor_no) => {
     });
 
     if (!debiteur) {
-        throw new ApiError(httpStatus.UNAUTHORIZED, "Invalid debiteur id");
+        // throw new ApiError(httpStatus.UNAUTHORIZED, "Invalid debiteur id");
+        throw new ApiError(httpStatus.UNAUTHORIZED, "Invalid login credentials");
     }
     const result = {
         debiteur, dossier
@@ -55,7 +56,7 @@ const userLogin = async (dossier_no, debitor_no) => {
     } catch (error) {
         console.log("================", error);
 
-        throw new ApiError(httpStatus.FORBIDDEN, error);
+        throw new ApiError(httpStatus.FORBIDDEN, "Invalid login credentials");
     }
 };
 const userLogout = async (accessToken) => {
@@ -63,7 +64,7 @@ const userLogout = async (accessToken) => {
     try {
         console.log("User Login service====", accessToken);
         console.log("User Login service====", dossier_id);
-        const payload = jwt.verify(accessToken, process.env.SECRETKEY);
+        const payload = jwt.verify(accessToken, config.jwtConfig.secret);
         console.log("User Login service====", payload.sub);
         console.log("User Login service====", tokenTypes.REFRESH);
 
@@ -167,7 +168,7 @@ const generateRefreshTokens = async (dossier_id) => {
     };
 };
 
-const generateToken = (dossier_id, expires, type, secret = process.env.SECRETKEY) => {
+const generateToken = (dossier_id, expires, type, secret = config.jwtConfig.secret) => {
     const payload = {
         sub: dossier_id,
         iat: moment().unix(),
