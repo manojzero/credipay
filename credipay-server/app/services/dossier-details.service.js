@@ -26,11 +26,11 @@ const getDossierDetails = async (dossier_id) => {
         }
         let final_result = [{
             'id': result?.id,
-            'hoofdsom': result?.hoofdsom + " €",
-            'intrest': result?.intrest + " €",
-            'schadebeding': result?.schadebeding + " €",
-            'inningskost': result?.inningskost + " €",
-            'openstaandbedrag': result?.openstaandbedrag + " €",
+            'hoofdsom': "€ " + result?.hoofdsom ,
+            'intrest': "€ " + result?.intrest ,
+            'schadebeding': "€ "+ result?.schadebeding ,
+            'inningskost':  "€ " +result?.inningskost ,
+            'openstaandbedrag': "€ "+ result?.openstaandbedrag ,
             'klant': result1?.id,
             'firmanaam': result1?.firmanaam,
         }];
@@ -50,7 +50,7 @@ const getDossierFacturenDetails = async (dossier_id) => {
             order: [
                 ['datum', 'ASC'],
             ],
-            attributes: ['id', 'referentie', 'datum', 'hoofdsom', 'intrest', 'schadebeding', 'inningskost', 'totaal', 'betaaldincasso', 'rest'],
+            attributes: ['id', 'referentie', 'datum', 'hoofdsom', 'intrest', 'schadebeding', 'inningskost', 'totaal', 'betaaldincasso', 'rest','reedsbetaaldvoorincasso'],
         });
         let Somme_principle = 0.00;
         let Interest = 0.00;
@@ -67,10 +67,10 @@ const getDossierFacturenDetails = async (dossier_id) => {
                 Num_Interests_damages_clause = Number(Num_Interests_damages_clause) + Number(element?.schadebeding);
             }
             if (element?.inningskost != '0.00') {
-                Collection_costs = "€ " + element?.Collection_costs
+                Collection_costs = "€ " + element?.inningskost
             }
-            if (element?.betaaldincasso != '0.00') {
-                Payments_made = "€ " + element?.Payments_made
+            if (element?.reedsbetaaldvoorincasso != '0.00') {
+                Payments_made = "€ " + element?.reedsbetaaldvoorincasso
             }
             if (element?.hoofdsom != '0.00') {
                 Somme_principle = Number(Somme_principle) + Number(element?.hoofdsom);
@@ -81,7 +81,7 @@ const getDossierFacturenDetails = async (dossier_id) => {
             if (element?.totaal != '0.00') {
                 Total = Number(Total) + Number(element?.totaal);
             }
-            if (element?.intrest != '0.00') {
+            if (element?.rest != '0.00') {
                 Pay = Number(Pay) + Number(element?.rest);
             }
             let json = {
