@@ -124,7 +124,7 @@ export class DossiersComponent implements OnInit {
       let proceed = false;
       console.log("this.Outstanding_Balance", Number(this.Outstanding_Balance.replace("€", '')))
 
-      this.dossierService.getDossierPaymentplancheck(Number(89)).subscribe({
+      this.dossierService.getDossierPaymentplancheck(Number(500)).subscribe({
         next: (data: any) => {
           this.spinner.show();
           this.router.navigateByUrl('dossier-details/paymentplan/' + this.dossierDetails[0].Dossier + '/' + Number(this.Outstanding_Balance.replace("€", '')))
@@ -132,10 +132,11 @@ export class DossiersComponent implements OnInit {
         error: (err: any) => {
           this.errmessage = err.error.response;
           Swal.fire({
-            title: "Error",
+            title: "Warning",
             text: this.errmessage,
             icon: "warning",
-            confirmButtonText: "OK"
+            confirmButtonText: "OK",
+            width: 430,
           })
           console.log("poietr", err.error.response)
         },

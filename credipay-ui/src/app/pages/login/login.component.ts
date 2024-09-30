@@ -73,6 +73,7 @@ export class LoginComponent implements OnInit {
     }
     this.authService.login(jsonbody).subscribe({
       next: (data: any) => {
+        this.spinner.show();
         console.log("logged in suceessfully");
         this.message = "Welcome to Credipay!";
         this.authService.setUserLoggedIn(true)
@@ -81,7 +82,7 @@ export class LoginComponent implements OnInit {
           window.localStorage.setItem("dossier", data.response.dossier_id);
           window.localStorage.setItem("finalToken", data.response.finalToken);
           window.localStorage.setItem("response", JSON.stringify(data.response));
-          window.location.reload();
+          // window.location.reload();
         }
       },
       error: (err: any) => {
@@ -92,9 +93,15 @@ export class LoginComponent implements OnInit {
         // this.toastr.error(err)
       },
       complete: () => {
-        setTimeout(() => {
-          this.spinner.hide();
-        }, 3000);
+        this.spinner.show();
+        this.router.navigateByUrl('dossier-details').then(()=>{
+          // setTimeout(() => {
+            // this.spinner.hide();
+            window.location.reload();
+          // }, 1000);
+        })
+        
+        // window.location.reload();
         console.log("logged in complete");
       },
     });

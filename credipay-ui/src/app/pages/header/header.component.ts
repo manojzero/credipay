@@ -147,14 +147,17 @@ export class HeaderComponent implements OnInit, OnDestroy {
           console.log("errrorrr logout failed");
           setTimeout(() => {
             this.spinner.hide();
-          }, 3000);
+          }, 500);
         }, complete: () => {
           console.log("logout completed");
-          this.router.navigateByUrl('')
-          setTimeout(() => {
-            this.spinner.hide();
-            window.location.reload();
-          }, 3000);
+          this.spinner.show();
+          this.router.navigateByUrl('').then(()=>{
+            // setTimeout(() => {
+              // this.spinner.hide();
+              window.location.reload();
+            // }, 500);
+          })
+          
         },
       });
       // this.authService.logout(window.localStorage.getItem('dossier')).subscribe({

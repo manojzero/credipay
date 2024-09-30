@@ -29,7 +29,7 @@ export class DossierDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.callSpinner();
+    // this.callSpinner();
     this.getDossierDetails();
   }
   callSpinner() {
@@ -40,6 +40,7 @@ export class DossierDetailsComponent implements OnInit {
   }
 
   getDossierDetails() {
+    
     if (typeof window !== 'undefined' && window.localStorage) {
       const dossierId = window.localStorage.getItem("dossier");
       this.spinner.show();
@@ -51,7 +52,7 @@ export class DossierDetailsComponent implements OnInit {
           this.message = err.message;
           this.spinner.hide();
         }, complete: () => {
-          this.callSpinner();
+          // this.callSpinner();
         },
 
       })
