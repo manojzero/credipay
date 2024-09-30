@@ -57,7 +57,7 @@ export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
               subscribe((res: any) => {
                 localStorage.clear()
                 router.navigateByUrl('');
-                window.location.reload();
+                // window.location.reload();
                 spinner.hide()
               }, (err) => {
                 spinner.hide()

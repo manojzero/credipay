@@ -6,6 +6,17 @@
   color: #ce0405 !important;
 }
 
+
+.dropdown-item {
+  background-color: #fff;
+  text-align: center;
+  font-size: var(--bs-nav-link-font-size);
+  font-family: var(--bs-body-font-family);
+}
+.dropdown-item:hover {
+  background-color: #fff
+}
+
 .btn-close {
   color: #fff !important;
 }

@@ -68,13 +68,29 @@
                         data-bs-title="My Dossiers" tooltip="{{'My Dossiers'|translate}}" (click)="nav('dossier-details')">
                         {{'My Dossiers' | translate}}
                     </a>
-                </li>                 
-                <li class="nav-item p-0">
+                </li>
+                <li class="nav-item dropdown" [class.show]="isDropdownOpen">
+                    <button class="btn btn-dark"
+                            (click)="toggleDropdown()"
+                            aria-haspopup="true"
+                            aria-expanded="isDropdownOpen">
+                     {{user}}
+                    </button>
+                    <div class="dropdown-menu"
+                         [class.show]="isDropdownOpen">
+                      <a class="dropdown-item"
+                         (click)="nav('logout')"
+                         routerLink="">
+                        {{'Logout' | translate}}
+                      </a>
+                    </div>
+                  </li>              
+                <!-- <li class="nav-item p-0">
                     <a class="nav-link" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="logout"
                         tooltip="{{'logout'|translate}}"  routerLink="/logout" (click)="nav('logout')">
                         {{'Logout' | translate}}
                     </a>
-                </li>
+                </li> -->
                 }@else if (username === null) {
                 <li class="nav-item  p-0">
                     <a class="nav-link" placement="bottom" data-bs-toggle="tooltip" data-bs-placement="bottom"
@@ -84,12 +100,11 @@
                 </li>
                 <li class="nav-item  p-0">
                     <a class="nav-link" placement="bottom" data-bs-toggle="modal" data-bs-target="#loginModal" 
-                        data-bs-placement="bottom"  data-bs-title="login" tooltip="login">
+                        data-bs-placement="bottom" routerLink="" data-bs-title="login" tooltip="login">
                         {{'Login' | translate}}
                     </a>
                 </li>
                 }
-
                 <li class="nav-item  p-0">
                     <select name="language" id="language" class="nav-link" placement="bottom"
                         (change)="language($event)">

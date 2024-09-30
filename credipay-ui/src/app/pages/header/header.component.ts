@@ -49,6 +49,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   pagination = 3;
   pagination1 = 1;
   lang: string = '';
+  user: any;
+  isDropdownOpen = false;
   constructor(public dialog: MatDialog, private renderer: Renderer2,
     private modalService: BsModalService, private spinner: NgxSpinnerService, private router: Router,
     private authService: AuthService, public translate: TranslateService) {
@@ -103,6 +105,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       }
     }
 
+    this.getmyprofiledata();
 
     if (typeof window !== 'undefined' && window.localStorage) {
       this.lang = localStorage.getItem('lang') || 'en'
@@ -114,6 +117,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
       var body = document.getElementsByTagName("body")[0];
       body.classList.remove("index-page");
     }
+  }
+  toggleDropdown() {
+    this.isDropdownOpen = !this.isDropdownOpen;
   }
 
   toggleCollapse() {
@@ -182,5 +188,24 @@ export class HeaderComponent implements OnInit, OnDestroy {
       localStorage.setItem('lang', selectedLanguage);
     }
     this.translate.use(selectedLanguage);
+  }
+  getmyprofiledata() {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      const dossierId = window.localStorage.getItem("dossier");
+
+      console.log("dossierId " + dossierId)
+      this.authService.getuserdetails(dossierId).subscribe({
+        next: (data: any) => {
+          this.user = data.result.naam ? data.result.naam : data.result.firmanaam
+        },
+        error: (err: any) => {
+          console.log("err " + JSON.stringify(err));
+        },
+        complete: () => {
+          console.log("completed ");
+        }
+
+      })
+    }
   }
 }

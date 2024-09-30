@@ -43,8 +43,7 @@
         <div class="card-block">
             <div> @if (checklogin) {
                 <!-- <p style="color: #ce0405;text-align: center;">{{this.message}}</p> -->
-                <alert type="warning" [dismissible]="dismissible" [isOpen]="open"
-                [dismissOnTimeout]="timeout">
+                <alert type="warning"  [isOpen]="open">
                     <strong>{{this.message | translate}}</strong>
                 </alert>                   
                 }

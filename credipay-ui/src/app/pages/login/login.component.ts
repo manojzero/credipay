@@ -32,8 +32,6 @@ export class LoginComponent implements OnInit {
   public loginForm: any = FormGroup; message: string = '';
   submitted = false; checklogin = false;
   open: boolean = true;
-  dismissible: boolean = true;
-  timeout: number = 5000;
   authService: AuthService;
 
   constructor(private formBuilder: FormBuilder, private authService1: AuthService, 
@@ -71,7 +69,7 @@ export class LoginComponent implements OnInit {
     console.log(this.loginForm.value);
     let jsonbody = {
       userName: this.loginForm.controls['dossier_id'].value,
-      password: this.loginForm.controls['password'].value
+      password: this.loginForm.controls['password'].value.replace(/[/]/g, '')
     }
     this.authService.login(jsonbody).subscribe({
       next: (data: any) => {
