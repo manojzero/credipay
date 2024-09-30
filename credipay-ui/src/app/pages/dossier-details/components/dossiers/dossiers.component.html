@@ -7,8 +7,8 @@
                         <tr>
                             <th scope="col">{{'Dossier'|translate}}</th>
                             <th scope="col">{{'Invoice Reference'|translate}}</th>
-                            <th scope="col">{{'Date Decheance'|translate}}</th>
-                            <th scope="col">{{'Somme Principle'|translate}}</th>
+                            <th scope="col">{{'Invoice Date'|translate}}</th>
+                            <th scope="col">{{'Principal Sum'|translate}}</th>
                             <th scope="col">{{'Interest'|translate}}</th>
                             <th scope="col">{{'Interests Damages Clause'|translate}}</th>
                             <th scope="col">{{'Collection costs'|translate}}</th>
@@ -45,7 +45,7 @@
                     <thead>
                         <tr>
                             <th scope="col"></th>
-                            <th scope="col">{{'Somme Principle'|translate}}</th>
+                            <th scope="col">{{'Principal Sum'|translate}}</th>
                             <th scope="col">{{'Interest'|translate}}</th>
                             <th scope="col">{{'Interests Damages Clause'|translate}}</th>
                             <th scope="col">{{'Collection costs'|translate}}</th>
@@ -69,13 +69,15 @@
                         }
                     </tbody>
                 </table>
-                <div class="col-10 modal-footer">
-                    <button class="btn btn-secondary" type="button" data-bs-toggle="modal"
-                        data-bs-target="#staticBackdrop" (click)="onFullPay('popup')">{{'Pay in full'|translate}}</button>
-                    <button class="btn btn-primary" type="button" (click)="paymentPlan()">{{'Choose Payment Plan'|translate}}</button>                    
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                data-bs-target="#havequestions">{{'Do you have any question'|translate}}</button>
-                </div>
+                @if(Outstanding_Balance != '€ 0.00'){
+                    <div class="col-10 modal-footer">                    
+                        <button class="btn btn-secondary" type="button" data-bs-toggle="modal"
+                            data-bs-target="#staticBackdrop" (click)="onFullPay('popup')">{{'Pay in full'|translate}}</button>
+                        <button class="btn btn-primary" type="button" (click)="paymentPlan()">{{'Choose Payment Plan'|translate}}</button>                    
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#havequestions">{{'Do you have any question'|translate}}</button>
+                    </div>
+                }
             </div>
         </div>
     </div>
@@ -90,9 +92,9 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="">
+                <!-- <h4 class="modal-title" id="">
                     <img class="imagesss" src="../../../assets/img/credipay-payment-logo.png" /><br>
-                </h4>
+                </h4> -->
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">

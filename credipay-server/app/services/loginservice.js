@@ -11,21 +11,23 @@ const config=require('../config/config');
 
 const userLogin = async (dossier_no, debitor_no) => {
     try {
-    // console.log("User Login service====", email);
+    console.log("User Login service====");
     const { debiteurs, dossiers, sequelize } = db;
     const dossier = await dossiers.findOne({
         where: {
             id: dossier_no
         },
-        attributes: ['id']
+        attributes: ['id','debiteur']
     });
     if (!dossier) {
         // throw new ApiError(httpStatus.UNAUTHORIZED, "Invalid dossier id");
         throw new ApiError(httpStatus.UNAUTHORIZED, "Invalid login credentials");
     }
+    
     const debiteur = await debiteurs.findOne({
         where: {
-            gestructureerdemededeling: debitor_no
+            [OP.and]:[{ gestructureerdemededeling : debitor_no },{ id : dossier.debiteur }]
+            
         },
         attributes: ['id', 'gestructureerdemededeling']
     });
