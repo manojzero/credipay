@@ -81,6 +81,11 @@
     "Follow us on Twitter": "Follow us on Twitter",
     "Like us on Facebook":"Like us on Facebook",
     "Follow us on Instagram":"Follow us on Instagram",
-    "Designed and Coded by Zeroone":"Designed and Coded by Zeroone"
-
+    "Designed and Coded by Zeroone":"Designed and Coded by Zeroone",
+    "Success":"Success",
+    "Error":"Error",
+    "Cancel":"Cancel",
+    "Success Payment Message":"Payment is successful and it will be reflected in your dossier file! transaction id -",
+    "Cancel Payment Message":"You have cancelled your payment successfully! transaction id -",
+    "Error Payment Message":"Your Payment is not successful and please contact the support xxxxx for more details. transaction id -"
 }

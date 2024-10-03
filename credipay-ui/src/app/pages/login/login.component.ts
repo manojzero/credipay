@@ -93,7 +93,7 @@ export class LoginComponent implements OnInit {
         // this.toastr.error(err)
       },
       complete: () => {
-        this.spinner.show();
+        this.spinner.hide();
         this.router.navigateByUrl('dossier-details').then(()=>{
           // setTimeout(() => {
             // this.spinner.hide();

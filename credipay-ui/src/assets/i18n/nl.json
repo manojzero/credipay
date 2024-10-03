@@ -80,5 +80,11 @@
     "Follow us on Twitter": "Volg ons op Twitter",
     "Like us on Facebook": "Vind ons leuk op Facebook",
     "Follow us on Instagram": "Volg ons op Instagram",
-    "Designed and Coded by Zeroone": "Ontworpen en gecodeerd door Zeroone"
+    "Designed and Coded by Zeroone": "Ontworpen en gecodeerd door Zeroone",
+    "Success":"Succes",
+    "Error":"Fout",
+    "Cancel":"Annuleren",
+    "Success Payment Message":"De betaling is gelukt en wordt weergegeven in uw dossierbestand! transactie-ID -",
+    "Cancel Payment Message":"U heeft uw betaling succesvol geannuleerd! transactie-ID -",
+    "Error Payment Message":"Uw betaling is niet gelukt. Neem contact op met de ondersteuning xxxxx voor meer informatie. transactie-ID -"
 }

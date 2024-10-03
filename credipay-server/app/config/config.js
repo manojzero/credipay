@@ -18,7 +18,12 @@ const envVarsSchema = Joi.object()
         DATABASE_LOGGING: Joi.string()
             .required()
             .description("Sequelize query logging"),
-        JWT_SECRET: Joi.string().required().description("JWT secret key")
+        JWT_SECRET: Joi.string().required().description("JWT secret key"),
+        PAYMENT_URL: Joi.string().required().description("payment url"),
+        VAT_NUMBER: Joi.string().required().description("vat number"),
+        PAYMENT_SUCCESS_URL: Joi.string().required().description("payment success url"),
+        PAYMENT_ERROR_URL: Joi.string().required().description("payment error url"),
+        PAYMENT_CANCEL_URL: Joi.string().required().description("payment cancel url")
     })
     .unknown();   
 
@@ -43,6 +48,13 @@ module.exports = {
     },
     jwtConfig: {
         secret: envVars.JWT_SECRET
+    },
+    paymentConfig:{
+        payment_url: envVars.PAYMENT_URL,
+        vat_number: envVars.VAT_NUMBER,
+        payment_success_url:envVars.PAYMENT_SUCCESS_URL,
+        payment_error_url: envVars.PAYMENT_ERROR_URL,
+        payment_cancel_url: envVars.PAYMENT_CANCEL_URL
     }
 
 };

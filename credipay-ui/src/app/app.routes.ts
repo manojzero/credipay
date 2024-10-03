@@ -6,6 +6,9 @@ import { DossiersComponent } from './pages/dossier-details/components/dossiers/d
 import { LoginComponent } from './pages/login/login.component';
 import { DossierPaymentplanComponent } from './pages/dossier-details/components/dossier-paymentplan/dossier-paymentplan.component';
 import { DossiersQuestionComponent } from './pages/dossier-details/components/dossiers-question/dossiers-question.component';
+import { PaymentSuccessComponent } from './pages/payment-success/payment-success.component';
+import { PaymentErrorComponent } from './pages/payment-error/payment-error.component';
+import { PaymentCancelComponent } from './pages/payment-cancel/payment-cancel.component';
 
 export const routes: Routes = [
     {
@@ -43,5 +46,18 @@ export const routes: Routes = [
         component: DossiersQuestionComponent,
         data: { title: 'dossiers-question' }
     },
+    {
+        path: 'payment-success',
+        component: PaymentSuccessComponent,
+        data: { title: 'payment success' }
+    },{
+        path: 'payment-error',
+        component: PaymentErrorComponent,
+        data: { title: 'payment error' }
+    },{
+        path: 'payment-cancel',
+        component: PaymentCancelComponent,
+        data: { title: 'payment cancel' }
+    }
 
 ];

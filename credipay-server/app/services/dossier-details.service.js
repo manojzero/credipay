@@ -4,6 +4,7 @@ const ApiError = require('../utils/ApiError');
 const httpStatus = require("http-status");
 const { Op, where } = require("sequelize");
 const fileprocessor = require("../utils/fileprocessor")
+const config=require('../config/config');
 
 const getDossierDetails = async (dossier_id) => {
     try {
@@ -111,10 +112,17 @@ const getDossierFacturenDetails = async (dossier_id) => {
             { Dossier: "Payments received during the recovery procedure", Somme_principle: '', Interest: '', Interests_damages_clause: '', Collection_costs: '', Total: '', Payments_made: '', Pay: '--' },
             { Dossier: "A PAYER", Somme_principle: '', Interest: '', Interests_damages_clause: '', Collection_costs: '', Total: '', Payments_made: '', Pay: '€ ' + Pay.toFixed(2) },
         ]
+
+        let payment_link = config.paymentConfig.payment_url +"/execute?requesterVAT="+ config.paymentConfig.vat_number+"&language=XXXlanguageXXX&remittanceInfo=test209&amountInCents="+(Pay.toFixed(2)*100)+"&confirmationURL="+ config.paymentConfig.payment_success_url+"&errorURL="+config.paymentConfig.payment_error_url+"&cancelURL="+config.paymentConfig.payment_cancel_url;
+        let paymentbutton_link = config.paymentConfig.payment_url +"?requesterVAT="+ config.paymentConfig.vat_number+"&language=XXXlanguageXXX&remittanceInfo=test209&amountInCents="+(Pay.toFixed(2)*100)+"&confirmationURL="+ config.paymentConfig.payment_success_url+"&errorURL="+config.paymentConfig.payment_error_url+"&cancelURL="+config.paymentConfig.payment_cancel_url;
+
+
         let final_data = [{
             "dossierDetails": final_result,
             "dossierTotalDetails": dossierTotalDetails,
-            "Outstanding_Balance": '€ ' + Pay.toFixed(2)
+            "Outstanding_Balance": '€ ' + Pay.toFixed(2),
+            "paymentLink": payment_link,
+            "paymentButtonLink":paymentbutton_link
         }]
         return final_data;
     } catch (error) {

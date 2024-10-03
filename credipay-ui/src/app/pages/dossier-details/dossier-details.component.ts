@@ -52,6 +52,7 @@ export class DossierDetailsComponent implements OnInit {
           this.message = err.message;
           this.spinner.hide();
         }, complete: () => {
+          this.spinner.hide();
           // this.callSpinner();
         },
 

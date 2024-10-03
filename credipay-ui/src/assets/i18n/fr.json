@@ -80,5 +80,11 @@
     "Follow us on Twitter": "Suivez-nous sur Twitter",
     "Like us on Facebook": "Aimez-nous sur facebook",
     "Follow us on Instagram": "Suis nous sur instagram",
-    "Designed and Coded by Zeroone": "Conçu et codé par Zeroone"
+    "Designed and Coded by Zeroone": "Conçu et codé par Zeroone",
+    "Success":"Succès",
+    "Error":"Erreur",
+    "Cancel":"Annuler",
+    "Success Payment Message":"Le paiement est réussi et cela sera reflété dans votre dossier ! identifiant de transaction -",
+    "Cancel Payment Message":"Vous avez annulé votre paiement avec succès !  ID de transition -",
+    "Error Payment Message":"Votre paiement n'a pas abouti et veuillez contacter le support xxxxx pour plus de détails.  ID de transition -"
 }

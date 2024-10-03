@@ -186,12 +186,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   language(language: any) {
+    //this.spinner.show();
     let selectedLanguage = language.target.value;
     if (typeof window !== 'undefined' && window.localStorage) {
       localStorage.setItem('lang', selectedLanguage);
     }
     this.translate.use(selectedLanguage);
+    location.reload();
   }
+
   getmyprofiledata() {
     if (typeof window !== 'undefined' && window.localStorage) {
       const dossierId = window.localStorage.getItem("dossier");

@@ -91,10 +91,13 @@
     aria-labelledby="" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <div class="modal-header">
-                <!-- <h4 class="modal-title" id="">
-                    <img class="imagesss" src="../../../assets/img/credipay-payment-logo.png" /><br>
-                </h4> -->
+            <div class="modal-header custom_modal_header">
+
+                    <a class="navbar-brand" placement="bottom" >
+                        <span class="credi"> {{'credi' | translate}}</span>
+                        <span class="solve">{{'Pay' | translate}}</span>
+                    </a>
+               
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -108,7 +111,10 @@
             </div>
             <div class="col-12 modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{'Close'|translate}}</button>
-                <button type="button" class="btn btn-primary">{{'Make the payment online'|translate}}</button>
+                <!-- <button type="button" class="btn btn-primary" (click)="makePayment()">{{'Make the payment online'|translate}}</button> -->
+                <a [href]="payment_link" class="payButtonLink" target="_blank">
+                    <img [src]="paymentbutton_link" alt="PAY" class="payButtonImage">
+                </a> 
             </div>
         </div>
     </div>

@@ -23,6 +23,9 @@ export class DossiersComponent implements OnInit {
   public dossierDetails: any = []; dossier_number: any; public dossierTotalDetails: any = [];
   public Outstanding_Balance: string = ''; message: string = '';
   public aValue: any = "";
+  public payment_link = "";
+  public paymentbutton_link = "";
+  public language: any = "en";
   @ViewChild('myModalClose') modalClose: any;
   data: any;
   errmessage: any;
@@ -39,6 +42,7 @@ export class DossiersComponent implements OnInit {
     if (typeof window !== 'undefined' && window.localStorage) {
       translate.use(localStorage.getItem('lang') || 'en');
     }
+   
     console.log("---------", this.translate);
     translate.get('SUB-TOTAL').subscribe((text: string) => {
       this.aValue = text
@@ -56,6 +60,7 @@ export class DossiersComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.language = localStorage.getItem('lang');
     this.dossier_number = this.activatedroute.snapshot.params['dossier_id'];
     this.getDossierDetails(this.dossier_number);
     this.initform();
@@ -68,11 +73,19 @@ export class DossiersComponent implements OnInit {
   }
   getDossierDetails(dossierId: any) {
     this.spinner.show();
+    
     this.dossierService.getDossierFacturenDetails(dossierId).subscribe({
       next: (value) => {
         this.dossierDetails = value[0]?.dossierDetails;
         this.dossierTotalDetails = value[0]?.dossierTotalDetails;
         this.Outstanding_Balance = value[0].Outstanding_Balance;
+
+        this.payment_link = value[0].paymentLink;
+        this.paymentbutton_link = value[0].paymentButtonLink;
+        this.language = this.language.toUpperCase();
+        this.payment_link = this.payment_link.replace("XXXlanguageXXX", this.language);
+        this.paymentbutton_link = this.paymentbutton_link.replace("XXXlanguageXXX", this.language);
+
       }, error: (err) => {
         this.message = err.message;
         this.spinner.hide();
