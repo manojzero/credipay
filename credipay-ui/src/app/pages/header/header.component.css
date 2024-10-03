@@ -9,22 +9,31 @@
 
 .dropdown-item {
   background-color: #fff;
+  color: #070000;
   text-align: center;
   font-size: var(--bs-nav-link-font-size);
   font-family: var(--bs-body-font-family);
+  padding: 0;
 }
 .dropdown-item:hover {
   background-color: #fff
 }
-
+.dropdown-menu  {
+  left:12px
+}
 .btn-close {
   color: #fff !important;
 }
 
 .navbar {
   background-color: #ce0405 !important;
+  color: #fff !important;
 }
 
+.dropdown-toggle{
+  background-color: #ce0405  !important;
+  color: #fff !important;
+}
 
 .card {
   background: #f7f7fa;
