@@ -141,7 +141,7 @@ export class DossiersQuestionComponent {
             });
           }
           // this.location.back()
-          this.router.navigateByUrl('home')
+          this.router.navigateByUrl('')
         },
         error: (err: any) => {
           console.log("err " + err);
@@ -179,7 +179,7 @@ export class DossiersQuestionComponent {
             });
           }
           // this.location.back()
-          this.router.navigateByUrl('home')
+          this.router.navigateByUrl('')
         },
         error: (err: any) => {
           console.log("err " + err);

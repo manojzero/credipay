@@ -87,40 +87,43 @@
 
 <div class="modal fade" id="paymentconfirmed" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="" aria-hidden="true">
-    <div class="modal-dialog ">
+    <div class="modal-dialog  modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id=""><b>
-                    Please reconfirm the details of the payment plan</b>
+                <h4 class="modal-title" id="">
+                    <b>Please reconfirm the details of the payment plan</b>
                 </h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form [formGroup]="paymentForm">
-                    <table>
+                    <table class="w-100">
                       <tbody>
                         <tr>
                           <th>Payment Months</th>
                           <td>
-                            <input type="date" formControlName="dateOfBirth">
+                            <input type="date" class="form-control float-right" formControlName="dateOfBirth">
                           </td>
                         </tr>
+                        <br>
                         <tr>
                           <th>Monthly payment amount</th>
                           <td>
-                            <input type="number" formControlName="amount" min="0">
+                            <input type="number" class="form-control float-right" formControlName="amount" min="0">
                           </td>
                         </tr>
+                        <br>
                         <tr>
                           <th>IBAN (From which account did you pay?)</th>
                           <td>
-                            <input type="text" formControlName="ibanFrom">
+                            <input type="text" class="form-control float-right" formControlName="ibanFrom">
                           </td>
                         </tr>
+                        <br>
                         <tr>
                           <th>IBAN (To which account did you transfer?)</th>
                           <td>
-                            <input type="text" formControlName="ibanTo">
+                            <input type="text" class="form-control float-right" formControlName="ibanTo">
                           </td>
                         </tr>
                       </tbody>
