@@ -170,7 +170,7 @@ export class AppComponent implements OnInit {
     this.spinner.hide();
     setTimeout(() => {
       this.spinner.hide();
-    }, 3000);
+    }, 2000);
     this.onWindowScroll();
 
     if (typeof document !== 'undefined') {
