@@ -76,7 +76,7 @@ export class DossierPaymentplanComponent {
     if (this.paymentForm.invalid) {
       return
     }
-    this.amount = 500
+    //this.amount = 500
     this.DossierDetailsService.getDossierPaymentplan(this.amount, this.paymentForm.value.monthly_amount).subscribe({
       next: (data: any) => {
         this.data = data
@@ -87,7 +87,7 @@ export class DossierPaymentplanComponent {
         //  this.val=this.paymentForm.controls['totalmonths'].setValue(month).value;
         //  console.log("val==========>",this.val);
         this.paymentForm.controls['totalmonths'].setValue(data.months);
-        this.paymentForm.controls['remainingamount'].setValue(data.remaining_amount);
+        this.paymentForm.controls['remainingamount'].setValue(data.remaining_amount.toFixed(2));
         this.errmessage = []
         this.paymentplan = true
         console.log("this. paymentForm===", this.paymentForm.controls['totalmonths'].value);
