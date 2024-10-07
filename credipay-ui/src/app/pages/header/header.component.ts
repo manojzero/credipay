@@ -151,13 +151,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
         }, complete: () => {
           console.log("logout completed");
           this.spinner.show();
-          this.router.navigateByUrl('').then(()=>{
-            // setTimeout(() => {
-              // this.spinner.hide();
-              window.location.reload();
-            // }, 500);
-          })
-          
+          window.location.reload();
+          this.router.navigateByUrl('');          
         },
       });
       // this.authService.logout(window.localStorage.getItem('dossier')).subscribe({
@@ -213,5 +208,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
       })
     }
+  }
+
+  refreshdata(){
+    this.ngOnInit();
   }
 }

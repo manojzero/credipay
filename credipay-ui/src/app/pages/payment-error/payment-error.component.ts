@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import Swal from 'sweetalert2';
 
@@ -15,7 +15,7 @@ import Swal from 'sweetalert2';
 export class PaymentErrorComponent implements OnInit {
   transactionid: any = "";
 
-  constructor(private route: ActivatedRoute, public translate: TranslateService) {}
+  constructor(private route: ActivatedRoute, public translate: TranslateService, public router:Router) {}
   
   ngOnInit(): void {
     this.transactionid = this.route.snapshot.queryParams['transactionid'];
@@ -24,7 +24,7 @@ export class PaymentErrorComponent implements OnInit {
       text: this.translate.instant('Error Payment Message') + this.transactionid,
       icon: "error"
     }).then(()=>{
-      
+      this.router.navigateByUrl('');
     });
 
   }

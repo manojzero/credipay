@@ -43,10 +43,31 @@ const updatelogBook = async (req, res) => {
         res.status(httpStatus.BAD_REQUEST).send(error)
     }
 };
+
+const paymentSuccess = async (req, res) => {
+    try {
+        const result = await dossierDetailService.paymentSuccess(req.body);
+        res.status(httpStatus.OK).send(result);
+    } catch (error) {
+        res.status(httpStatus.BAD_REQUEST).send(error)
+    }
+};
+
+const paymentError = async (req, res) => {
+    try {
+        const result = await dossierDetailService.paymentError(req.body);
+        res.status(httpStatus.OK).send(result);
+    } catch (error) {
+        res.status(httpStatus.BAD_REQUEST).send(error)
+    }
+};
+
 module.exports = {
     getAllDossierList,
     getDossierFacturenDetails,
     getDossierPaymentPlanCalculation,
     eligibleDossierPaymentPlancheck,
-    updatelogBook
+    updatelogBook,
+    paymentSuccess,
+    paymentError
 }

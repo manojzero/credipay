@@ -98,14 +98,18 @@ export class DossiersQuestionComponent {
               showConfirmButton: false,
               timer: 2000
             }).then((result) => {
-              this.spinner.show()
+              this.spinner.show();
+              this.router.navigate(['']).then(()=>{
+                window.location.reload();
+              }); 
             });
           }
           // this.location.back()
-          this.router.navigateByUrl('')
+          
         },
         error: (err: any) => {
           console.log("err " + err);
+          this.spinner.hide();
           if (err) {
             Swal.fire({
               icon: "error",
@@ -114,12 +118,13 @@ export class DossiersQuestionComponent {
             });
           }
         },
-        complete: () => {
-          console.log("completed ");
-          setTimeout(() => {
-            this.spinner.hide();
-          }, 1000);
-        }
+        // complete: () => {
+        //   console.log("completed ");          
+        //   setTimeout(() => {
+        //     window.location.reload();
+        //     this.router.navigateByUrl('');            
+        //   }, 2000);
+        // }
 
       })
     }
@@ -129,22 +134,26 @@ export class DossiersQuestionComponent {
         next: (data: any) => {
           console.log("data " + data);
           if (data) {
-            this.spinner.hide()
+            this.spinner.hide();
             Swal.fire({
               position: "center",
               icon: "success",
               title: "Your data has been saved",
               showConfirmButton: false,
-              timer: 2000
+              timer: 3000
             }).then((result) => {
-              this.spinner.show()
+              this.spinner.show();
+              this.router.navigate(['']).then(()=>{
+                window.location.reload();
+              });              
             });
           }
           // this.location.back()
-          this.router.navigateByUrl('')
+          
         },
         error: (err: any) => {
           console.log("err " + err);
+          this.spinner.hide();
           if (err) {
             Swal.fire({
               icon: "error",
@@ -153,12 +162,13 @@ export class DossiersQuestionComponent {
             });
           }
         },
-        complete: () => {
-          console.log("completed ");
-          setTimeout(() => {
-            this.spinner.hide();
-          }, 1000);
-        }
+        // complete: () => {
+        //   console.log("completed ");
+        //   setTimeout(() => {
+        //     this.router.navigateByUrl('');
+        //     this.spinner.hide();           
+        //   }, 1000);
+        // }
       })
     }
     if (type == 'deathcertificate') {
@@ -175,14 +185,18 @@ export class DossiersQuestionComponent {
               showConfirmButton: false,
               timer: 2000
             }).then((result) => {
-              this.spinner.show()
+              this.spinner.show();
+              this.router.navigate(['']).then(()=>{
+                window.location.reload();
+              }); 
             });
           }
           // this.location.back()
-          this.router.navigateByUrl('')
+          
         },
         error: (err: any) => {
           console.log("err " + err);
+          this.spinner.hide();
           if (err) {
             Swal.fire({
               icon: "error",
@@ -191,12 +205,13 @@ export class DossiersQuestionComponent {
             });
           }
         },
-        complete: () => {
-          console.log("completed ");
-          setTimeout(() => {
-            this.spinner.hide();
-          }, 1000);
-        }
+        // complete: () => {
+        //   console.log("completed ");         
+        //   setTimeout(() => {
+        //     window.location.reload();
+        //     this.router.navigateByUrl('');
+        //   }, 2000);
+        // }
       })
     }
   }

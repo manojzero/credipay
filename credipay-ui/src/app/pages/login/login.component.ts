@@ -1,4 +1,4 @@
-import { Component, OnInit, InjectionToken, ElementRef, Injectable, inject } from '@angular/core';
+import { Component, OnInit, InjectionToken, ElementRef, Injectable, inject, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 // import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ToastrConfig, ToastrModule, ToastrService } from 'ngx-toastr';
@@ -29,9 +29,10 @@ import { Router } from '@angular/router';
 })
 
 export class LoginComponent implements OnInit {
+  // @Output("isloggedin") isloggedin: EventEmitter<any> = new EventEmitter();
   public loginForm: any = FormGroup; message: string = '';
   submitted = false; checklogin = false;
-  open: boolean = true;
+  open: boolean = true; isSubmitted:boolean = false;
   authService: AuthService;
 
   constructor(private formBuilder: FormBuilder, private authService1: AuthService, 
@@ -93,11 +94,16 @@ export class LoginComponent implements OnInit {
         // this.toastr.error(err)
       },
       complete: () => {
-        this.spinner.hide();
+        // this.spinner.hide();
+        // this.isloggedin.emit();
+        window.location.reload();
         this.router.navigateByUrl('dossier-details').then(()=>{
           // setTimeout(() => {
-            // this.spinner.hide();
-            window.location.reload();
+            
+            
+            this.isSubmitted = true;
+            
+            this.spinner.hide();
           // }, 1000);
         })
         

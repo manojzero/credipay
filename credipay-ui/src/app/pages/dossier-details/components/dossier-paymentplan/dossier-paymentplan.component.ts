@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { PagemoduleModule } from '../../../../pagemodule/pagemodule.module';
 import { DossierDetailsService } from '../../../../service/dossier-details.service';
 import { AlertConfig, AlertModule } from 'ngx-bootstrap/alert';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-dossier-paymentplan',
@@ -37,7 +38,9 @@ export class DossierPaymentplanComponent {
   paymentplan: any = false;
   enablepayment: any = false;
   finalsubmit: any = false;
-  constructor(public translate: TranslateService, private formBuilder: FormBuilder, private route: ActivatedRoute, private DossierDetailsService: DossierDetailsService) {
+  constructor(public translate: TranslateService, private formBuilder: FormBuilder, private route: ActivatedRoute, private DossierDetailsService: DossierDetailsService,
+    public spinner: NgxSpinnerService
+  ) {
     translate.setDefaultLang('en');
     if (typeof window !== 'undefined' && window.localStorage) {
       translate.use(localStorage.getItem('lang') || 'en');
@@ -75,11 +78,10 @@ export class DossierPaymentplanComponent {
   }
 
   getpaymentplan() {
-    
+    this.spinner.show();
     if (this.paymentForm.invalid) {
       return
     }
-    //this.amount = 500
     this.DossierDetailsService.getDossierPaymentplan(this.amount, this.paymentForm.value.monthly_amount).subscribe({
       next: (data: any) => {
         this.data = data
@@ -96,14 +98,18 @@ export class DossierPaymentplanComponent {
         console.log("this. paymentForm===", this.paymentForm.controls['totalmonths'].value);
       },
       error: (err: any) => {
-        // this.addAlert(err.error.response);
+        // this.addAlert(err.error.response);        
         this.errmessage = err.error.response;
         this.paymentForm.controls['totalmonths'].setValue('');
         this.paymentForm.controls['remainingamount'].setValue('');
         this.eligibleforpaymentplan = false;
+        this.spinner.hide();
+        console.log("this.errmessage====",this.errmessage);
+        
       },
       complete: () => {
         console.log("completed ");
+        this.spinner.hide();
       }
     })
   }

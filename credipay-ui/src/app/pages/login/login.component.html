@@ -66,7 +66,7 @@
                         <label for="validationDefault03" class="form-label">{{'Password' | translate}}</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="tim-icons icon-key-25"></i></span>
-                            <input type="password" class="form-control" id="validationDefaultDossiersID"
+                            <input type="password" class="form-control" id="validationDefault03"
                                 style="color: black;" formControlName="password" aria-describedby="inputGroupPrepend2"
                                 [ngClass]="{ 'is-invalid': submitted && loginForm.controls['password'].errors }">
 
@@ -86,7 +86,7 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                             (click)="close()">{{'Close' | translate}}</button>
-                        <button type="button" class="btn btn-primary" 
+                        <button type="button" class="btn btn-primary" [attr.data-bs-dismiss]="isSubmitted ? 'modal' : null"
                             (click)="onSubmit()">{{'Submit' | translate}}</button>
                     </div>
 

@@ -30,10 +30,10 @@
   color: #fff !important;
 }
 
-.dropdown-toggle{
+/* .dropdown-toggle{
   background-color: #ce0405  !important;
   color: #fff !important;
-}
+} */
 
 .card {
   background: #f7f7fa;
@@ -43,5 +43,11 @@
   background-color: black !important;
 }
 .context-menu {cursor: context-menu;}
+
+
+.navbar-user{
+  margin-right: -100px !important;
+  margin-left: 30px !important;
+}
 
 
