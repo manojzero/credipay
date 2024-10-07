@@ -14,7 +14,8 @@
 <nav class="navbar navbar-expand-lg fixed-top navbar-transparent" color-on-scroll="100" id="navbar-top">
     <div class="container">
         <div class="navbar-translate">
-            <a class="navbar-brand" placement="bottom" (click)="nav('')" tooltip="{{'Designed and Coded by Zeroone'|translate}}">
+            <a class="navbar-brand" placement="bottom" (click)="nav('')"
+                tooltip="{{'Designed and Coded by Zeroone'|translate}}">
                 <span class="credi"> {{'credi' | translate}}</span>
                 <span class="solve">{{'Pay' | translate}}</span>
             </a>
@@ -37,38 +38,42 @@
                     </div>
                 </div>
             </div>
-            <ul class="navbar-nav">
+            <ul class="navbar-nav" style="margin-right: 0px;margin-left: 20px;">
                 <li class="nav-item p-0">
-                    <a class="nav-link" href="#" placement="bottom" target="_blank" tooltip="{{'Follow us on Twitter'|translate}}">
+                    <a class="nav-link" href="#" placement="bottom" target="_blank"
+                        tooltip="{{'Follow us on Twitter'|translate}}">
                         <i class="fab fa-twitter"> </i>
                         <p class="d-lg-none d-xl-none"> {{'Twitter' | translate}}</p>
                     </a>
                 </li>
                 <li class="nav-item p-0">
-                    <a class="nav-link" href="#" placement="bottom" target="_blank" tooltip="{{'Like us on Facebook'|translate}}">
+                    <a class="nav-link" href="#" placement="bottom" target="_blank"
+                        tooltip="{{'Like us on Facebook'|translate}}">
                         <i class="fab fa-facebook-square"> </i>
                         <p class="d-lg-none d-xl-none"> {{'Facebook' | translate}}</p>
                     </a>
                 </li>
                 <li class="nav-item p-0">
-                    <a class="nav-link" href="#" placement="bottom" target="_blank" tooltip="{{'Follow us on Instagram'|translate}}">
+                    <a class="nav-link" href="#" placement="bottom" target="_blank"
+                        tooltip="{{'Follow us on Instagram'|translate}}">
                         <i class="fab fa-instagram"> </i>
                         <p class="d-lg-none d-xl-none"> {{'Instagram' | translate}}</p>
                     </a>
                 </li>
                 @if (username != null) {
-                    <li class="nav-item p-0" >
-                        <a class="nav-link" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="My profile" 
-                            tooltip="{{'My profile'|translate}}" routerLink="/my-profile" (click)="nav('my-profile')">
-                            {{'My profile' | translate}}
-                        </a>
-                    </li>
                 <li class="nav-item p-0">
-                    <a class="nav-link" data-bs-toggle="tooltip" data-bs-placement="bottom" routerLink="/dossier-details"
-                        data-bs-title="My Dossiers" tooltip="{{'My Dossiers'|translate}}" (click)="nav('dossier-details')">
+                    <a class="nav-link" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="My profile"
+                        tooltip="{{'My profile'|translate}}" routerLink="/my-profile" (click)="nav('my-profile')">
+                        {{'My profile' | translate}}
+                    </a>
+                </li>
+                <li class="nav-item p-0">
+                    <a class="nav-link" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                        routerLink="/dossier-details" data-bs-title="My Dossiers" tooltip="{{'My Dossiers'|translate}}"
+                        (click)="nav('dossier-details')">
                         {{'My Dossiers' | translate}}
                     </a>
-                </li>       
+                </li>
                 <!-- <li class="nav-item p-0">
                     <a class="nav-link" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="logout"
                         tooltip="{{'logout'|translate}}"  routerLink="/logout" (click)="nav('logout')">
@@ -83,7 +88,7 @@
                     </a>
                 </li>
                 <li class="nav-item  p-0">
-                    <a class="nav-link" placement="bottom" data-bs-toggle="modal" data-bs-target="#loginModal" 
+                    <a class="nav-link" placement="bottom" data-bs-toggle="modal" data-bs-target="#loginModal"
                         data-bs-placement="bottom" routerLink="" data-bs-title="login" tooltip="login">
                         {{'Login' | translate}}
                     </a>
@@ -99,27 +104,24 @@
                 </li>
             </ul>
         </div>
+        @if (username != null) {
+            <div class="navbar-user" style="
+            margin-right: -100px;
+            margin-left: 20px;">
+                <ul class="navbar-nav dropdown" [class.show]="isDropdownOpen">
+                    <li class="" (click)="toggleDropdown()" aria-haspopup="true" aria-expanded="false">
+                        {{user}}
+                    </li>
+                    <div class="dropdown-menu" [class.show]="isDropdownOpen">
+                        <a class="dropdown-item" (click)="nav('logout')" routerLink="">
+                            {{'Logout' | translate}}
+                        </a>
+                    </div>
+                </ul>
+            </div>
+        }
     </div>
-    @if (username != null) {
-    <div>
-    <ul class="navbar-nav dropdown" [class.show]="isDropdownOpen">
-        <li class=" dropdown-toggle"
-                (click)="toggleDropdown()"
-                aria-haspopup="true"
-                aria-expanded="false">
-         {{user}}
-        </li>
-        <div class="dropdown-menu"
-             [class.show]="isDropdownOpen">
-          <a class="dropdown-item"
-             (click)="nav('logout')"
-             routerLink="">
-            {{'Logout' | translate}}
-          </a>
-        </div>
-      </ul> 
-    </div>
-}
+    
 </nav>
 
 
@@ -138,7 +140,7 @@
                     style="color: white;"></button> -->
             </div>
             <div class="modal-body ">
-                <app-login></app-login>
+                <app-login (isloggedin)="refreshdata()"></app-login>
             </div>
 
         </div>

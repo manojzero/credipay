@@ -36,7 +36,7 @@ export class DossierDetailsComponent implements OnInit {
     this.spinner.show();
     setTimeout(() => {
       this.spinner.hide();
-    }, 3000);
+    }, 2000);
   }
 
   getDossierDetails() {
@@ -52,7 +52,9 @@ export class DossierDetailsComponent implements OnInit {
           this.message = err.message;
           this.spinner.hide();
         }, complete: () => {
-          this.spinner.hide();
+          setTimeout(() => {
+            this.spinner.hide();
+          }, 2000);
           // this.callSpinner();
         },
 
@@ -70,7 +72,7 @@ export class DossierDetailsComponent implements OnInit {
           client_name: this.dossierData[0].firmanaam
         }
       });
-      this.callSpinner();
+      // this.callSpinner();
     } catch (error) {
       console.log("=========" + error);
     }
