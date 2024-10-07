@@ -82,7 +82,7 @@ export class DossiersComponent implements OnInit {
 
         this.payment_link = value[0].paymentLink;
         this.paymentbutton_link = value[0].paymentButtonLink;
-        this.language = this.language.toUpperCase();
+        this.language = this.language?.toUpperCase();
         this.payment_link = this.payment_link.replace("XXXlanguageXXX", this.language);
         this.paymentbutton_link = this.paymentbutton_link.replace("XXXlanguageXXX", this.language);
 

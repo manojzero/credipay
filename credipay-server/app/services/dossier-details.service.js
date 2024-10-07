@@ -53,6 +53,15 @@ const getDossierFacturenDetails = async (dossier_id) => {
             ],
             attributes: ['id', 'referentie', 'datum', 'hoofdsom', 'intrest', 'schadebeding', 'inningskost', 'totaal', 'betaaldincasso', 'rest','reedsbetaaldvoorincasso'],
         });
+
+        let dossiers_data = await dossiers.findOne({
+            where: {
+                id: dossier_id
+            }
+        })
+
+        let transaction_id = dossier_id +"_"+ dossiers_data?.debiteur+"1235";
+
         let Somme_principle = 0.00;
         let Interest = 0.00;
         let Num_Interests_damages_clause = 0.00;
@@ -107,14 +116,16 @@ const getDossierFacturenDetails = async (dossier_id) => {
         } else {
             Num_Interests_damages_clause = '€ ' + Num_Interests_damages_clause.toFixed(2)
         }
+
+
         let dossierTotalDetails = [
             { Dossier: "SUB-TOTAL", Somme_principle: '€ ' + Somme_principle.toFixed(2), Interest: '€ ' + Interest.toFixed(2), Interests_damages_clause: Num_Interests_damages_clause, Collection_costs: '--', Total: '€ ' + Total.toFixed(2), Payments_made: '--', Pay: '€ ' + Pay.toFixed(2) },
             { Dossier: "Payments received during the recovery procedure", Somme_principle: '', Interest: '', Interests_damages_clause: '', Collection_costs: '', Total: '', Payments_made: '', Pay: '--' },
             { Dossier: "A PAYER", Somme_principle: '', Interest: '', Interests_damages_clause: '', Collection_costs: '', Total: '', Payments_made: '', Pay: '€ ' + Pay.toFixed(2) },
         ]
 
-        let payment_link = config.paymentConfig.payment_url +"/execute?requesterVAT="+ config.paymentConfig.vat_number+"&language=XXXlanguageXXX&remittanceInfo=test209&amountInCents="+(Pay.toFixed(2)*100)+"&confirmationURL="+ config.paymentConfig.payment_success_url+"&errorURL="+config.paymentConfig.payment_error_url+"&cancelURL="+config.paymentConfig.payment_cancel_url;
-        let paymentbutton_link = config.paymentConfig.payment_url +"?requesterVAT="+ config.paymentConfig.vat_number+"&language=XXXlanguageXXX&remittanceInfo=test209&amountInCents="+(Pay.toFixed(2)*100)+"&confirmationURL="+ config.paymentConfig.payment_success_url+"&errorURL="+config.paymentConfig.payment_error_url+"&cancelURL="+config.paymentConfig.payment_cancel_url;
+        let payment_link = config.paymentConfig.payment_url +"/execute?requesterVAT="+ config.paymentConfig.vat_number+"&language=XXXlanguageXXX&remittanceInfo="+transaction_id+"&amountInCents="+(Pay.toFixed(2)*100)+"&confirmationURL="+ config.paymentConfig.payment_success_url+"&errorURL="+config.paymentConfig.payment_error_url+"&cancelURL="+config.paymentConfig.payment_cancel_url;
+        let paymentbutton_link = config.paymentConfig.payment_url +"?requesterVAT="+ config.paymentConfig.vat_number+"&language=XXXlanguageXXX&remittanceInfo="+transaction_id+"&amountInCents="+(Pay.toFixed(2)*100)+"&confirmationURL="+ config.paymentConfig.payment_success_url+"&errorURL="+config.paymentConfig.payment_error_url+"&cancelURL="+config.paymentConfig.payment_cancel_url;
 
 
         let final_data = [{
@@ -155,7 +166,7 @@ const getDossierPaymentPlanCalculation = async (total_amount, amount) => {
 
             var min_amount = total_amount / result.plan_months;
 
-            min_amount = Math.round(min_amount);
+            min_amount = min_amount.toFixed(2);
 
             if (Number(total_amount) < Number(amount)) {
 
@@ -268,10 +279,129 @@ const updatelogBook = async (createbody, dossier_id) => {
 
 }
 
+const paymentSuccess = async (data) => {
+    try {
+        const { logboek, dossiers } = db;
+
+        let dossier_id = "";
+        let debiteur_id = "";
+
+        if(data?.paymentRequestInformation?.remittanceInfo){
+            const data_arr = data?.paymentRequestInformation?.remittanceInfo?.split("_");
+            dossier_id = data_arr[0];
+            debiteur_id = data_arr[1];
+        }
+
+        let dossiers_data = await dossiers.findOne({
+            where: {
+                id: dossier_id
+            }
+        })
+       
+     
+        let date_time = new Date();
+        let date = ("0" + date_time.getDate()).slice(-2);
+        let month = ("0" + (date_time.getMonth() + 1)).slice(-2);
+        let year = date_time.getFullYear();
+        let hours = date_time.getHours();
+        let minutes = date_time.getMinutes();
+        let seconds = date_time.getSeconds();
+        let currenttime = year + "-" + month + "-" + date + " " + hours + ":" + minutes + ":" + seconds
+        let createJson = {
+            inserted: currenttime,
+            modified: currenttime,
+            modifiedby: 'creditportal',
+            dossier: ',' + dossier_id + ',',
+            omschrijving:"Online Payment of euro - "+(data?.paymentRequestInformation?.amountInCents/100)+"  is successful through Credipay portal with the transaction ID- "+ data?.paymentRequestInformation?.paymentID,
+            datum:data?.paymentRequestInformation?.paymentRequestDate,
+            debiteur:debiteur_id,
+            klant:dossiers_data?.klant,
+            omschrijvingintern:'',
+            bestand:'',
+            verwerkt: 1,
+            template:0,
+            bestand2:'',
+            paginas: 0,
+            bezig: 0,
+            teldoor:0,
+            smsmsgid: 0,
+            smsmsgidtxt:'',
+            smsresponse: '',
+            smsfeedback:'',
+            adres:''
+        }
+        let result = await logboek.create(createJson);
+        return result;
+    } catch (error) {
+        throw new ApiError(httpStatus.BAD_REQUEST, error);
+    }
+}
+
+const paymentError = async (data) => {
+    try {
+        const { logboek, dossiers } = db;
+
+        let dossier_id = "";
+        let debiteur_id = "";
+
+        if(data?.paymentRequestInformation?.remittanceInfo){
+            const data_arr = data?.paymentRequestInformation?.remittanceInfo?.split("_");
+            dossier_id = data_arr[0];
+            debiteur_id = data_arr[1];
+        }
+
+        let dossiers_data = await dossiers.findOne({
+            where: {
+                id: dossier_id
+            }
+        })
+       
+     
+        let date_time = new Date();
+        let date = ("0" + date_time.getDate()).slice(-2);
+        let month = ("0" + (date_time.getMonth() + 1)).slice(-2);
+        let year = date_time.getFullYear();
+        let hours = date_time.getHours();
+        let minutes = date_time.getMinutes();
+        let seconds = date_time.getSeconds();
+        let currenttime = year + "-" + month + "-" + date + " " + hours + ":" + minutes + ":" + seconds
+        let createJson = {
+            inserted: currenttime,
+            modified: currenttime,
+            modifiedby: 'creditportal',
+            dossier: ',' + dossier_id + ',',
+            omschrijving:"Online Payment of euro - "+(data?.paymentRequestInformation?.amountInCents/100)+"  is error through Credipay portal with the transaction ID- "+ data?.paymentRequestInformation?.paymentID,
+            datum:data?.paymentRequestInformation?.paymentRequestDate,
+            debiteur:debiteur_id,
+            klant:dossiers_data?.klant,
+            omschrijvingintern:'',
+            bestand:'',
+            verwerkt: 1,
+            template:0,
+            bestand2:'',
+            paginas: 0,
+            bezig: 0,
+            teldoor:0,
+            smsmsgid: 0,
+            smsmsgidtxt:'',
+            smsresponse: '',
+            smsfeedback:'',
+            adres:''
+        }
+        let result = await logboek.create(createJson, {});
+        return result;
+    } catch (error) {
+        throw new ApiError(httpStatus.BAD_REQUEST);
+    }
+}
+
+
 module.exports = {
     getDossierDetails,
     getDossierFacturenDetails,
     getDossierPaymentPlanCalculation,
     eligibleDossierPaymentPlancheck,
-    updatelogBook
+    updatelogBook,
+    paymentSuccess,
+    paymentError
 }
