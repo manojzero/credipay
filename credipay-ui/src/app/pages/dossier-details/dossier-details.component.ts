@@ -43,7 +43,7 @@ export class DossierDetailsComponent implements OnInit {
     
     if (typeof window !== 'undefined' && window.localStorage) {
       const dossierId = window.localStorage.getItem("dossier");
-      this.spinner.show();
+      // this.spinner.show();
       this.dossierService.getDossierDetails(dossierId).subscribe({
         next: (value) => {
           if (Object.values(value[0]).every(value => value == "€ undefined") == false){          
@@ -54,9 +54,9 @@ export class DossierDetailsComponent implements OnInit {
           this.message = err.message;
           this.spinner.hide();
         }, complete: () => {
-          setTimeout(() => {
-            this.spinner.hide();
-          }, 2000);
+          // setTimeout(() => {
+          //   this.spinner.hide();
+          // }, 2000);
           // this.callSpinner();
         },
 

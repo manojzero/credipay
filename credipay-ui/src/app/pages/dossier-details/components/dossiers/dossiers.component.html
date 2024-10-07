@@ -142,8 +142,10 @@
                       <input type="radio" name="options" value="deceased" [(ngModel)]="selectedOption">
                       &nbsp; {{'Debtor_deceased'|translate}} 
                     </label>
-                </div>
-
+                  </div>
+                  
+                  <!-- <p>You selected: {{ selectedOption }}</p> -->
+                  
             </div>
             <div class="col-12 modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{'Close'|translate}}</button> @if (selectedOption=='disagree') {<button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="nav()">{{'Submit'|translate}}</button>}
@@ -416,10 +418,10 @@
                       &nbsp; Client 
                     </label>
                     <br>
-                </div>
-
-                <p>You selected: {{ selectedOptions }}</p>
-
+                  </div>
+                  
+                  <!-- <p>You selected: {{ selectedOptions }}</p> -->
+                  
             </div>
             <div class="col-12 modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{'Close'|translate}}</button> @if (selectedOptions=='options1') {<button type="button" class="btn btn-primary" data-bs-dismiss="modal" data-bs-toggle="modal" id="closeModal"

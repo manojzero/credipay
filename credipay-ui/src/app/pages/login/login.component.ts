@@ -29,7 +29,7 @@ import { Router } from '@angular/router';
 })
 
 export class LoginComponent implements OnInit {
-  // @Output("isloggedin") isloggedin: EventEmitter<any> = new EventEmitter();
+  @Output("isloggedin") isloggedin: EventEmitter<any> = new EventEmitter();
   public loginForm: any = FormGroup; message: string = '';
   submitted = false; checklogin = false;
   open: boolean = true; isSubmitted:boolean = false;
@@ -94,17 +94,14 @@ export class LoginComponent implements OnInit {
         // this.toastr.error(err)
       },
       complete: () => {
-        // this.spinner.hide();
-        // this.isloggedin.emit();
-        window.location.reload();
+        this.spinner.show();
         this.router.navigateByUrl('dossier-details').then(()=>{
-          // setTimeout(() => {
-            
-            
-            this.isSubmitted = true;
-            
-            this.spinner.hide();
-          // }, 1000);
+          this.isSubmitted = true;            
+          this.isloggedin.emit();       
+          // this.spinner.hide();
+          setTimeout(function () {
+            window.location.reload();
+          }, 500);
         })
         
         // window.location.reload();
