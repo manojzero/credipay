@@ -18,8 +18,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @if(dossierDetails.length > 0) {
-                        @for(details of dossierDetails;track details) {
+                        @if(dossierDetails.length > 0) { @for(details of dossierDetails;track details) {
                         <tr>
                             <td>{{details.Dossier}}</td>
                             <td>{{details.Invoice_Reference}}</td>
@@ -32,8 +31,7 @@
                             <td>{{details.Payments_made}}</td>
                             <td>{{details.Pay}}</td>
                         </tr>
-                        }
-                        } @else {
+                        } } @else {
                         <tr>
                             <td colspan="3" style="text-align: center;">{{'No data found!!!'|translate}}</td>
                         </tr>
@@ -57,7 +55,7 @@
                     <tbody>
                         @for(details of dossierTotalDetails;track details) {
                         <tr>
-                            <td>{{details.Dossier}}</td>
+                            <td>{{details.Dossier | translate}}</td>
                             <td>{{details.Somme_principle}}</td>
                             <td>{{details.Interest}}</td>
                             <td>{{details.Interests_damages_clause}}</td>
@@ -70,13 +68,11 @@
                     </tbody>
                 </table>
                 @if(Outstanding_Balance != '€ 0.00'){
-                    <div class="col-10 modal-footer">                    
-                        <button class="btn btn-secondary" type="button" data-bs-toggle="modal"
-                            data-bs-target="#staticBackdrop" (click)="onFullPay('popup')">{{'Pay in full'|translate}}</button>
-                        <button class="btn btn-primary" type="button" (click)="paymentPlan()">{{'Choose Payment Plan'|translate}}</button>                    
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                        data-bs-target="#havequestions">{{'Do you have any question'|translate}}</button>
-                    </div>
+                <div class="col-10 modal-footer">
+                    <button class="btn btn-secondary" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="onFullPay('popup')">{{'Pay in full'|translate}}</button>
+                    <button class="btn btn-primary" type="button" (click)="paymentPlan()">{{'Choose Payment Plan'|translate}}</button>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#havequestions">{{'do_you_have_any_question'|translate}}</button>
+                </div>
                 }
             </div>
         </div>
@@ -87,24 +83,23 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="" aria-hidden="true">
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header custom_modal_header">
 
-                    <a class="navbar-brand" placement="bottom" >
-                        <span class="credi"> {{'credi' | translate}}</span>
-                        <span class="solve">{{'Pay' | translate}}</span>
-                    </a>
-               
+                <a class="navbar-brand" placement="bottom">
+                    <span class="credi"> {{'credi' | translate}}</span>
+                    <span class="solve">{{'Pay' | translate}}</span>
+                </a>
+
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p style="color: green;font-weight: 600;text-align: center;">{{'Dossier'|translate}} :
-                    {{dossier_number}}</p>
-                <p style="font-size: 15px;font-weight: 600; text-align: center;">{{'Outstanding balance'|translate}} :
-                    {{Outstanding_Balance}}</p>
+                <p style="color: green;font-weight: 600;text-align: center;">{{'Dossier'|translate}} : {{dossier_number}}
+                </p>
+                <p style="font-size: 15px;font-weight: 600; text-align: center;">{{'Outstanding balance'|translate}} : {{Outstanding_Balance}}
+                </p>
                 <!-- <p style="color: blue;font-weight: 600;">I want to pay online</p>  
                    <p>To make a payment online, first enter the desired amount and then confirm.</p>  
                    <p>Amount to be paid : {{Outstanding_Balance}}</p>   -->
@@ -114,7 +109,7 @@
                 <!-- <button type="button" class="btn btn-primary" (click)="makePayment()">{{'Make the payment online'|translate}}</button> -->
                 <a [href]="payment_link" class="payButtonLink" target="_blank">
                     <img [src]="paymentbutton_link" alt="PAY" class="payButtonImage">
-                </a> 
+                </a>
             </div>
         </div>
     </div>
@@ -122,13 +117,12 @@
 
 
 
-<div class="modal fade" id="havequestions" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="" aria-hidden="true">
+<div class="modal fade" id="havequestions" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id=""><b>
-                    Do you have any questions from the Below ?</b>
+                    {{'Do_you_have_any_questions_from_the_Below'|translate}}</b>
                 </h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -136,41 +130,33 @@
                 <div>
                     <label>
                       <input type="radio" name="options" value="disagree" [(ngModel)]="selectedOption" aria-selected="true">
-                         &nbsp; Disagree/Dispute
+                         &nbsp; {{'Disagree_Dispute'|translate}}
                     </label>
                     <br>
                     <label>
                       <input type="radio" name="options" value="alreadypaid" [(ngModel)]="selectedOption">
-                      &nbsp; Already Paid
+                      &nbsp; {{'Already_paid'|translate}}
                     </label>
                     <br>
                     <label>
                       <input type="radio" name="options" value="deceased" [(ngModel)]="selectedOption">
-                      &nbsp; Debtor deceased 
+                      &nbsp; {{'Debtor_deceased'|translate}} 
                     </label>
-                  </div>
-                  
-                  <p>You selected: {{ selectedOption }}</p>
-                  
+                </div>
+
             </div>
             <div class="col-12 modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{'Close'|translate}}</button>
-                @if (selectedOption=='disagree') {<button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="nav()" 
-                >{{'Submit'|translate}}</button>}
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{'Close'|translate}}</button> @if (selectedOption=='disagree') {<button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="nav()">{{'Submit'|translate}}</button>}
                 @else if(selectedOption == 'alreadypaid'){
-                    <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" (click)="nav()"
-                >{{'Submit'|translate}}</button>                }
-                @else if (selectedOption == 'deceased') {<button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="nav()" 
-                >{{'Submit'|translate}}</button>}           
-                
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="nav()">{{'Submit'|translate}}</button> } @else if (selectedOption == 'deceased') {<button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="nav()">{{'Submit'|translate}}</button>}
+
             </div>
         </div>
     </div>
 </div>
 
 
-<div class="modal fade" id="openinvoices" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="" aria-hidden="true">
+<div class="modal fade" id="openinvoices" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -178,18 +164,16 @@
                     Do you disagree with the open invoice(s)?</b>
                 </h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>            
+            </div>
             <div class="col-12 modal-footer">
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">{{'NO'|translate}}</button>
-                <button type="button" class="btn btn-success" data-bs-dismiss="modal" data-bs-toggle="modal"
-                data-bs-target="#disagreement">{{'YES'|translate}}</button>
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#disagreement">{{'YES'|translate}}</button>
                 <!-- <p class="link">{{'YES'|translate}}</p> -->
             </div>
         </div>
     </div>
 </div>
-<div class="modal fade" id="disagreement" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="" aria-hidden="true">
+<div class="modal fade" id="disagreement" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -198,18 +182,15 @@
                 </h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            
+
             <div class="col-12 modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" data-bs-toggle="modal"
-                data-bs-target="#disagreementNo">{{'NO'|translate}}</button>
-                <button type="button" class="btn btn-success" data-bs-dismiss="modal" data-bs-toggle="modal"
-                data-bs-target="#disagreementYes">{{'YES'|translate}}</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#disagreementNo">{{'NO'|translate}}</button>
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#disagreementYes">{{'YES'|translate}}</button>
             </div>
         </div>
     </div>
 </div>
-<div class="modal fade" id="disagreementNo" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="" aria-hidden="true">
+<div class="modal fade" id="disagreementNo" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -218,15 +199,14 @@
                      In the meanwhile your dossier can not be changed and will be continued.</b>
                 </h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>            
+            </div>
             <div class="col-12 modal-footer">
                 <button type="button" class="btn btn-primary" data-bs-dismiss="modal">{{'OK'|translate}}</button>
             </div>
         </div>
     </div>
 </div>
-<div class="modal fade" id="disagreementYes" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="" aria-hidden="true">
+<div class="modal fade" id="disagreementYes" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -237,17 +217,15 @@
                     If not your dossier will be continued.</b>
                 </h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>            
+            </div>
             <div class="col-12 modal-footer">
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">{{'NO'|translate}}</button>
-                <button type="button" class="btn btn-success" data-bs-dismiss="modal" data-bs-toggle="modal"
-                data-bs-target="#Clientconfirmed">{{'YES'|translate}}</button>
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#Clientconfirmed">{{'YES'|translate}}</button>
             </div>
         </div>
     </div>
 </div>
-<div class="modal fade" id="ClientconfirmedNo" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="" aria-hidden="true">
+<div class="modal fade" id="ClientconfirmedNo" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -257,17 +235,15 @@
                     your procedure will continue</b>
                 </h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>            
+            </div>
             <div class="col-12 modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" data-bs-toggle="modal"
-                data-bs-target="#create">{{'NO'|translate}}</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#create">{{'NO'|translate}}</button>
                 <button type="button" class="btn btn-success" data-bs-dismiss="modal">{{'YES'|translate}}</button>
             </div>
         </div>
     </div>
 </div>
-<div class="modal fade" id="ClientconfirmedYes" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="" aria-hidden="true">
+<div class="modal fade" id="ClientconfirmedYes" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -278,7 +254,7 @@
             </div>
             <div class="modal-body">
                 <input type="file">
-            </div>            
+            </div>
             <div class="col-12 modal-footer">
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">{{'Cancel'|translate}}</button>
                 <button type="button" class="btn btn-success" data-bs-dismiss="modal">{{'Submit'|translate}}</button>
@@ -286,8 +262,7 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="Clientconfirmed" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="" aria-hidden="true">
+<div class="modal fade" id="Clientconfirmed" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -295,18 +270,15 @@
                     Do you have this confirmed with the client per email/letter? </b>
                 </h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>            
+            </div>
             <div class="col-12 modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" data-bs-toggle="modal"
-                data-bs-target="#ClientconfirmedNo">{{'NO'|translate}}</button>
-                <button type="button" class="btn btn-success" data-bs-dismiss="modal" data-bs-toggle="modal"
-                data-bs-target="#ClientconfirmedYes">{{'YES'|translate}}</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#ClientconfirmedNo">{{'NO'|translate}}</button>
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#ClientconfirmedYes">{{'YES'|translate}}</button>
             </div>
         </div>
     </div>
 </div>
-<div class="modal fade" id="Debtordeceased" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="" aria-hidden="true">
+<div class="modal fade" id="Debtordeceased" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -314,18 +286,15 @@
                     Do you want to report death?</b>
                 </h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>            
+            </div>
             <div class="col-12 modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                data-bs-target="#DebtordeceasedNo">{{'NO'|translate}}</button>
-                <button type="button" class="btn btn-success"  data-bs-toggle="modal"
-                data-bs-target="#DebtordeceasedYes">{{'YES'|translate}}</button>
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#DebtordeceasedNo">{{'NO'|translate}}</button>
+                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#DebtordeceasedYes">{{'YES'|translate}}</button>
             </div>
         </div>
     </div>
 </div>
-<div class="modal fade" id="DebtordeceasedYes" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="" aria-hidden="true">
+<div class="modal fade" id="DebtordeceasedYes" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -336,7 +305,7 @@
             </div>
             <div class="modal-body">
                 <input type="file">
-            </div>            
+            </div>
             <div class="col-12 modal-footer">
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">{{'Cancel'|translate}}</button>
                 <button type="button" class="btn btn-success" data-bs-dismiss="modal">{{'Submit'|translate}}</button>
@@ -344,8 +313,7 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="DebtordeceasedNo" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="" aria-hidden="true">
+<div class="modal fade" id="DebtordeceasedNo" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -354,64 +322,62 @@
                 </h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            
+
             <div class="col-12 modal-footer">
                 <button type="button" class="btn btn-success" data-bs-dismiss="modal">{{'OK'|translate}}</button>
             </div>
         </div>
     </div>
 </div>
-<div class="modal fade" id="Credisolv" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="" aria-hidden="true">
+<div class="modal fade" id="Credisolv" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id=""><b>
-                    Provide the below details </b>                    
+                    Provide the below details </b>
                 </h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>   
+            </div>
             <div class="modal-body">
                 <form [formGroup]="credisolvform">
                     <table>
-                      <tbody>
-                        <tr>
-                          <th>Date of Birth</th>
-                          <td>
-                            <input type="date" formControlName="dateOfBirth">
-                          </td>
-                        </tr>
-                        <tr>
-                          <th>Amount in Euros</th>
-                          <td>
-                            <input type="number" formControlName="amount" min="0">
-                          </td>
-                        </tr>
-                        <tr>
-                          <th>IBAN (From which account did you pay?)</th>
-                          <td>
-                            <input type="text" formControlName="ibanFrom">
-                          </td>
-                        </tr>
-                        <tr>
-                          <th>IBAN (To which account did you transfer?)</th>
-                          <td>
-                            <input type="text" formControlName="ibanTo">
-                          </td>
-                        </tr>
-                      </tbody>
+                        <tbody>
+                            <tr>
+                                <th>Date of Birth</th>
+                                <td>
+                                    <input type="date" formControlName="dateOfBirth">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Amount in Euros</th>
+                                <td>
+                                    <input type="number" formControlName="amount" min="0">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>IBAN (From which account did you pay?)</th>
+                                <td>
+                                    <input type="text" formControlName="ibanFrom">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>IBAN (To which account did you transfer?)</th>
+                                <td>
+                                    <input type="text" formControlName="ibanTo">
+                                </td>
+                            </tr>
+                        </tbody>
                     </table>
-                  </form>                 
-                  
-    </div>
+                </form>
+
+            </div>
             <div class="col-12 modal-footer">
                 <button type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="credisolvAlreadypaid()">{{'Submit'|translate}}</button>
             </div>
         </div>
     </div>
 </div>
-<div class="modal fade" id="Client" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="" aria-hidden="true">
+<div class="modal fade" id="Client" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -422,15 +388,14 @@
                 </h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            
+
             <div class="col-12 modal-footer">
                 <button type="button" class="btn btn-success" data-bs-dismiss="modal">{{'OK'|translate}}</button>
             </div>
         </div>
     </div>
 </div>
-<div class="modal fade" id="AlreadyPaid" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="" aria-hidden="true">
+<div class="modal fade" id="AlreadyPaid" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -439,7 +404,7 @@
                 </h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-             <div class="modal-body">
+            <div class="modal-body">
                 <div>
                     <label>
                       <input type="radio" name="options" value="options1" [(ngModel)]="selectedOptions" aria-selected="true">
@@ -451,19 +416,15 @@
                       &nbsp; Client 
                     </label>
                     <br>
-                  </div>
-                  
-                  <p>You selected: {{ selectedOptions }}</p>
-                  
+                </div>
+
+                <p>You selected: {{ selectedOptions }}</p>
+
             </div>
             <div class="col-12 modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{'Close'|translate}}</button>
-                @if (selectedOptions=='options1') {<button type="button" class="btn btn-primary" data-bs-dismiss="modal" data-bs-toggle="modal" id="closeModal"
-                data-bs-target="#Credisolv">{{'Submit'|translate}}</button>}
-                @else if(selectedOptions == 'options2'){
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" data-bs-toggle="modal" id="closeModal"
-                data-bs-target="#Client" >{{'Submit'|translate}}</button>
-                }
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{'Close'|translate}}</button> @if (selectedOptions=='options1') {<button type="button" class="btn btn-primary" data-bs-dismiss="modal" data-bs-toggle="modal" id="closeModal"
+                    data-bs-target="#Credisolv">{{'Submit'|translate}}</button>} @else if(selectedOptions == 'options2'){
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" data-bs-toggle="modal" id="closeModal" data-bs-target="#Client">{{'Submit'|translate}}</button> }
+            </div>
         </div>
     </div>
-</div>

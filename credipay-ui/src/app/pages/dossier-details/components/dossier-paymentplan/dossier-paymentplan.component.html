@@ -12,20 +12,18 @@
                     }
                     <!-- <h2 style="color: black;">Payment Plan</h2> -->
                     <div class="card-header">
-                        <h4 class="card-title">or choose your own payment plan (€ {{amount}}) </h4>
+                        <h4 class="card-title rounded">{{'Choose_your_own_payment_plan'| translate}} (€ {{amount}}) </h4>
                     </div>
                     <div class="container mt-4">
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <div class="mb-1">
-                                    How much would you like to pay per month in euros? <input type="number" min="0"
-                                        class="form-control" formControlName="monthly_amount">
+                                    {{'How_much_would_you_like_to_pay_per_month_in_euros' | translate}} <input type="number" min="0" class="form-control" formControlName="monthly_amount">
 
                                 </div>
                             </div>
                             <div class="col-md-6 d-flex align-items-end justify-content-center">
-                                <div class="mb-1 align-bottom"><button type="button" (click)="getpaymentplan()"
-                                        class="btn btn-primary">{{'Submit'}}</button></div>
+                                <div class="mb-1 align-bottom"><button type="button" (click)="getpaymentplan()" class="btn btn-primary">{{'Submit'| translate}}</button></div>
                             </div>
                             <!-- <div class="col-md-6">
                                 <div class="mb-1">
@@ -36,32 +34,27 @@
                             @if(paymentplan){
                             <div class="col-md-6">
                                 <div class="mb-1">
-                                    Total Months <input type="number" readonly min="0" class="form-control"
-                                        formControlName="totalmonths">
+                                    {{'Total_Months' | translate}} <input type="number" readonly min="0" class="form-control" formControlName="totalmonths">
                                 </div>
                                 <div class="mb-1">
-                                    remaining amount for another month
-                                    <input type="number" readonly min="0" formControlName="remainingamount"
-                                        class="form-control">
+                                    {{'Remaining_amount_for_another_month' | translate}}
+                                    <input type="number" readonly min="0" formControlName="remainingamount" class="form-control">
                                 </div>
 
                             </div>
                             <div class="col-md-6  d-flex align-items-end justify-content-center">
-                                <div class="mb-1 "><button type="button" (click)="enablepaymentplan()"
-                                        class="btn btn-primary">{{'Click to proceed with this plan'}}</button></div>
+                                <div class="mb-1 "><button type="button" (click)="enablepaymentplan()" class="btn btn-primary"> {{'Click_to_proceed_with_this_plan' | translate}}</button></div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-1" *ngIf="this.paymentForm.controls['totalmonths'].value!='' &&
                                 this.paymentForm.controls['totalmonths'].value!=null && enablepayment&&
                                 this.paymentForm.controls['remainingamount'].value!=null">
-                                    <span> Select payment date</span><input type="date" placeholder="yyyy-mm-dd"
-                                        formControlName="paymentDate" class="form-control" [min]="minDate"
-                                        [max]="maxDate" (change)="enablefinalsubmit()">
+                                    <span>{{'Select_payment_date' | translate}}</span><input type="date" placeholder="yyyy-mm-dd" formControlName="paymentDate" class="form-control" [min]="minDate" [max]="maxDate" (change)="enablefinalsubmit()">
 
                                 </div>
                                 <div class="invalid-feedback">
-                                    <div *ngIf="paymentForm.controls['paymentDate'].errors">{{'payment Date is required'
-                                        }}</div>
+                                    <div *ngIf="paymentForm.controls['paymentDate'].errors">{{'Payment_date_is_required' | translate}}
+                                    </div>
                                 </div>
                             </div>
                             }
@@ -71,8 +64,7 @@
                 </form>
                 <div class="col-12 modal-footer">
                     <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{'Close'}}</button> -->
-                    <button type="button" class="btn btn-primary" *ngIf="finalsubmit" data-bs-toggle="modal"
-                        data-bs-target="#paymentconfirmed">{{'Submit'}}</button>
+                    <button type="button" class="btn btn-primary" *ngIf="finalsubmit" data-bs-toggle="modal" data-bs-target="#paymentconfirmed">{{'Submit'| translate}}</button>
                 </div>
             </div>
 
@@ -85,54 +77,53 @@
 
 
 
-<div class="modal fade" id="paymentconfirmed" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="" aria-hidden="true">
+<div class="modal fade" id="paymentconfirmed" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="" aria-hidden="true">
     <div class="modal-dialog  modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="">
-                    <b>Please reconfirm the details of the payment plan</b>
+                    <b>{{'Please_reconfirm_the_details_of_the_payment_plan'| translate}}</b>
                 </h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form [formGroup]="paymentForm">
                     <table class="w-100">
-                      <tbody>
-                        <tr>
-                          <th>Payment Months</th>
-                          <td>
-                            <input type="date" class="form-control float-right" formControlName="dateOfBirth">
-                          </td>
-                        </tr>
-                        <br>
-                        <tr>
-                          <th>Monthly payment amount</th>
-                          <td>
-                            <input type="number" class="form-control float-right" formControlName="amount" min="0">
-                          </td>
-                        </tr>
-                        <br>
-                        <tr>
-                          <th>IBAN (From which account did you pay?)</th>
-                          <td>
-                            <input type="text" class="form-control float-right" formControlName="ibanFrom">
-                          </td>
-                        </tr>
-                        <br>
-                        <tr>
-                          <th>IBAN (To which account did you transfer?)</th>
-                          <td>
-                            <input type="text" class="form-control float-right" formControlName="ibanTo">
-                          </td>
-                        </tr>
-                      </tbody>
+                        <tbody>
+                            <tr>
+                                <th>{{'Payment_Months'| translate}}</th>
+                                <td>
+                                    <input type="date" class="form-control float-right" formControlName="dateOfBirth" required>
+                                </td>
+                            </tr>
+                            <br>
+                            <tr>
+                                <th>{{'Monthly_payment_amount'| translate}}</th>
+                                <td>
+                                    <input type="number" class="form-control float-right" formControlName="amount" min="0" required>
+                                </td>
+                            </tr>
+                            <br>
+                            <tr>
+                                <th>{{'IBAN_From_which_account_did_you_pay'| translate}}</th>
+                                <td>
+                                    <input type="text" class="form-control float-right" formControlName="ibanFrom" required>
+                                </td>
+                            </tr>
+                            <br>
+                            <tr>
+                                <th>{{'IBAN_To_which_account_did_you_transfer'| translate}}</th>
+                                <td>
+                                    <input type="text" class="form-control float-right" formControlName="ibanTo" required>
+                                </td>
+                            </tr>
+                        </tbody>
                     </table>
-                  </form> 
-            </div>            
+                </form>
+            </div>
             <div class="col-12 modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">{{'Cancel'}}</button>
-                <button type="button" class="btn btn-success" data-bs-dismiss="modal">{{'Submit'}}</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{'Cancel'| translate}}</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">{{'Submit'| translate}}</button>
             </div>
         </div>
     </div>

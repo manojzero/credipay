@@ -19,7 +19,7 @@ import { DossierDetailsService } from '../../service/dossier-details.service';
   providers: [HttpClient, TranslateService]
 })
 export class DossierDetailsComponent implements OnInit {
-  public dossierData: any = []; public Outstanding_Balance: string = ''; message: string = '';
+  public dossierData: any = []; public Outstanding_Balance: string = '€ 0'; message: string = '';
   constructor(private authService: AuthService, public spinner: NgxSpinnerService, private dossierService: DossierDetailsService,
     private router: Router, private activatedroute: ActivatedRoute, public translate: TranslateService) {
     translate.setDefaultLang('en');
@@ -46,8 +46,10 @@ export class DossierDetailsComponent implements OnInit {
       this.spinner.show();
       this.dossierService.getDossierDetails(dossierId).subscribe({
         next: (value) => {
-          this.dossierData = value;
-          this.Outstanding_Balance = "Total Outstanding Balance : " + value[0]?.openstaandbedrag;
+          if (Object.values(value[0]).every(value => value == "€ undefined") == false){          
+            this.dossierData = value;
+            this.Outstanding_Balance = value[0]?.openstaandbedrag;
+          }
         }, error: (err) => {
           this.message = err.message;
           this.spinner.hide();

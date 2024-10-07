@@ -2,11 +2,8 @@
     width: 100%;
 } */
 
-
-
 .table {
     color: #0c0101;
-
 }
 
 .table-bold0 {
@@ -21,6 +18,7 @@
     text-transform: none;
 }
 
+
 /* .table>tbody>tr>td {
     border-color: #ce0405;
 } */
@@ -29,7 +27,6 @@ table.my-table>tbody>tr>td {
     color: rgb(18, 1, 1);
     font-size: 9px;
 }
-
 
 .wrapper {
     margin-top: 100px;
@@ -64,10 +61,10 @@ table.my-table>tbody>tr>td {
 .card-title {
     background-color: #090101;
     text-align: center;
-    font-weight: 500;
-    font-size: 30px;
+    font-weight: 500 !important;
+    font-size: 20px;
+    padding: 3px;
 }
-
 
 
 /* Example using Classic Blue and White */
@@ -124,6 +121,6 @@ h2 {
 
 .input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+    -webkit-appearance: none;
+    margin: 0;
 }

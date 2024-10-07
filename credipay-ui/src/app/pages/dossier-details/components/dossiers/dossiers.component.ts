@@ -135,9 +135,10 @@ export class DossiersComponent implements OnInit {
     try {
       this.errmessage = ''
       let proceed = false;
-      console.log("this.Outstanding_Balance", Number(this.Outstanding_Balance.replace("€", '')))
-
-      this.dossierService.getDossierPaymentplancheck(Number(500)).subscribe({
+      
+      let outstand = Number(this.Outstanding_Balance.replace("€", ''))
+      console.log("this.Outstanding_Balance", Number(outstand))
+      this.dossierService.getDossierPaymentplancheck(Number(outstand)).subscribe({
         next: (data: any) => {
           this.spinner.show();
           this.router.navigateByUrl('dossier-details/paymentplan/' + this.dossierDetails[0].Dossier + '/' + Number(this.Outstanding_Balance.replace("€", '')))

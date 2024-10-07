@@ -2,12 +2,10 @@
     <div class="card">
         <div class="card-body"><br>
             <!-- <img class="imagesss" src="../../../assets/img/credipay-payment-logo.png"/><br><br><br><br> -->
-            <p class="text-value">Welcome to your personal and confidential space</p>
-            <p class="text-value">Below you will find the list of files linked to your personal data that have been
-                entrusted to us and for which you have been granted this access.</p>
+            <p class="text-value">{{'dossier_details_content_1'|translate}}</p>
+            <p class="text-value">{{'dossier_details_content_2'|translate}}</p>
 
-            <p class="text-value">During your first visit to this portal, you were asked to validate your address and
-                telephone number. If you have recently moved or your telephone number has changed, please inform us by clicking here.</p>
+            <p class="text-value">{{'dossier_details_content_3'|translate}}</p>
             <br>
             <p class="text-file">{{'Available file(s)'|translate}}: {{dossierData.length}}</p>
             <p class="text-value">{{'click on each reference to see the detail'|translate}}</p><br>
@@ -19,9 +17,8 @@
                         <th scope="col">{{'Outstanding Balance'|translate}}</th>
                     </tr>
                 </thead>
-                <tbody> 
-                    @if(dossierData.length > 0) {
-                    @for(details of dossierData;track details) {
+                <tbody>
+                    @if(dossierData.length > 0) { @for(details of dossierData;track details) {
                     <tr>
                         <!-- <td [routerLink]='["/dossiers",details.Referentie]'>{{details.Referentie}}</td>   href="/dossiers/{{details.Referentie}}"-->
                         <td>
@@ -30,15 +27,14 @@
                         <td>{{details?.firmanaam}}</td>
                         <td>{{details?.openstaandbedrag}}</td>
                     </tr>
-                    }
-                    } @else {
+                    } } @else {
                     <tr>
-                        <td colspan="3" style="text-align: center;">No data found!!!</td>
+                        <td colspan="3" style="text-align: center;">{{'no_data_found'|translate}}</td>
                     </tr>
                     }
                 </tbody>
             </table>
-            <p class="text-total">{{Outstanding_Balance}}</p><br>
+            <p class="text-total">{{'total_outstanding_balance'|translate}}{{Outstanding_Balance}}</p><br>
         </div>
     </div>
 </div>

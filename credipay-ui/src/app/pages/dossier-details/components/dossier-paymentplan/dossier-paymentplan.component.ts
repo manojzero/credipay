@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { NgModel, FormBuilder, Validators, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router';
@@ -12,7 +12,7 @@ import { AlertConfig, AlertModule } from 'ngx-bootstrap/alert';
 @Component({
   selector: 'app-dossier-paymentplan',
   standalone: true,
-  imports: [FormsModule, CommonModule, PagemoduleModule, ReactiveFormsModule, AlertModule],
+  imports: [FormsModule, CommonModule, PagemoduleModule, ReactiveFormsModule, AlertModule,TranslateModule],
   templateUrl: './dossier-paymentplan.component.html',
   styleUrl: './dossier-paymentplan.component.css',
   providers: [HttpClient, TranslateService, FormBuilder, AlertConfig]
@@ -38,7 +38,10 @@ export class DossierPaymentplanComponent {
   enablepayment: any = false;
   finalsubmit: any = false;
   constructor(public translate: TranslateService, private formBuilder: FormBuilder, private route: ActivatedRoute, private DossierDetailsService: DossierDetailsService) {
-
+    translate.setDefaultLang('en');
+    if (typeof window !== 'undefined' && window.localStorage) {
+      translate.use(localStorage.getItem('lang') || 'en');
+    }
   }
 
   ngOnInit(): void {
