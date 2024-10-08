@@ -2,14 +2,9 @@
     width: 100%;
 } */
 
-
-
 .table {
     color: #0c0101;
-
 }
-
-
 
 .table>thead>tr>th {
     /* background-color: #ce0405; */
@@ -28,19 +23,17 @@ table.my-table>tbody>tr>td {
     font-size: 9px;
 }
 
+
 /* a {
     color: #0430ce;
     font-weight: 300;
 } */
-
 
 .custom-header {
     background-color: #ce0405;
     color: rgb(18, 1, 1);
     font-size: 9px;
 }
-
-
 
 .wrapper {
     margin-top: 100px;
@@ -60,7 +53,6 @@ table.my-table>tbody>tr>td {
     /* Change the color when hovering over the link */
 }
 
-
 .card {
     margin-left: 3%;
     margin-top: 6%;
@@ -71,7 +63,6 @@ table.my-table>tbody>tr>td {
     box-shadow: 0 0px 30px 14px rgba(0, 0, 0, 0.2) !important;
 }
 
-
 .modal-body {
     margin-left: 5%;
 }
@@ -79,6 +70,12 @@ table.my-table>tbody>tr>td {
 .table-bold {
     font-weight: bold !important;
 }
+
+.form-control {
+    color: #070000;
+    text-align: center;
+}
+
 
 /* .modal.show .modal-dialog {
     -webkit-transform: translate(0, 30%);
@@ -127,7 +124,6 @@ input::-webkit-inner-spin-button {
     width: 10em;
 }
 
-
 .card label {
     font-size: medium;
     margin-bottom: 5px;
@@ -137,6 +133,6 @@ input::-webkit-inner-spin-button {
     color: black !important;
 }
 
-.btn-primary{
+.btn-primary {
     margin-left: 45% !important;
 }
