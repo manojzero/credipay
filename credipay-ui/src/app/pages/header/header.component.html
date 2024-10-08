@@ -39,7 +39,7 @@
                 </div>
             </div>
             <ul class="navbar-nav" style="margin-right: 0px;margin-left: 20px;">
-                <li class="nav-item p-0">
+                <!-- <li class="nav-item p-0">
                     <a class="nav-link" href="#" placement="bottom" target="_blank"
                         tooltip="{{'Follow us on Twitter'|translate}}">
                         <i class="fab fa-twitter"> </i>
@@ -59,7 +59,7 @@
                         <i class="fab fa-instagram"> </i>
                         <p class="d-lg-none d-xl-none"> {{'Instagram' | translate}}</p>
                     </a>
-                </li>
+                </li> -->
                 @if (username != null) {
                 <li class="nav-item p-0">
                     <a class="nav-link" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="My profile"
@@ -105,14 +105,12 @@
             </ul>
         </div>
         @if (username != null) {
-            <div class="navbar-user" style="
-            margin-right: -100px;
-            margin-left: 20px;">
+            <div class="navbar-user">
                 <ul class="navbar-nav dropdown" [class.show]="isDropdownOpen">
-                    <li class="" (click)="toggleDropdown()" aria-haspopup="true" aria-expanded="false">
+                    <li class="dropdown-toggle" (click)="toggleDropdown()" aria-haspopup="true" aria-expanded="false">
                         {{user}}
                     </li>
-                    <div class="dropdown-menu" [class.show]="isDropdownOpen">
+                    <div class="dropdown-menu" [class.show]="isDropdownOpen" (mouseleave)="closeDropdown()">
                         <a class="dropdown-item" (click)="nav('logout')" routerLink="">
                             {{'Logout' | translate}}
                         </a>

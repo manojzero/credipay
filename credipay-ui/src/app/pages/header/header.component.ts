@@ -110,7 +110,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     if (typeof window !== 'undefined' && window.localStorage) {
       this.lang = localStorage.getItem('lang') || 'en'
     }
-
   }
   ngOnDestroy() {
     if (typeof document !== 'undefined') {
@@ -151,8 +150,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
         }, complete: () => {
           console.log("logout completed");
           this.spinner.show();
-          window.location.reload();
-          this.router.navigateByUrl('');          
+          this.isDropdownOpen = false;
+          this.router.navigateByUrl('').then(()=>{
+            setTimeout(() => {
+              window.location.reload();
+            }, 1000);
+          })        
         },
       });
       // this.authService.logout(window.localStorage.getItem('dossier')).subscribe({
@@ -187,7 +190,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       localStorage.setItem('lang', selectedLanguage);
     }
     this.translate.use(selectedLanguage);
-    location.reload();
+    // location.reload();
   }
 
   getmyprofiledata() {
@@ -212,5 +215,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   refreshdata(){
     this.ngOnInit();
+  }
+
+  closeDropdown() {
+    this.isDropdownOpen = false;
   }
 }

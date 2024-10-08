@@ -48,6 +48,7 @@
 .navbar-user{
   margin-right: -100px !important;
   margin-left: 30px !important;
+  /* z-index: 0 !important; */
 }
 
 
