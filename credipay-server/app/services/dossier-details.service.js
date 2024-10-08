@@ -166,7 +166,7 @@ const getDossierPaymentPlanCalculation = async (total_amount, amount) => {
 
             var min_amount = total_amount / result.plan_months;
 
-            min_amount = min_amount.toFixed(2);
+            min_amount = Math.ceil(min_amount);
 
             if (Number(total_amount) < Number(amount)) {
 
@@ -174,7 +174,7 @@ const getDossierPaymentPlanCalculation = async (total_amount, amount) => {
 
             }
 
-            throw new ApiError(httpStatus.BAD_REQUEST, "Amount entered cannot be assigned with the payment plan, the amount is more than € " + min_amount)
+            throw new ApiError(httpStatus.BAD_REQUEST, "Amount entered cannot be assigned with the payment plan, the minimum amount should be € " + min_amount)
         }
         else {
             return_data.months = Math.trunc(c_plan);
@@ -187,10 +187,10 @@ const getDossierPaymentPlanCalculation = async (total_amount, amount) => {
         throw new ApiError(httpStatus.BAD_REQUEST, "Your amount is high to provide the payment plan, please contact at the below number – 0032 15 690 390")
     }
 
-
     return return_data;
 
 }
+
 const eligibleDossierPaymentPlancheck = async (amount) => {
     const { credipay_paymentplan } = db;
     let result = await credipay_paymentplan.findOne({
