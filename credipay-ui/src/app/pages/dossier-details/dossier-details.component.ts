@@ -19,32 +19,22 @@ import { DossierDetailsService } from '../../service/dossier-details.service';
   providers: [HttpClient, TranslateService]
 })
 export class DossierDetailsComponent implements OnInit {
-  public dossierData: any = []; public Outstanding_Balance: string = '€ 0'; message: string = '';
+  public dossierData: any = []; 
+  public Outstanding_Balance: string = '€ 0'; 
+  message: string = '';
+  
   constructor(private authService: AuthService, public spinner: NgxSpinnerService, private dossierService: DossierDetailsService,
     private router: Router, private activatedroute: ActivatedRoute, public translate: TranslateService) {
-    translate.setDefaultLang('en');
-    if (typeof window !== 'undefined' && window.localStorage) {
-      translate.use(localStorage.getItem('lang') || 'en');
-    }
+    
   }
 
   ngOnInit(): void {
-    // this.callSpinner();
     this.getDossierDetails();
   }
-  callSpinner() {
-    this.spinner.show();
-    setTimeout(() => {
-      this.spinner.hide();
-    }, 2000);
-  }
+
 
   getDossierDetails() {
-    
-    if (typeof window !== 'undefined' && window.localStorage) {
-      const dossierId = window.localStorage.getItem("dossier");
-      // this.spinner.show();
-      this.dossierService.getDossierDetails(dossierId).subscribe({
+      this.dossierService.getDossierDetails().subscribe({
         next: (value) => {
           if (Object.values(value[0]).every(value => value == "€ undefined") == false){          
             this.dossierData = value;
@@ -54,14 +44,10 @@ export class DossierDetailsComponent implements OnInit {
           this.message = err.message;
           this.spinner.hide();
         }, complete: () => {
-          // setTimeout(() => {
-          //   this.spinner.hide();
-          // }, 2000);
-          // this.callSpinner();
         },
 
       })
-    }
+    
   }
 
   nav(path: string) {
@@ -74,7 +60,6 @@ export class DossierDetailsComponent implements OnInit {
           client_name: this.dossierData[0].firmanaam
         }
       });
-      // this.callSpinner();
     } catch (error) {
       console.log("=========" + error);
     }

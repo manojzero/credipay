@@ -23,7 +23,8 @@ const envVarsSchema = Joi.object()
         VAT_NUMBER: Joi.string().required().description("vat number"),
         PAYMENT_SUCCESS_URL: Joi.string().required().description("payment success url"),
         PAYMENT_ERROR_URL: Joi.string().required().description("payment error url"),
-        PAYMENT_CANCEL_URL: Joi.string().required().description("payment cancel url")
+        PAYMENT_CANCEL_URL: Joi.string().required().description("payment cancel url"),
+        COOKIE_ID: Joi.string().required().description("auth cookie id")
     })
     .unknown();   
 
@@ -55,6 +56,6 @@ module.exports = {
         payment_success_url:envVars.PAYMENT_SUCCESS_URL,
         payment_error_url: envVars.PAYMENT_ERROR_URL,
         payment_cancel_url: envVars.PAYMENT_CANCEL_URL
-    }
-
+    },
+    COOKIE_ID:envVars.COOKIE_ID
 };

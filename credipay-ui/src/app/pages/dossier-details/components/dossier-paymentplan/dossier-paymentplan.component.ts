@@ -41,10 +41,7 @@ export class DossierPaymentplanComponent {
   constructor(public translate: TranslateService, private formBuilder: FormBuilder, private route: ActivatedRoute, private DossierDetailsService: DossierDetailsService,
     public spinner: NgxSpinnerService
   ) {
-    translate.setDefaultLang('en');
-    if (typeof window !== 'undefined' && window.localStorage) {
-      translate.use(localStorage.getItem('lang') || 'en');
-    }
+
   }
 
   ngOnInit(): void {
@@ -87,7 +84,7 @@ export class DossierPaymentplanComponent {
         this.data = data
         const text = "-months";
         const month = data.months + text;
-        console.log("month==========", month);
+        
         this.eligibleforpaymentplan = true;
         //  this.val=this.paymentForm.controls['totalmonths'].setValue(month).value;
         //  console.log("val==========>",this.val);

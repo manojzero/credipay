@@ -17,19 +17,15 @@ import { ProfileService } from '../../service/profile.service';
   providers: [HttpClient, AlertConfig, TranslateService]
 })
 export class MyProfileComponent {
-  isCollapsed = true;
+
   focus: boolean = false; focus1: boolean = false; focus2: boolean = false;
   public profileForm: any = FormGroup; message: string = '';
   submitted = false; checkmesage: boolean = false;
   open: boolean = true; dismissible: boolean = true; timeout: number = 5000;
   data: any;
 
-  constructor(private formBuilder: FormBuilder, private authService: ProfileService,
-    public translate: TranslateService) {
-    translate.setDefaultLang('en');
-    if (typeof window !== 'undefined' && window.localStorage) {
-      translate.use(localStorage.getItem('lang') || 'en');
-    }
+  constructor(private formBuilder: FormBuilder, private authService: ProfileService) {
+
   }
 
   ngOnInit() {
@@ -98,8 +94,8 @@ export class MyProfileComponent {
     });
   }
   getmyprofiledata() {
-    if (typeof window !== 'undefined' && window.localStorage) {
-      const dossierId = window.localStorage.getItem("dossier");
+    if (typeof window !== 'undefined' && window?.localStorage) {
+      const dossierId = window?.localStorage.getItem("dossier");
 
       console.log("dossierId " + dossierId)
       this.authService.getuserdetails(dossierId).subscribe({

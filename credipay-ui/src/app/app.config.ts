@@ -8,11 +8,13 @@ import { HTTP_INTERCEPTORS, HttpClient, provideHttpClient, withFetch, withInterc
 import { tokenInterceptor } from './service/token.interceptor';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpLoaderFactory } from './pages/header/header.component';
+import { RequestInterceptor } from './service/interceptor/request.interceptor';
+import { Globals } from './utils/globals';
 
 export const appConfig: ApplicationConfig = {
   providers: [provideRouter(routes), provideClientHydration(),
      provideAnimationsAsync(), provideAnimationsAsync(),
-      provideHttpClient(withFetch(),withInterceptorsFromDi(),withInterceptors([tokenInterceptor]),
+      provideHttpClient(withFetch(),withInterceptorsFromDi(),
     ),importProvidersFrom(
       TranslateModule.forRoot({
         loader: {
@@ -21,7 +23,10 @@ export const appConfig: ApplicationConfig = {
           deps: [HttpClient],
         },
       })
-    ),]
+    ),
+    Globals, 
+    {provide:HTTP_INTERCEPTORS,useClass:RequestInterceptor, multi:true}
+  ]
 };
 
 

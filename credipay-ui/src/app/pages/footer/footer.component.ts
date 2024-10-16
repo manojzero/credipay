@@ -16,7 +16,6 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class FooterComponent {
 
   constructor(public translate: TranslateService,private sanitizer: DomSanitizer) {
-    translate.setDefaultLang('en'); if (typeof window !== 'undefined' && window.localStorage) { translate.use(localStorage.getItem('lang') || 'en'); }
   }
 
 }

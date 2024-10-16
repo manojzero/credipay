@@ -86,7 +86,7 @@ export class DossiersQuestionComponent {
     this.spinner.show()
     if (type == 'alreadypaid') {
       console.log("++++" + JSON.stringify(this.credisolvform.value));
-      this.dossierservice.updatelogbook(window.localStorage.getItem('dossier'), this.credisolvform.value).subscribe({
+      this.dossierservice.updatelogbook(window?.localStorage.getItem('dossier'), this.credisolvform.value).subscribe({
         next: (data: any) => {
           console.log("data " + data);
           if (data) {
@@ -130,7 +130,7 @@ export class DossiersQuestionComponent {
     }
     if (type == 'disagree') {
       console.log("++++" + JSON.stringify(this.credisolvform.value));
-      this.dossierservice.updatelogbook(window.localStorage.getItem('dossier'), this.credisolvform.value).subscribe({
+      this.dossierservice.updatelogbook(window?.localStorage.getItem('dossier'), this.credisolvform.value).subscribe({
         next: (data: any) => {
           console.log("data " + data);
           if (data) {
@@ -173,7 +173,7 @@ export class DossiersQuestionComponent {
     }
     if (type == 'deathcertificate') {
       console.log("++++" + JSON.stringify(this.credisolvform.value));
-      this.dossierservice.updatelogbook(window.localStorage.getItem('dossier'), this.credisolvform.value).subscribe({
+      this.dossierservice.updatelogbook(window?.localStorage.getItem('dossier'), this.credisolvform.value).subscribe({
         next: (data: any) => {
           console.log("data " + data);
           if (data) {

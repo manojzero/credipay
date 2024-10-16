@@ -3,7 +3,7 @@ const httpStatus = require('http-status');
 
 const getAllDossierList = async (req, res) => {
     try {
-        const result = await dossierDetailService.getDossierDetails(req.params.dossier_id);
+        const result = await dossierDetailService.getDossierDetails(req.user?.dossier_id);
         res.status(httpStatus.OK).send(result);
     } catch (error) {
         res.status(httpStatus.BAD_REQUEST).send(error.message)
@@ -11,8 +11,7 @@ const getAllDossierList = async (req, res) => {
 };
 const getDossierFacturenDetails = async (req, res) => {
     try {
-        console.log('returm')
-        const result = await dossierDetailService.getDossierFacturenDetails(req.params.dossier_id);
+        const result = await dossierDetailService.getDossierFacturenDetails(req.user?.dossier_id);
         res.status(httpStatus.OK).send(result);
     } catch (error) {
         res.status(httpStatus.BAD_REQUEST).send(error.message)

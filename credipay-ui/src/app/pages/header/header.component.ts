@@ -24,6 +24,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { AuthService } from '../../service/auth.service';
 import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { Globals } from '../../utils/globals';
 
 
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -44,36 +45,34 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   http = inject(HttpClient)
-  public username: any = ''; isCollapsed = true;
-  date = new Date(); modalRef: BsModalRef;
-  pagination = 3;
-  pagination1 = 1;
+  public username: any = ''; 
+  isCollapsed = true;
+
+
   lang: string = '';
   user: any;
   isDropdownOpen = false;
   constructor(public dialog: MatDialog, private renderer: Renderer2,
     private modalService: BsModalService, private spinner: NgxSpinnerService, private router: Router,
-    private authService: AuthService, public translate: TranslateService) {
-    this.modalRef = new BsModalRef();
-    translate.setDefaultLang('en');
-    if (typeof window !== 'undefined' && window.localStorage) {
+    private authService: AuthService, public translate: TranslateService, public global: Globals) {
+  
+    if (typeof window !== 'undefined' && window?.localStorage) {
       translate.use(localStorage.getItem('lang') || 'en');
     }
 
   }
+
   scrollToDownload(element: any) {
     element.scrollIntoView({ behavior: "smooth" });
   }
 
-  openDialog(): void {
-    const dialogRef = this.dialog.open(LoginComponent, {
-      width: '800px',
-    });
-  }
+
   ngOnInit() {
-    if (typeof window !== "undefined") {
-      this.username = window.localStorage.getItem('dossier');
+    if (typeof window !== 'undefined' && window?.localStorage) {
+      this.lang = localStorage.getItem('lang') || 'en'
     }
+
+
     if (typeof document !== 'undefined') {
       var body = document.getElementsByTagName("body")[0];
       body.classList.add("index-page");
@@ -90,8 +89,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
         });
       }
 
-
-
       var slider2 = document.getElementById("sliderDouble");
       if (slider2 instanceof HTMLElement) {
         nouislider.create(slider2, {
@@ -105,12 +102,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
       }
     }
 
-    this.getmyprofiledata();
-
-    if (typeof window !== 'undefined' && window.localStorage) {
-      this.lang = localStorage.getItem('lang') || 'en'
-    }
+ 
   }
+
   ngOnDestroy() {
     if (typeof document !== 'undefined') {
       var body = document.getElementsByTagName("body")[0];
@@ -129,17 +123,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.isCollapsed = !this.isCollapsed;
   }
 
-  openModal(template: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(template);
-  }
-
   nav(path: string) {
     this.spinner.show();
     if (path === 'logout') {
       this.authService.logOut().subscribe({
         next: (value) => {
           console.log("logout successfull" + value);
-          if (typeof window !== 'undefined' && window.localStorage) {
+          if (typeof window !== 'undefined' && window?.localStorage) {
             localStorage.clear()
           }
         }, error: (err) => {
@@ -158,22 +148,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
           })        
         },
       });
-      // this.authService.logout(window.localStorage.getItem('dossier')).subscribe({
-      //   next: (value) => {
-      //     console.log("logout successfull" + value)
-      //   }, error: (err) => {
-      //     console.log("errrorrr logout failed");
-      //   }, complete: () => {
-      //     console.log("logout completed");
-      //     setTimeout(() => {
-      //       this.spinner.hide();
-      //     }, 3000);
-      //   },
-      // });
-      // if (typeof window !== 'undefined') {
-      //   window.location.reload();
-      // }
-
+     
     } else {
       this.router.navigateByUrl(path)
       setTimeout(() => {
@@ -183,35 +158,17 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   }
 
+  getLoginUserName(){
+   let data =  this.global.getloginuserinfo();
+   return data.naam ? data.naam : data.firmanaam
+  }
+
   language(language: any) {
-    //this.spinner.show();
     let selectedLanguage = language.target.value;
-    if (typeof window !== 'undefined' && window.localStorage) {
-      localStorage.setItem('lang', selectedLanguage);
-    }
+    localStorage.setItem('lang', selectedLanguage);
     this.translate.use(selectedLanguage);
-    // location.reload();
   }
 
-  getmyprofiledata() {
-    if (typeof window !== 'undefined' && window.localStorage) {
-      const dossierId = window.localStorage.getItem("dossier");
-
-      console.log("dossierId " + dossierId)
-      this.authService.getuserdetails(dossierId).subscribe({
-        next: (data: any) => {
-          this.user = data.result.naam ? data.result.naam : data.result.firmanaam
-        },
-        error: (err: any) => {
-          console.log("err " + JSON.stringify(err));
-        },
-        complete: () => {
-          console.log("completed ");
-        }
-
-      })
-    }
-  }
 
   refreshdata(){
     this.ngOnInit();

@@ -50,7 +50,7 @@ export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
         // Handle HTTP errors
         if (err.status === 401) {
           // Specific handling for unauthorized errors     
-          if (typeof window !== 'undefined' && window.localStorage) {
+          if (typeof window !== 'undefined' && window?.localStorage) {
             console.error('Unauthorized request:', err);
             // You might trigger a re-authentication flow or redirect the user here
             authService.logOut().
@@ -86,7 +86,7 @@ export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
 
   // let router = inject(Router);
   // let token: any = '';
-  // if (typeof window !== 'undefined' && window.localStorage) {
+  // if (typeof window !== 'undefined' && window?.localStorage) {
   //   token = localStorage.getItem('token');
   // }
 
@@ -97,7 +97,7 @@ export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
 
   //   if (isExpired) {
   //     console.log('Token expired');
-  //     if (typeof window !== 'undefined' && window.localStorage) {
+  //     if (typeof window !== 'undefined' && window?.localStorage) {
   //       localStorage.removeItem('token');
   //     }
   //     router.navigateByUrl('/login');

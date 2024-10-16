@@ -43,15 +43,31 @@ const getDossierDetails = async (dossier_id) => {
 const getDossierFacturenDetails = async (dossier_id) => {
     try {
         let final_result = [];
-        const { dossiers, facturen, klanten } = db;
+        const { dossiers, facturen, klanten, betalingen } = db;
+
+        // betalingen.belongsTo(facturen, {  foreignKey: "factuur" });
+        // facturen.hasMany(betalingen, {  foreignKey: "factuur" });
+      
+
         let result = await facturen.findAll({
+            attributes: {
+                
+                include: [
+                    [
+                        Sequelize.literal('(select sum(aanincasso)+ sum(aanklant) as totalamount from  betalingen WHERE `factuur` = `facturen`.`id`)'),
+                        'paymentdone',
+                    ],
+                ]},
+            // include:{
+            //     model: betalingen,
+            // },
             where: {
                 dossier: dossier_id
             },
             order: [
                 ['datum', 'ASC'],
             ],
-            attributes: ['id', 'referentie', 'datum', 'hoofdsom', 'intrest', 'schadebeding', 'inningskost', 'totaal', 'betaaldincasso', 'rest','reedsbetaaldvoorincasso'],
+            // attributes: ['id', 'referentie', 'datum', 'hoofdsom', 'intrest', 'schadebeding', 'inningskost', 'totaal', 'betaaldincasso', 'rest','reedsbetaaldvoorincasso', 'paymentdone'],
         });
 
         let dossiers_data = await dossiers.findOne({
@@ -59,15 +75,21 @@ const getDossierFacturenDetails = async (dossier_id) => {
                 id: dossier_id
             }
         })
-
-        let transaction_id = dossier_id +"_"+ dossiers_data?.debiteur+"1235";
+        
+        let transaction_id = dossier_id +"_"+ dossiers_data?.debiteur+"100";
 
         let Somme_principle = 0.00;
         let Interest = 0.00;
         let Num_Interests_damages_clause = 0.00;
         let Total = 0.00;
         let Pay = 0.00;
+        let Total_paid = 0.00;
+        let Total_Collection_Cost = 0.00;
         result.forEach(element => {
+            element =JSON.stringify(element);
+            element =JSON.parse(element);
+
+         
             let Interests_damages_clause = "--";
             let Collection_costs = "--";
             let Payments_made = "--";
@@ -77,10 +99,12 @@ const getDossierFacturenDetails = async (dossier_id) => {
                 Num_Interests_damages_clause = Number(Num_Interests_damages_clause) + Number(element?.schadebeding);
             }
             if (element?.inningskost != '0.00') {
-                Collection_costs = "€ " + element?.inningskost
+                Collection_costs = "€ " + element?.inningskost;
+                Total_Collection_Cost = Number(Total_Collection_Cost) + Number(element?.inningskost);
             }
-            if (element?.reedsbetaaldvoorincasso != '0.00') {
-                Payments_made = "€ " + element?.reedsbetaaldvoorincasso
+            if (element?.paymentdone != '0.00' && element?.paymentdone) {
+                Payments_made = "€ " + element?.paymentdone;
+                Total_paid = Number(Total_paid) + Number(element?.paymentdone);
             }
             if (element?.hoofdsom != '0.00') {
                 Somme_principle = Number(Somme_principle) + Number(element?.hoofdsom);
@@ -104,12 +128,12 @@ const getDossierFacturenDetails = async (dossier_id) => {
                 "Collection_costs": Collection_costs,
                 "Total": "€ " + element?.totaal,
                 "Payments_made": Payments_made,
-                "Pay": "€ " + element?.rest,
+                "Pay": "€ " + (element?.totaal-element?.paymentdone).toFixed(2),
             }
             final_result.push(
                 json
             );
-            console.log("sooooooooooos" + Somme_principle);
+           
         });
         if (Num_Interests_damages_clause == 0.00) {
             Num_Interests_damages_clause = "--"
@@ -119,9 +143,9 @@ const getDossierFacturenDetails = async (dossier_id) => {
 
 
         let dossierTotalDetails = [
-            { Dossier: "SUB-TOTAL", Somme_principle: '€ ' + Somme_principle.toFixed(2), Interest: '€ ' + Interest.toFixed(2), Interests_damages_clause: Num_Interests_damages_clause, Collection_costs: '--', Total: '€ ' + Total.toFixed(2), Payments_made: '--', Pay: '€ ' + Pay.toFixed(2) },
+            { Dossier: "SUB-TOTAL", Somme_principle: '€ ' + Somme_principle.toFixed(2), Interest: '€ ' + Interest.toFixed(2), Interests_damages_clause: Num_Interests_damages_clause, Collection_costs: Total_Collection_Cost.toFixed(2), Total: '€ ' + Total.toFixed(2), Payments_made:Total_paid.toFixed(2), Pay: '€ ' + (Pay.toFixed(2) - Total_paid.toFixed(2)).toFixed(2)},
             { Dossier: "Payments received during the recovery procedure", Somme_principle: '', Interest: '', Interests_damages_clause: '', Collection_costs: '', Total: '', Payments_made: '', Pay: '--' },
-            { Dossier: "A PAYER", Somme_principle: '', Interest: '', Interests_damages_clause: '', Collection_costs: '', Total: '', Payments_made: '', Pay: '€ ' + Pay.toFixed(2) },
+            { Dossier: "A PAYER", Somme_principle: '', Interest: '', Interests_damages_clause: '', Collection_costs: '', Total: '', Payments_made: '', Pay: '€ ' + (Pay.toFixed(2) - Total_paid.toFixed(2)).toFixed(2) },
         ]
 
         let payment_link = config.paymentConfig.payment_url +"/execute?requesterVAT="+ config.paymentConfig.vat_number+"&language=XXXlanguageXXX&remittanceInfo="+transaction_id+"&amountInCents="+(Pay.toFixed(2)*100)+"&confirmationURL="+ config.paymentConfig.payment_success_url+"&errorURL="+config.paymentConfig.payment_error_url+"&cancelURL="+config.paymentConfig.payment_cancel_url;
@@ -131,7 +155,7 @@ const getDossierFacturenDetails = async (dossier_id) => {
         let final_data = [{
             "dossierDetails": final_result,
             "dossierTotalDetails": dossierTotalDetails,
-            "Outstanding_Balance": '€ ' + Pay.toFixed(2),
+            "Outstanding_Balance": '€ ' + (Pay.toFixed(2) - Total_paid.toFixed(2)).toFixed(2),
             "paymentLink": payment_link,
             "paymentButtonLink":paymentbutton_link
         }]
@@ -204,6 +228,7 @@ const eligibleDossierPaymentPlancheck = async (amount) => {
     }
     return result;
 }
+
 const updatelogBook = async (createbody, dossier_id) => {
     try {
         const { logboek, templatestreinen } = db;

@@ -10,6 +10,8 @@ import { AlertConfig, AlertModule } from 'ngx-bootstrap/alert';
 import Swal from 'sweetalert2';
 import { CommonModule } from '@angular/common';
 import { PagemoduleModule } from '../../../../pagemodule/pagemodule.module';
+import {Title} from "@angular/platform-browser";
+
 @Component({
   selector: 'app-dossiers',
   standalone: true,
@@ -37,13 +39,11 @@ export class DossiersComponent implements OnInit {
   client_name: any;
   constructor(private authService: AuthService, private spinner: NgxSpinnerService,
     private router: Router, private activatedroute: ActivatedRoute, private elementRef: ElementRef,
-    private renderer: Renderer2, public translate: TranslateService, private dossierService: DossierDetailsService, private formBuilder: FormBuilder) {
-    translate.setDefaultLang('en');
-    if (typeof window !== 'undefined' && window.localStorage) {
-      translate.use(localStorage.getItem('lang') || 'en');
-    }
+    private renderer: Renderer2, public translate: TranslateService, private dossierService: DossierDetailsService, private formBuilder: FormBuilder,
+    private titleService:Title) {
    
-    console.log("---------", this.translate);
+   
+   
     translate.get('SUB-TOTAL').subscribe((text: string) => {
       this.aValue = text
     });
@@ -57,12 +57,14 @@ export class DossiersComponent implements OnInit {
         this.client_name = state_datas.client_name;
     }
     console.log("current client name ", this.client_name)
+
   }
 
   ngOnInit(): void {
+    if (typeof window !== 'undefined' && window?.localStorage) 
     this.language = localStorage.getItem('lang');
-    this.dossier_number = this.activatedroute.snapshot.params['dossier_id'];
-    this.getDossierDetails(this.dossier_number);
+    
+    this.getDossierDetails();
     this.initform();
   }
   callSpinner() {
@@ -71,10 +73,10 @@ export class DossiersComponent implements OnInit {
       this.spinner.hide();
     }, 2000);
   }
-  getDossierDetails(dossierId: any) {
+  getDossierDetails() {
     this.spinner.show();
     
-    this.dossierService.getDossierFacturenDetails(dossierId).subscribe({
+    this.dossierService.getDossierFacturenDetails().subscribe({
       next: (value) => {
         this.dossierDetails = value[0]?.dossierDetails;
         this.dossierTotalDetails = value[0]?.dossierTotalDetails;

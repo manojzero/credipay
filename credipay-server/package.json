@@ -24,6 +24,7 @@
     "nocache": "^4.0.0",
     "nodemon": "^3.1.0",
     "passport": "^0.7.0",
+    "passport-jwt": "^4.0.1",
     "sequelize": "^6.37.2",
     "xss-clean": "^0.1.4"
   }

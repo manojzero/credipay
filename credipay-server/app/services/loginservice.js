@@ -63,35 +63,23 @@ const userLogin = async (dossier_no, debitor_no) => {
 };
 const userLogout = async (accessToken) => {
     const { dossier_token } = db;
-    try {
-        console.log("User Login service====", accessToken);
-        console.log("User Login service====", dossier_id);
-        const payload = jwt.verify(accessToken, config.jwtConfig.secret);
-        console.log("User Login service====", payload.sub);
-        console.log("User Login service====", tokenTypes.REFRESH);
 
-        const refreshTokenDoc = await dossier_token.destroy({
-            where: {
-                dossier_id: payload.sub,
-                type: tokenTypes.REFRESH,
-                blacklisted: false,
-            }
-        });
-        if (!refreshTokenDoc) {
-            throw new ApiError(httpStatus.NOT_FOUND, "Token Not found");
+    const payload = jwt.verify(accessToken, config.jwtConfig.secret);
+
+    let login_user_info = payload.sub;
+    
+    const refreshTokenDoc = await dossier_token.destroy({
+        where: {
+            dossier_id: login_user_info[0],
+            type: tokenTypes.REFRESH,
+            blacklisted: false,
         }
-        return refreshTokenDoc;
-    } catch (error) {
-        // throw new ApiError(httpStatus.BAD_REQUEST, error);
-        // const refreshTokenDoc = await dossier_token.destroy({
-        //     where: {
-        //         dossier_id: dossier_id,
-        //         type: tokenTypes.REFRESH,
-        //         blacklisted: false,
-        //     }
-        // });
-        // return refreshTokenDoc;
+    });
+    if (!refreshTokenDoc) {
+        throw new ApiError(httpStatus.NOT_FOUND, "Token Not found");
     }
+    return refreshTokenDoc;
+   
 };
 const isPasswordMatch = async function (email, password) {
     const { users } = db
@@ -113,28 +101,12 @@ const generateAuthTokens = async (dossier_id) => {
         tokenTypes.ACCESS
     );
 
-    const refreshTokenExpires = moment().add(1000, "minutes");
-    const refreshToken = generateToken(
-        dossier_id,
-        refreshTokenExpires,
-        tokenTypes.REFRESH
-    );
-
-    await saveToken(
-        dossier_id,
-        refreshTokenExpires,
-        tokenTypes.REFRESH
-    );
+    await saveToken(dossier_id, accessTokenExpires, tokenTypes.ACCESS)
+  
 
     return {
-        access: {
-            token: accessToken,
-            expires: accessTokenExpires.toDate(),
-        },
-        refresh: {
-            token: refreshToken,
-            expires: refreshTokenExpires.toDate(),
-        },
+        token: accessToken,
+        expires: accessTokenExpires.toDate(),
     };
 };
 const generateRefreshTokens = async (dossier_id) => {

@@ -58,9 +58,7 @@ export class AuthService {
     this.userLoggedIn.next(false);
   }
 
-  changeUsername(username: string) {
-    this.username.next(username);
-  }
+
   login(body: any): Observable<any> {
     return this.http.post<any>(this.loginURL, body, {
       headers: this.headers,
@@ -68,71 +66,14 @@ export class AuthService {
     })
   }
 
-  setUserLoggedIn(userLoggedIn: boolean) {
-    this.userLoggedIn.next(userLoggedIn);
-    console.log("User logged in ", this.userLoggedIn)
-  }
-
-  logout(dossier_id: any): Observable<boolean> {
-    if (typeof window !== 'undefined') {
-      localStorage.removeItem('dossier')
-      this.router.navigateByUrl('')
-      setTimeout(() => {
-        if (typeof window !== 'undefined') {
-          window.location.reload();
-        }
-        this.spinner.hide();
-      }, 1000);
-      setTimeout(() => {
-        this.router.navigateByUrl('')
-      }, 1500);
-    }
-    return this.http.post<any>(this.logoutUrl + "/" + dossier_id, { 'headers': this.headers, withCredentials: true });
-  }
+ 
 
   logOut() {
-    // if (this.clearTimeout) {
-    //   clearTimeout(this.clearTimeout);
-    // }
-    let dossier_id: any;
-    console.log("inside logout")
-    if (typeof window !== 'undefined') {
-      dossier_id = window.localStorage.getItem('dossier');
-    }
-    console.log("===============iiiiiiiiiiiiiii" + dossier_id);
-
-    // return this.http.post<any>(this.logoutUrl + "/", dossier_id, { 'headers': this.headers,withCredentials: true })
     return this.http.post<any>(this.logoutUrl, { 'headers': this.headers, withCredentials: true })
-    // this.http.post<any>(this.logoutURL, null, { withCredentials: true })
-    // localStorage.clear();
-    // this.router.navigate(['']);
-
   }
 
-  getUserLoggedIn(): Observable<boolean> {
-    return this.userLoggedIn.asObservable();
-  }
-  updateProfile(data: any, id: any): Observable<any> {
-    const headers = { 'content-type': 'application/json' }
 
-    return this.http.put<any>(this.updateProfileUrl + "/" + id, data, { 'headers': headers, withCredentials: true });
-  }
 
-  getDossierDetails() {
-    const headers = { 'content-type': 'application/json' }
-
-    return this.http.get<any>(this.getDossierDetailsUrl, { 'headers': headers, withCredentials: true })
-  }
-
-  getPartcularDossierDetails(dossier_no: any) {
-    const headers = { 'content-type': 'application/json' }
-
-    return this.http.get<any>(this.getPartcularDossierDetailsUrl + "/" + dossier_no, { 'headers': headers, withCredentials: true })
-  }
-  getuserdetailURL = environment.apiURL + "user/get-userbyid";
-  getuserdetails(id: any): Observable<any> {
-    return this.http.get<any>(this.getuserdetailURL + "/" + id, { 'headers': this.headers, withCredentials: true });
-  }
   generateRefreshToken(body: any): Observable<any> {
     return this.http.post<any>(this.refreshTokenURL, body, {
       headers: this.headers,
@@ -220,16 +161,16 @@ export class AuthService {
         }
       } else if (result.isDenied) {
         if (typeof window !== 'undefined') {
-          let login_details = JSON.parse(window.localStorage.getItem('response') as any);
+          let login_details = JSON.parse(window?.localStorage.getItem('response') as any);
           console.log("-----------login_details---------", login_details);
 
           this.generateRefreshToken(login_details).subscribe({
             next: (data: any) => {
               console.log("logged in suceessfully");
               if (typeof window !== "undefined") {
-                window.localStorage.setItem("dossier", data.response.dossier_id);
-                window.localStorage.setItem("finalToken", data.response.finalToken);
-                window.localStorage.setItem("response", JSON.stringify(data.response));
+                window?.localStorage.setItem("dossier", data.response.dossier_id);
+                window?.localStorage.setItem("finalToken", data.response.finalToken);
+                window?.localStorage.setItem("response", JSON.stringify(data.response));
                 window.location.reload();
               }
               Swal.fire("Refresh token", "", "info");

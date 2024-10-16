@@ -1,4 +1,4 @@
-import { Component, OnInit, InjectionToken, ElementRef, Injectable, inject, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, InjectionToken, ElementRef, Injectable, inject, Output, EventEmitter, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 // import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ToastrConfig, ToastrModule, ToastrService } from 'ngx-toastr';
@@ -30,17 +30,19 @@ import { Router } from '@angular/router';
 
 export class LoginComponent implements OnInit {
   @Output("isloggedin") isloggedin: EventEmitter<any> = new EventEmitter();
-  public loginForm: any = FormGroup; message: string = '';
-  submitted = false; checklogin = false;
-  open: boolean = true; isSubmitted:boolean = false;
+  public loginForm: any = FormGroup; 
+  message: string = '';
+  open: boolean = true; 
+  isSubmitted:boolean = false;
   authService: AuthService;
+  @ViewChild('closebutton') closebutton: any;
 
-  constructor(private formBuilder: FormBuilder, private authService1: AuthService, 
-    private el: ElementRef, public translate: TranslateService,
+  constructor(private formBuilder: FormBuilder, 
+    public translate: TranslateService,
     public dialog: MatDialog, private spinner: NgxSpinnerService,
   public router:Router) {
     translate.setDefaultLang('en');
-    if (typeof window !== 'undefined' && window.localStorage) {
+    if (typeof window !== 'undefined' && window?.localStorage) {
       translate.use(localStorage.getItem('lang') || 'en');
     }
     this.authService = inject(AuthService)
@@ -58,89 +60,41 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-
-    this.spinner.show();
-    this.message = '';
-    this.checklogin = false;
-    this.submitted = true;
     if (this.loginForm.invalid) {
-      this.spinner.hide();
       return;
     }
-    console.log(this.loginForm.value);
+   
+    this.spinner.show();
+    this.message = '';
+
     let jsonbody = {
       userName: this.loginForm.controls['dossier_id'].value,
       password: this.loginForm.controls['password'].value.replace(/[/]/g, '')
     }
+
     this.authService.login(jsonbody).subscribe({
       next: (data: any) => {
-        this.spinner.show();
-        console.log("logged in suceessfully");
-        this.message = "Welcome to Credipay!";
-        this.authService.setUserLoggedIn(true)
-        this.authService.changeUsername(this.loginForm.controls['dossier_id'].value);
-        if (typeof window !== "undefined") {
-          window.localStorage.setItem("dossier", data.response.dossier_id);
-          window.localStorage.setItem("finalToken", data.response.finalToken);
-          window.localStorage.setItem("response", JSON.stringify(data.response));
-          // window.location.reload();
-        }
+       
+        this.spinner.hide();
+        this.closebutton.nativeElement.click();
+        localStorage.setItem('isloggedin', "true");
+        this.router.navigate(['/dossier-details']);
       },
       error: (err: any) => {
-        console.log("logged in failure", err);
-        this.message = err.error.message
-        this.checklogin = true;
         this.spinner.hide();
-        // this.toastr.error(err)
       },
       complete: () => {
-        this.spinner.show();
-        this.router.navigateByUrl('dossier-details').then(()=>{
-          this.isSubmitted = true;            
-          this.isloggedin.emit();       
-          // this.spinner.hide();
-          setTimeout(function () {
-            window.location.reload();
-          }, 500);
-        })
-        
-        // window.location.reload();
-        console.log("logged in complete");
+        this.spinner.hide();
       },
     });
-    //   // if (this.loginForm.controls['dossier_id'].value === '123456' && this.loginForm.controls['password'].value === '123456') {
-    //   //   // this.toastr.success("Welcome to Creditpay!")
-    //   //   this.message = "Welcome to Creditpay!"
-    //   //   this.authService.setUserLoggedIn(true)
-    //   //   this.authService.changeUsername(this.loginForm.controls['dossier_id'].value);
-
-    //     if (typeof window !== "undefined") {
-    //       window.localStorage.setItem("dossier", this.loginForm.controls['dossier_id'].value);
-    //       window.location.reload();
-    //     }
-    //     console.log("-------------");
-    //     // emit a change event after 2 seconds
-
-    //     setTimeout(() => {
-    //       this.spinner.hide();
-    //     }, 3000)
-
-    //   } else {
-    //     // this.toastr.error("invalid userid & password")
-    //     this.message = 'invalid Dossiers ID & Password'
-    //     this.checklogin = true;
-    //   }
+   
   }
 
   close() {
-    console.log("INSIDE CLOSE CALL");
 
     this.loginForm.reset();
     this.loginForm.controls['dossier_id'].setValue(null)
     this.loginForm.controls['password'].setValue(null)
-    if (typeof window !== "undefined") {
-      window.localStorage.removeItem("dossier"); 
-      window.location.reload();
-    }
+
   }
 }

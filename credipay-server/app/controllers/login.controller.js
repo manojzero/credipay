@@ -12,20 +12,21 @@ const getUserLogin = async (req, res) => {
     const { userName, password } = req.body;
     let result = await userloginservice.userLogin(userName, password);
     if (result) {
-      let tokens = await userloginservice.generateAuthTokens(result.dossier.id);
-      console.log("========", JSON.stringify(tokens));
-
+      let tokens = await userloginservice.generateAuthTokens(result.dossier.id +"~"+result.debiteur.gestructureerdemededeling);
+     
       let response = {
         dossier_id: result.dossier.id,
         debiteur: result.debiteur.gestructureerdemededeling,
-        finalToken: tokens.access.expires
       }
       if (tokens) {
-        res.cookie("CP_SE9894", tokens.access, {
+ 
+        res.cookie(process.env.COOKIE_ID, tokens, {
           httpOnly: true,
-          secure: false, // Set to true in production with HTTPS
-          sameSite: 'lax'
+          secure: process.env.NODE_ENV == "development" ? false : true,
+          sameSite: process.env.NODE_ENV == "development" ? "strict" : "lax",
+          path: "/"
         }).send({ response });
+
       }
     }
   } catch (error) {
@@ -34,33 +35,6 @@ const getUserLogin = async (req, res) => {
     res.status(httpStatus.UNAUTHORIZED).send({ message: error.message })
   }
 
-  // try {
-  // const { dossier_id, password } = req.body
-  // console.log("req body=========", req.body);
-  // let result = await userloginservice.userLogin(req.body.userName, req.body.password);
-  // if (result) {
-  //     let tokens = await userloginservice.generateAuthTokens(result.dossier.id);
-  //     if (tokens) {
-  //         console.log("------token--------", JSON.stringify(tokens));
-  //         res.cookie("CP_SE9894", tokens.access, {
-  //             httpOnly: true,
-  //             // maxAge:90000,
-  //             secure: process.env.NODE_ENV === 'development',
-  //             sameSite: 'strict',
-  //         }).send({ result });
-  //         console.log("result", res);
-  //         // if (result.dossier != null && result.debiteur != null && result != '') {
-  //         //     res.status(httpStatus.OK).send({ result, message: "User Exist" });
-  //         // }
-  //         // else if (result.dossier == null) {
-  //         //     res.status(httpStatus.NOT_FOUND).send({ message: "User Not found" })
-  //         // }
-  //         // else if (result.debiteur == null) {
-  //         //     res.status(httpStatus.NOT_FOUND).send({ message: "Invalid Password" })
-  //         // }
-  //         // res.send(result);
-  //     }
-  // }
 };
 
 
@@ -68,20 +42,16 @@ const getUserLogin = async (req, res) => {
 const logout = async (req, res) => {
   var mes = "Successfully logged out"
   try {
-
-    // let result = await userloginservice.userLogout(req.params.dossier_id);
-    let result = await userloginservice.userLogout(req.cookies.CP_SE9894.token);
-    // res.sendStatus(httpStatus.OK).send(result);
-
+  
+    let result = await userloginservice.userLogout(req.cookies[process.env.COOKIE_ID].token);
+   
     res
-      .clearCookie("CP_SE9894")
-      // .clearCookie("auth-token")
+      .clearCookie(process.env.COOKIE_ID, {path: "/", sameSite: process.env.NODE_ENV == "development" ? "strict" : "lax", secure: process.env.NODE_ENV == "development" ? false : true})
       .status(httpStatus.OK)
       .send({ mes });
   } catch (error) {
     res
-      .clearCookie("CP_SE9894")
-      // .clearCookie("auth-token")
+      .clearCookie(process.env.COOKIE_ID, {path: "/", sameSite: process.env.NODE_ENV == "development" ? "strict" : "lax", secure: process.env.NODE_ENV == "development" ? false : true})
       .status(httpStatus.OK)
       .send({ mes });
   }

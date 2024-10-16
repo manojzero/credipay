@@ -21,11 +21,11 @@ export class DossierDetailsService {
   constructor(private http: HttpClient, private spinner: NgxSpinnerService, private router: Router) {
   }
 
-  getDossierDetails(id: any): Observable<any> {
-    return this.http.get<any>(this.getDossierDetailURL + "/" + id, { 'headers': this.headers, withCredentials: true });
+  getDossierDetails(): Observable<any> {
+    return this.http.get<any>(this.getDossierDetailURL , { 'headers': this.headers, withCredentials: true });
   }
-  getDossierFacturenDetails(id: any): Observable<any> {
-    return this.http.get<any>(this.getDossierFacturenDetailsURL + "/" + id, { 'headers': this.headers, withCredentials: true });
+  getDossierFacturenDetails(): Observable<any> {
+    return this.http.get<any>(this.getDossierFacturenDetailsURL , { 'headers': this.headers, withCredentials: true });
   }
   getDossierPaymentplan(totalamount: any, monthly_amount: any): Observable<any> {
     return this.http.get<any>(this.getDossierpaymentplanUrl + "/" + totalamount + "/" + monthly_amount, { 'headers': this.headers, withCredentials: true });

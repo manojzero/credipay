@@ -107,7 +107,7 @@
             <div class="col-12 modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{'Close'|translate}}</button>
                 <!-- <button type="button" class="btn btn-primary" (click)="makePayment()">{{'Make the payment online'|translate}}</button> -->
-                <a [href]="payment_link" class="payButtonLink" target="_blank">
+                <a [href]="payment_link" class="payButtonLink">
                     <img [src]="paymentbutton_link" alt="PAY" class="payButtonImage">
                 </a>
             </div>
@@ -120,13 +120,23 @@
 <div class="modal fade" id="havequestions" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id=""><b>
-                    {{'Do_you_have_any_questions_from_the_Below'|translate}}</b>
-                </h4>
+            <div class="modal-header custom_modal_header">
+                
+                
+                <a class="navbar-brand" placement="bottom">
+                    <span class="credi"> {{'credi' | translate}}</span>
+                    <span class="solve">{{'Pay' | translate}}</span>
+                </a>
+
+              
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+                <h4>
+                    <b>
+                        {{'Do_you_have_any_questions_from_the_Below'|translate}}
+                    </b>
+                </h4>
                 <div>
                     <label>
                       <input type="radio" name="options" value="disagree" [(ngModel)]="selectedOption" aria-selected="true">
@@ -157,276 +167,3 @@
     </div>
 </div>
 
-
-<div class="modal fade" id="openinvoices" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id=""><b>
-                    Do you disagree with the open invoice(s)?</b>
-                </h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="col-12 modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">{{'NO'|translate}}</button>
-                <button type="button" class="btn btn-success" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#disagreement">{{'YES'|translate}}</button>
-                <!-- <p class="link">{{'YES'|translate}}</p> -->
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="disagreement" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id=""><b>
-                    Did you confirm the disagreement to ‘Client’ (variable: Scarlet, Verisure, XLG, FERM, OLV, …) ?</b>
-                </h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-
-            <div class="col-12 modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#disagreementNo">{{'NO'|translate}}</button>
-                <button type="button" class="btn btn-success" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#disagreementYes">{{'YES'|translate}}</button>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="disagreementNo" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id=""><b>
-                    Please confirm your disagreement to the client by letter or email and and please upload the copy of the letter in this portal.
-                     In the meanwhile your dossier can not be changed and will be continued.</b>
-                </h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="col-12 modal-footer">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">{{'OK'|translate}}</button>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="disagreementYes" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id=""><b>
-                    Please upload a copy of your mail opr letter (jpeg, png, pdf) herewith. 
-                    The letter will be checked. 
-                    If your dispute is acceptable to the client (variable) -  your dossier will be closed. 
-                    If not your dossier will be continued.</b>
-                </h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="col-12 modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">{{'NO'|translate}}</button>
-                <button type="button" class="btn btn-success" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#Clientconfirmed">{{'YES'|translate}}</button>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="ClientconfirmedNo" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id=""><b>
-                    We can only help you further after you have informed the client of this in writing or by mail. 
-                    As long as we do not receive confirmation,
-                    your procedure will continue</b>
-                </h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="col-12 modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#create">{{'NO'|translate}}</button>
-                <button type="button" class="btn btn-success" data-bs-dismiss="modal">{{'YES'|translate}}</button>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="ClientconfirmedYes" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id=""><b>
-                   Kindly upload the photo below</b>
-                </h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <input type="file">
-            </div>
-            <div class="col-12 modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">{{'Cancel'|translate}}</button>
-                <button type="button" class="btn btn-success" data-bs-dismiss="modal">{{'Submit'|translate}}</button>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="Clientconfirmed" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id=""><b>
-                    Do you have this confirmed with the client per email/letter? </b>
-                </h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="col-12 modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#ClientconfirmedNo">{{'NO'|translate}}</button>
-                <button type="button" class="btn btn-success" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#ClientconfirmedYes">{{'YES'|translate}}</button>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="Debtordeceased" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id=""><b>
-                    Do you want to report death?</b>
-                </h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="col-12 modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#DebtordeceasedNo">{{'NO'|translate}}</button>
-                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#DebtordeceasedYes">{{'YES'|translate}}</button>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="DebtordeceasedYes" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id=""><b>
-                   Kindly upload the death certificate below</b>
-                </h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <input type="file">
-            </div>
-            <div class="col-12 modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">{{'Cancel'|translate}}</button>
-                <button type="button" class="btn btn-success" data-bs-dismiss="modal">{{'Submit'|translate}}</button>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="DebtordeceasedNo" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id=""><b>
-                    Please visit your local city council and file for the death certificate</b>
-                </h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-
-            <div class="col-12 modal-footer">
-                <button type="button" class="btn btn-success" data-bs-dismiss="modal">{{'OK'|translate}}</button>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="Credisolv" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id=""><b>
-                    Provide the below details </b>
-                </h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form [formGroup]="credisolvform">
-                    <table>
-                        <tbody>
-                            <tr>
-                                <th>Date of Birth</th>
-                                <td>
-                                    <input type="date" formControlName="dateOfBirth">
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Amount in Euros</th>
-                                <td>
-                                    <input type="number" formControlName="amount" min="0">
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>IBAN (From which account did you pay?)</th>
-                                <td>
-                                    <input type="text" formControlName="ibanFrom">
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>IBAN (To which account did you transfer?)</th>
-                                <td>
-                                    <input type="text" formControlName="ibanTo">
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </form>
-
-            </div>
-            <div class="col-12 modal-footer">
-                <button type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="credisolvAlreadypaid()">{{'Submit'|translate}}</button>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="Client" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id=""><b>
-                    Your payment with the client (variable Ferm, XLG, …) was has not been booked on these open 
-                    invoices in this file. Please contact client (variable: Ferm, OLV, …)
-                     to resolve this further with them. As long as we do not receive confirmation of receipt of payment, the dossiers will continue </b>
-                </h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-
-            <div class="col-12 modal-footer">
-                <button type="button" class="btn btn-success" data-bs-dismiss="modal">{{'OK'|translate}}</button>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="AlreadyPaid" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id=""><b>
-                    Whom did you pay to ?</b>
-                </h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div>
-                    <label>
-                      <input type="radio" name="options" value="options1" [(ngModel)]="selectedOptions" aria-selected="true">
-                         &nbsp; Credisolv 
-                    </label>
-                    <br>
-                    <label>
-                      <input type="radio" name="options" value="options2" [(ngModel)]="selectedOptions">
-                      &nbsp; Client 
-                    </label>
-                    <br>
-                  </div>
-                  
-                  <!-- <p>You selected: {{ selectedOptions }}</p> -->
-                  
-            </div>
-            <div class="col-12 modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{'Close'|translate}}</button> @if (selectedOptions=='options1') {<button type="button" class="btn btn-primary" data-bs-dismiss="modal" data-bs-toggle="modal" id="closeModal"
-                    data-bs-target="#Credisolv">{{'Submit'|translate}}</button>} @else if(selectedOptions == 'options2'){
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" data-bs-toggle="modal" id="closeModal" data-bs-target="#Client">{{'Submit'|translate}}</button> }
-            </div>
-        </div>
-    </div>

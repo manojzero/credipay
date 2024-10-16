@@ -6,13 +6,13 @@ var bodyParser = require('body-parser')
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const passport = require('passport');
+const { jwtStrategy } = require('../app/config/passport.js');
 const app = express();
 // const port = process.env.HOST;
 const config = require("../app/config/config.js");
 const xss = require('xss-clean');
 const compression = require('compression');
-const nocache = require("nocache");
-const jwt = require('jsonwebtoken');
+
 const auth = require('../app/middleware/auth.js')
 const errorHandler=require('../app/utils/error-handler.js');
 const port = config.port;
@@ -62,6 +62,8 @@ app.use(bodyParser.urlencoded({
   parameterLimit: 50000
 }));
 
+
+
 // app.get('/protected', token.authenticateToken, (req, res) => {
 //   res.json({ message: 'Welcome to the protected route!', user: req.user });
 // });
@@ -71,6 +73,11 @@ app.get('/protected', auth, (req, res) => {
 });
 
 app.use('/v1', routes);
+
+app.use(passport.initialize());
+//app.use(passport.session());
+passport.use('jwt', jwtStrategy);
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
