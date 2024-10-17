@@ -41,6 +41,7 @@ var _contactgegevens = require("./contactgegevens");
 var _countrycodes = require("./countrycodes");
 var _countrycodes_2019 = require("./countrycodes_2019");
 var _credipay_paymentplan = require("./credipay_paymentplan");
+var _credipay_transaction_payments = require("./credipay_transaction_payments");
 var _debiteurcategorie = require("./debiteurcategorie");
 var _debiteurs = require("./debiteurs");
 var _debiteurs_copy = require("./debiteurs_copy");
@@ -209,6 +210,7 @@ function initModels(sequelize) {
   var countrycodes = _countrycodes(sequelize, DataTypes);
   var countrycodes_2019 = _countrycodes_2019(sequelize, DataTypes);
   var credipay_paymentplan = _credipay_paymentplan(sequelize, DataTypes);
+  var credipay_transaction_payments = _credipay_transaction_payments(sequelize, DataTypes);
   var debiteurcategorie = _debiteurcategorie(sequelize, DataTypes);
   var debiteurs = _debiteurs(sequelize, DataTypes);
   var debiteurs_copy = _debiteurs_copy(sequelize, DataTypes);
@@ -378,6 +380,7 @@ function initModels(sequelize) {
     countrycodes,
     countrycodes_2019,
     credipay_paymentplan,
+    credipay_transaction_payments,
     debiteurcategorie,
     debiteurs,
     debiteurs_copy,
@@ -502,6 +505,7 @@ function initModels(sequelize) {
     zot_emaillijst,
     zot_emaillijst_before449,
     zot_facturen,
+    sequelize
   };
 }
 module.exports = initModels;

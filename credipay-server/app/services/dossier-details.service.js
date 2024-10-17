@@ -5,6 +5,7 @@ const httpStatus = require("http-status");
 const { Op, where } = require("sequelize");
 const fileprocessor = require("../utils/fileprocessor")
 const config=require('../config/config');
+const debiteurs = require("../models/debiteurs");
 
 const getDossierDetails = async (dossier_id) => {
     try {
@@ -223,9 +224,19 @@ const getDossierPaymentPlanCalculation = async (dossier_id, amount) => {
 
 const eligibleDossierPaymentPlancheck = async (dossier_id) => {
     try{
-        const { credipay_paymentplan } = db;
+        const { credipay_paymentplan, credipay_transaction_payments } = db;
 
         let dossier_data = await getDossierDetails(dossier_id);
+
+        let payment_plan_check = await credipay_transaction_payments.findOne({
+            where : {
+                dossier_id : dossier_id , type : 'Payment Plan' , status :'Success'
+            }
+        })
+
+        if(payment_plan_check){
+            throw new ApiError(httpStatus.BAD_REQUEST, "You have already opted for Payment plan and its under review. Please contact at the below number – 0032 15 690 390 for more details.")
+        }
 
         let result = await credipay_paymentplan.findOne({
             where: {
@@ -245,42 +256,77 @@ const eligibleDossierPaymentPlancheck = async (dossier_id) => {
     }
 }
 
-const updatelogBook = async (createbody, dossier_id) => {
+
+const updatelogBook = async (createbody, type, dossier_id) => {
+    const { logboek, templatestreinen,dossiers,debiteurs,sequelize } = db;
     try {
-        const { logboek, templatestreinen } = db;
+        
+        let filepath = "";
+        let description ="";
+        let debiteur_id = "";
+        let modified_by = "";
+
+        const dossier = await dossiers.findOne({
+            where: {
+                id: dossier_id
+            },
+        });
+
+        const debiteur = await debiteurs.findOne({
+            where: {
+                id : dossier.debiteur  
+            },
+        });
+        
+        if(debiteur.naam != ''){
+            modified_by = debiteur.naam
+        }else{
+            modified_by = debiteur.firmanaam
+        }
+
+        debiteur_id = debiteur.id;
+        
+        if(type == 'file'){
+
+            description = createbody.dateOfBirth + ',' + createbody.amount + ',' + createbody.ibanFrom + ',' + createbody.ibanTo;
+            if (createbody.deathcertificate) {
+                filepath = await fileprocessor.savePublicPDFFile(createbody.deathcertificate, createbody.deathcertificatename)
+                let code = "ALARM_DECEASED";
+                let templatestreinenCode = await templatestreinen.findOne({
+                    where: {
+                        code: code
+                    }
+                })
+                console.log("templatestreinenCode====", templatestreinenCode);
+            }
+            if (createbody.disputeletter) {
+                filepath = await fileprocessor.savePublicPDFFile(createbody.disputeletter, createbody.disputelettername)
+                let code = "ALARM_DISPUTE";
+                let templatestreinenCode = await templatestreinen.findOne({
+                    where: {
+                        code: code
+                    }
+                })
+                console.log("templatestreinenCode====", templatestreinenCode);
+            }
+            if (createbody.disagrementletter) {
+                filepath = await fileprocessor.savePublicPDFFile(createbody.disagrementletter, createbody.disagrementlettername)
+                let code = "ALARM_ALREADYPAID";
+                let templatestreinenCode = await templatestreinen.findOne({
+                    where: {
+                        code: code
+                    }
+                })
+                console.log("templatestreinenCode====", templatestreinenCode);
+                
+            }
+        }else if(type == 'confirm-paymentplan'){
+            description = "Choose a Payment Plan yourself Re-Payment amount "+ createbody.amount +" for "+ createbody.months +" months and then another month at "+ createbody.remaining_amount + " date "+createbody.date;
+        }
+
+        console.log("description=====",description);
         
 
-        let filepath = "";
-        if (createbody.deathcertificate) {
-            filepath = await fileprocessor.savePublicPDFFile(createbody.deathcertificate, createbody.deathcertificatename)
-            let code = "ALARM_DECEASED";
-            let templatestreinenCode = await templatestreinen.findOne({
-                where: {
-                    code: code
-                }
-            })
-            console.log("templatestreinenCode====", templatestreinenCode);
-        }
-        if (createbody.disputeletter) {
-            filepath = await fileprocessor.savePublicPDFFile(createbody.disputeletter, createbody.disputelettername)
-            let code = "ALARM_DISPUTE";
-            let templatestreinenCode = await templatestreinen.findOne({
-                where: {
-                    code: code
-                }
-            })
-            console.log("templatestreinenCode====", templatestreinenCode);
-        }
-        if (createbody.disagrementletter) {
-            filepath = await fileprocessor.savePublicPDFFile(createbody.disagrementletter, createbody.disagrementlettername)
-            let code = "ALARM_ALREADYPAID";
-            let templatestreinenCode = await templatestreinen.findOne({
-                where: {
-                    code: code
-                }
-            })
-            console.log("templatestreinenCode====", templatestreinenCode);
-        }
         console.log("filepath" + JSON.stringify(filepath))
         let date_time = new Date();
         let date = ("0" + date_time.getDate()).slice(-2);
@@ -293,26 +339,29 @@ const updatelogBook = async (createbody, dossier_id) => {
         let createJson = {
             inserted: currenttime,
             modified: currenttime,
-            modifiedby: 'creditportal',
+            modifiedby: modified_by,
             dossier: ',' + dossier_id + ',',
-            omschrijving: ',' + createbody.dateOfBirth + ',' + createbody.amount + ',' + createbody.ibanFrom + ',' + createbody.ibanTo + ',',
-            datum: '0000-00-00',
-            bestand: filepath ? filepath : ' ',
-            verwerkt: ' ',
-            template: ' ',
-            bestand2: ' ',
-            klant: ' ',
-            paginas: ' ',
-            bezig: ' ',
-            teldoor: ' ',
-            smsmsgid: ' ',
-            smsmsgidtxt: ' ',
-            smsresponse: ' ',
-            smsfeedback: ' ',
-            adres: ' ',
-            omschrijvingintern: ' '
+            omschrijving: description,
+            datum: year + "-" + month + "-" + date,
+            omschrijvingintern: '',
+            bestand: filepath ? filepath : '',
+            verwerkt: 1,
+            template: 0,
+            bestand2: '',
+            // verwerkingsdatum:'0000-00-00',
+            verwerkingsdatum: year + "-" + month + "-" + date,
+            debiteur:debiteur_id,
+            klant: dossier.klant,
+            paginas: 0,
+            bezig: 0,
+            teldoor: 0,
+            smsmsgid: 0,
+            smsmsgidtxt: '',
+            smsresponse: '',
+            smsfeedback: '',
+            adres: ''
         }
-        let result = await logboek.create(createJson, {});
+        let result = await logboek.create(createJson);
         return result;
     } catch (error) {
         throw new ApiError(httpStatus.BAD_REQUEST, error);
@@ -320,9 +369,44 @@ const updatelogBook = async (createbody, dossier_id) => {
 
 }
 
+const submitPaymentplan = async (createbody, dossier_id)=>{
+    const { dossiers,credipay_transaction_payments, sequelize } = db;
+    // const t = await sequelize.transaction();
+    try {
+        let dossier_update_action = await dossiers.update({ volgendeactie: 60}, // ALARM_PAYMENTPLAN
+            {
+            where:{
+                id : dossier_id
+            }
+        })
+
+        let date_time = new Date();
+        let date = ("0" + date_time.getDate()).slice(-2);
+        let month = ("0" + (date_time.getMonth() + 1)).slice(-2);
+        let year = date_time.getFullYear();
+
+        let trans_payments_json = {
+            dossier_id : dossier_id,
+            type : "Payment Plan",
+            status : "Success",
+            response : JSON.stringify(createbody),
+            date : year + "-" + month + "-" + date
+        }
+
+        await credipay_transaction_payments.create(trans_payments_json);
+
+        await updatelogBook(createbody, 'confirm-paymentplan', dossier_id);
+
+        return "Payment plan updated Successfully";
+    } catch (error) {
+        console.log("errror=====",error);        
+        throw new ApiError(httpStatus.BAD_REQUEST, error);
+    }
+}
+
 const paymentSuccess = async (data) => {
     try {
-        const { logboek, dossiers } = db;
+        const { logboek, dossiers, credipay_transaction_payments } = db;
 
         let dossier_id = "";
         let debiteur_id = "";
@@ -338,8 +422,7 @@ const paymentSuccess = async (data) => {
                 id: dossier_id
             }
         })
-       
-     
+
         let date_time = new Date();
         let date = ("0" + date_time.getDate()).slice(-2);
         let month = ("0" + (date_time.getMonth() + 1)).slice(-2);
@@ -348,6 +431,18 @@ const paymentSuccess = async (data) => {
         let minutes = date_time.getMinutes();
         let seconds = date_time.getSeconds();
         let currenttime = year + "-" + month + "-" + date + " " + hours + ":" + minutes + ":" + seconds
+
+
+        let trans_payments_json = {
+            dossier_id : dossier_id,
+            type : "Online",
+            status : "Success",
+            response : data,
+            date : year + "-" + month + "-" + date
+        }
+
+        let trans_payments = await credipay_transaction_payments.create( trans_payments_json );
+
         let createJson = {
             inserted: currenttime,
             modified: currenttime,
@@ -369,7 +464,8 @@ const paymentSuccess = async (data) => {
             smsmsgidtxt:'',
             smsresponse: '',
             smsfeedback:'',
-            adres:''
+            adres:'',
+            verwerkingsdatum: year + "-" + month + "-" + date,
         }
         let result = await logboek.create(createJson);
         return result;
@@ -379,6 +475,7 @@ const paymentSuccess = async (data) => {
 }
 
 const paymentError = async (data) => {
+
     try {
         const { logboek, dossiers } = db;
 
@@ -396,8 +493,7 @@ const paymentError = async (data) => {
                 id: dossier_id
             }
         })
-       
-     
+
         let date_time = new Date();
         let date = ("0" + date_time.getDate()).slice(-2);
         let month = ("0" + (date_time.getMonth() + 1)).slice(-2);
@@ -406,6 +502,20 @@ const paymentError = async (data) => {
         let minutes = date_time.getMinutes();
         let seconds = date_time.getSeconds();
         let currenttime = year + "-" + month + "-" + date + " " + hours + ":" + minutes + ":" + seconds
+
+
+        let trans_payments_json = {
+            dossier_id : dossier_id,
+            type : "Online",
+            status : "Error",
+            response : data,
+            date : year + "-" + month + "-" + date
+        }
+
+        let trans_payments = await credipay_transaction_payments.create( trans_payments_json );
+       
+     
+        
         let createJson = {
             inserted: currenttime,
             modified: currenttime,
@@ -427,12 +537,31 @@ const paymentError = async (data) => {
             smsmsgidtxt:'',
             smsresponse: '',
             smsfeedback:'',
-            adres:''
+            adres:'',
+            verwerkingsdatum: year + "-" + month + "-" + date,
         }
-        let result = await logboek.create(createJson, {});
+        let result = await logboek.create(createJson);
         return result;
     } catch (error) {
         throw new ApiError(httpStatus.BAD_REQUEST);
+    }
+}
+
+const getDossierFacturenInvoiceDetails = async (dossier_id) => {
+    const { dossiers, facturen, klanten, betalingen } = db;
+    try {
+        let dossier = await facturen.findAll({
+            where:{
+                dossier : dossier_id
+            },
+            attributes :[
+                ['dossier','dossier'],
+                ['referentie','invoice_number']
+            ]
+        })
+        return dossier
+    } catch (error) {
+        throw new ApiError(httpStatus.BAD_REQUEST, error);
     }
 }
 
@@ -443,6 +572,8 @@ module.exports = {
     getDossierPaymentPlanCalculation,
     eligibleDossierPaymentPlancheck,
     updatelogBook,
+    submitPaymentplan,
     paymentSuccess,
-    paymentError
+    paymentError,
+    getDossierFacturenInvoiceDetails
 }

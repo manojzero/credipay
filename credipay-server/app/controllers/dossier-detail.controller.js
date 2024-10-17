@@ -36,8 +36,17 @@ const eligibleDossierPaymentPlancheck = async (req, res) => {
 };
 const updatelogBook = async (req, res) => {
     try {
-        const result = await dossierDetailService.updatelogBook(req.body,req.params.dossier_id);
+        const result = await dossierDetailService.updatelogBook(req.body,req.params.type,req.user?.dossier_id);
         res.status(httpStatus.OK).send(result);
+    } catch (error) {
+        res.status(httpStatus.BAD_REQUEST).send(error)
+    }
+};
+
+const submitPaymentplan = async (req, res) => {
+    try {
+        const result = await dossierDetailService.submitPaymentplan(req.body,req.user?.dossier_id);
+        res.status(httpStatus.OK).send({message:result});
     } catch (error) {
         res.status(httpStatus.BAD_REQUEST).send(error)
     }
@@ -61,12 +70,23 @@ const paymentError = async (req, res) => {
     }
 };
 
+const getDossierFacturenInvoiceDetails = async (req, res) => {
+    try {
+        const result = await dossierDetailService.getDossierFacturenInvoiceDetails(req.user?.dossier_id);
+        res.status(httpStatus.OK).send(result);
+    } catch (error) {
+        res.status(httpStatus.BAD_REQUEST).send(error.message)
+    }
+};
+
 module.exports = {
     getAllDossierList,
     getDossierFacturenDetails,
     getDossierPaymentPlanCalculation,
     eligibleDossierPaymentPlancheck,
     updatelogBook,
+    submitPaymentplan,
     paymentSuccess,
-    paymentError
+    paymentError,
+    getDossierFacturenInvoiceDetails
 }
