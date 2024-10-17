@@ -10,6 +10,8 @@ router.get('/get-dossier-payment-plan-calculation/:totalamount/:amount', auth, d
 router.get('/eligible-dossier-payment-plan-check/:totalamount', auth, dossierController.eligibleDossierPaymentPlancheck);
 router.post('/update-logbook/:dossier_id', auth, dossierController.updatelogBook);
 
+router.get('/dossier-facturen-invoice-details', auth, dossierController.getDossierFacturenInvoiceDetails);
+
 router.post('/payment-success',  dossierController.paymentSuccess);
 router.post('/payment-error',  dossierController.paymentError);
 
