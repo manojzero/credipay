@@ -131,5 +131,13 @@
     "Debtor_deceased_form_banner": "Bezoek uw plaatselijke gemeentehuis en vraag om een ​​overlijdensakte",
     "Check":"Rekening",
     "Payment_Plan_confirm_message":"Aflossingsbedrag XXXAMOUNTXXX over de maand XXXMONTHXXX en daarna nog een maand op XXXRAMOUNTXXX",
-    "Payment_plan_updated_message":"Betaalplan succesvol ingediend"
+    "Payment_plan_updated_message":"Betaalplan succesvol ingediend",
+    "Select_language": "Selecteer taal",
+    "User Updated Successfully" : "Gebruiker succesvol bijgewerkt",
+    "Email_address_is_required":"E-mailadres is vereist",
+    "Email_address_is_Invalid":"E-mailadres is ongeldig",
+    "Telephone_is_required":"Telefoon is vereist",
+    "invalid_telephone_number":"Ongeldig telefoonnummer",
+    "Mobile_is_required":"Mobiel is vereist",
+    "invalid_moblie_number":"Ongeldig mobiel nummer"
 }

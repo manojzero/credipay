@@ -132,5 +132,14 @@
     "Debtor_deceased_form_banner": "Please visit your local city council and file for the death certificate",
     "Check":"Check",
     "Payment_Plan_confirm_message":"Repayment amount XXXAMOUNTXXX over XXXMONTHXXX month and then anothermonth at XXXRAMOUNTXXX",
-    "Payment_plan_updated_message":"Paymentplan submited successfully"
+    "Payment_plan_updated_message":"Paymentplan submited successfully",
+    "Payment_Plan_confirm_message":"Repayment amount XXXAMOUNTXXX over XXXMONTHXXX month and then anothermonth at XXXRAMOUNTXXX", 
+    "Select_language": "Select Language",
+    "User Updated Successfully" : "User Updated Successfully",
+    "Email_address_is_required":"Email address is required",
+    "Email_address_is_Invalid":"Email address is Invalid",
+    "Telephone_is_required":"Telephone is required",
+    "invalid_telephone_number":"Invalid telephone number",
+    "Mobile_is_required":"Mobile is required",
+    "invalid_moblie_number":"Invalid mobile number"
 }

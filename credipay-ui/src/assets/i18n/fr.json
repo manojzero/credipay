@@ -131,5 +131,14 @@
     "Debtor_deceased_form_banner": "Veuillez vous rendre à votre mairie et déposer une demande de certificat de décès.",
     "Check":"Vérifier",
     "Payment_Plan_confirm_message":"Montant du remboursement XXXAMOUNTXXX sur XXXMONTHXXX mois puis un autre mois à XXXRAMOUNTXXX",
-    "Payment_plan_updated_message":"Plan de paiement soumis avec succès"
+    "Payment_plan_updated_message":"Plan de paiement soumis avec succès",
+    "Payment_Plan_confirm_message":"Montant du remboursement XXXAMOUNTXXX sur XXXMONTHXXX mois puis un autre mois à XXXRAMOUNTXXX" ,
+    "Select_language": "Sélectionner la langue",
+    "User Updated Successfully" : "Mise à jour de l'utilisateur réussie",
+    "Email_address_is_required":"L'adresse e-mail est obligatoire",
+    "Email_address_is_Invalid":"L'adresse e-mail est invalide",
+    "Telephone_is_required":"Le téléphone est obligatoire",
+    "invalid_telephone_number":"Numéro de téléphone invalide",
+    "Mobile_is_required":"Le mobile est requis",
+    "invalid_moblie_number":"Numéro de portable invalide"
 }

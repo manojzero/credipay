@@ -69,7 +69,7 @@
             </ul>
         </div>
         @if (this.global.getloginstatus() == true && getLoginUserName()) {
-            <div class="navbar-user">
+            <div class="navbar-user" role="button">
                 <ul class="navbar-nav dropdown" [class.show]="isDropdownOpen">
                     <li class="dropdown-toggle" (click)="toggleDropdown()" aria-haspopup="true" aria-expanded="false">
                         {{getLoginUserName()}}

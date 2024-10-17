@@ -39,6 +39,10 @@
   background: #f7f7fa;
 }
 
+.navbar-collapse{
+  background-color: #ce0405 !important;
+}
+
 .multi{
   background-color: black !important;
 }

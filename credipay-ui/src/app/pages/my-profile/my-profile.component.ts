@@ -84,6 +84,7 @@ export class MyProfileComponent {
     this.authService.updateProfile(final_form.id, final_form).subscribe({
       next: (value) => {
         this.checkmesage = true;
+        console.log(value.message)
         this.message = value.message;
       }, error: (err) => {
         this.message = err.error.message;
@@ -94,11 +95,7 @@ export class MyProfileComponent {
     });
   }
   getmyprofiledata() {
-    if (typeof window !== 'undefined' && window?.localStorage) {
-      const dossierId = window?.localStorage.getItem("dossier");
-
-      console.log("dossierId " + dossierId)
-      this.authService.getuserdetails(dossierId).subscribe({
+      this.authService.getuserdetails().subscribe({
         next: (data: any) => {
           this.data = data.result
           console.log("data " + data.result);
@@ -112,8 +109,6 @@ export class MyProfileComponent {
         }
 
       })
-    }
-
   }
   setprofileformdata() {
     this.profileForm = this.formBuilder.group({
