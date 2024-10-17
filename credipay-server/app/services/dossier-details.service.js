@@ -229,26 +229,6 @@ const eligibleDossierPaymentPlancheck = async (amount) => {
     return result;
 }
 
-
-const getDossierFacturenInvoiceDetails = async (dossier_id) => {
-    const { dossiers, facturen, klanten, betalingen } = db;
-    try {
-        let dossier = await facturen.findAll({
-            where:{
-                dossier : dossier_id
-            },
-            attributes :[
-                ['dossier','dossier'],
-                ['referentie','invoice_number']
-            ]
-        })
-        return dossier
-    } catch (error) {
-        throw new ApiError(httpStatus.BAD_REQUEST, error);
-    }
-}
-
-
 const updatelogBook = async (createbody, dossier_id) => {
     try {
         const { logboek, templatestreinen } = db;
@@ -446,8 +426,7 @@ module.exports = {
     getDossierFacturenDetails,
     getDossierPaymentPlanCalculation,
     eligibleDossierPaymentPlancheck,
-    getDossierFacturenInvoiceDetails,
     updatelogBook,
     paymentSuccess,
-    paymentError,
+    paymentError
 }

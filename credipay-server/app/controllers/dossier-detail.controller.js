@@ -34,14 +34,6 @@ const eligibleDossierPaymentPlancheck = async (req, res) => {
         res.status(httpStatus.BAD_REQUEST).send(error)
     }
 };
-const getDossierFacturenInvoiceDetails = async (req, res) => {
-    try {
-        const result = await dossierDetailService.getDossierFacturenInvoiceDetails(req.user?.dossier_id);
-        res.status(httpStatus.OK).send(result);
-    } catch (error) {
-        res.status(httpStatus.BAD_REQUEST).send(error.message)
-    }
-};
 const updatelogBook = async (req, res) => {
     try {
         const result = await dossierDetailService.updatelogBook(req.body,req.params.dossier_id);
@@ -74,7 +66,6 @@ module.exports = {
     getDossierFacturenDetails,
     getDossierPaymentPlanCalculation,
     eligibleDossierPaymentPlancheck,
-    getDossierFacturenInvoiceDetails,
     updatelogBook,
     paymentSuccess,
     paymentError
