@@ -12,7 +12,7 @@ const getUserLogin = async (req, res) => {
     const { userName, password } = req.body;
     let result = await userloginservice.userLogin(userName, password);
     if (result) {
-      let tokens = await userloginservice.generateAuthTokens(result.dossier.id +"~"+result.debiteur.gestructureerdemededeling);
+      let tokens = await userloginservice.generateAuthTokens(result.dossier.id +"~"+result.debiteur.gestructureerdemededeling, result.dossier.id);
      
       let response = {
         dossier_id: result.dossier.id,

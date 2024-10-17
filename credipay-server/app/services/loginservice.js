@@ -93,10 +93,10 @@ const isPasswordMatch = async function (email, password) {
     return bcrypt.compare(password, user.password)
 }
 
-const generateAuthTokens = async (dossier_id) => {
+const generateAuthTokens = async (data, dossier_id) => {
     const accessTokenExpires = moment.utc(moment().add(1000, "minutes"));
     const accessToken = generateToken(
-        dossier_id,
+        data,
         accessTokenExpires,
         tokenTypes.ACCESS
     );
