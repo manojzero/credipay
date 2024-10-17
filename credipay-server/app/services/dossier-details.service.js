@@ -321,7 +321,7 @@ const updatelogBook = async (createbody, type, dossier_id) => {
                 
             }
         }else if(type == 'confirm-paymentplan'){
-            description = "Choose a Payment Plan yourself Re-Payment amount "+ createbody.amount +" for "+ createbody.months +" months and then another month at "+ createbody.remaining_amount + " date "+createbody.date;
+            description = "Choose a Payment Plan yourself Re-Payment amount "+ createbody.monthly_amount +" for "+ createbody.totalmonths +" months and then another month at "+ createbody.remainingamount + " date "+createbody.paymentDate;
         }
 
         console.log("description=====",description);
