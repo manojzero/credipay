@@ -1,0 +1,35 @@
+
+.card-header{
+    background-color: black;
+}
+
+.card {
+    width: 60%;
+}
+
+@media only screen and (max-width: 750px) {
+    .card {
+      width: 100%;
+    }
+}
+
+.form-control {
+    color: black !important;
+}
+
+.p_final_message{
+    color: #ffffff !important;
+    font-size: 15px;
+    line-height: 45px;
+}
+
+.card_success_message_view{
+    background-color: black !important;
+}
+
+.lbl_view{
+    font-weight: bold;
+    padding: 10px;
+    border: 1px solid;
+    border-radius: 10px;
+}

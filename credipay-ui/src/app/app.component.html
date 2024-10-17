@@ -2,7 +2,12 @@
     <p style="color: white"> {{'Loading...' | translate}} </p>
 </ngx-spinner>
 <!-- <ngx-spinner type="square-jelly-box"></ngx-spinner> -->
-
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="large" color="#fff" type="ball-atom" [fullScreen]="true">
+    <p style="color: white"> Loading... </p>
+</ngx-spinner>
 
 <app-header></app-header>
-<!--  -->
+<br> <br> <br> <br> <br>
+<router-outlet></router-outlet>
+
+<app-footer></app-footer>

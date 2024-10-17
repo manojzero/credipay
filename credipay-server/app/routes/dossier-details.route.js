@@ -6,8 +6,8 @@ const auth = require('../middleware/auth')
 
 router.get('/dossier-details', auth, dossierController.getAllDossierList);
 router.get('/dossier-facturen-details', auth, dossierController.getDossierFacturenDetails);
-router.get('/get-dossier-payment-plan-calculation/:totalamount/:amount', auth, dossierController.getDossierPaymentPlanCalculation);
-router.get('/eligible-dossier-payment-plan-check/:totalamount', auth, dossierController.eligibleDossierPaymentPlancheck);
+router.get('/get-dossier-payment-plan-calculation/:amount', auth, dossierController.getDossierPaymentPlanCalculation);
+router.get('/eligible-dossier-payment-plan-check', auth, dossierController.eligibleDossierPaymentPlancheck);
 router.post('/update-logbook/:dossier_id', auth, dossierController.updatelogBook);
 
 router.post('/payment-success',  dossierController.paymentSuccess);

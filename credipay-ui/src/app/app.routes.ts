@@ -4,12 +4,14 @@ import { MyProfileComponent } from './pages/my-profile/my-profile.component';
 import { DossierDetailsComponent } from './pages/dossier-details/dossier-details.component';
 import { DossiersComponent } from './pages/dossier-details/components/dossiers/dossiers.component';
 import { LoginComponent } from './pages/login/login.component';
-import { DossierPaymentplanComponent } from './pages/dossier-details/components/dossier-paymentplan/dossier-paymentplan.component';
+
 import { DossiersQuestionComponent } from './pages/dossier-details/components/dossiers-question/dossiers-question.component';
 import { PaymentSuccessComponent } from './pages/payment-success/payment-success.component';
 import { PaymentErrorComponent } from './pages/payment-error/payment-error.component';
 import { PaymentCancelComponent } from './pages/payment-cancel/payment-cancel.component';
 import { AuthGuard } from './service/auth.guard';
+import { DossierPaymentPlanComponent } from './pages/dossier-payment-plan/dossier-payment-plan.component';
+import { DossierPaymentplanComponent1 } from './pages/dossier-details/components/dossier-paymentplan/dossier-paymentplan.component';
 
 export const routes: Routes = [
     {
@@ -34,18 +36,18 @@ export const routes: Routes = [
     },
     {
         path: 'dossier-details/paymentplan/:dossier_id/:amount',  canActivate: [AuthGuard],
-        component: DossierPaymentplanComponent,
+        component: DossierPaymentplanComponent1,
         data: { title: 'dossiers-paymentplan' }
     },
-    // {
-    //     path: 'login',
-    //     component: LoginComponent,
-    //     data: { title: 'Login page' }
-    // },
     {
         path: 'dossiers-question/:options',  canActivate: [AuthGuard],
         component: DossiersQuestionComponent,
         data: { title: 'dossiers-question' }
+    },
+    {
+        path: 'payment-plan',  canActivate: [AuthGuard],
+        component: DossierPaymentPlanComponent,
+        data: { title: 'payment plans' }
     },
     {
         path: 'payment-success',  canActivate: [AuthGuard],

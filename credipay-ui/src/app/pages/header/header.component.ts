@@ -36,7 +36,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
   standalone: true,
   imports: [MatButtonModule, MatDialogModule, MatToolbarModule, FormsModule, CommonModule, ReactiveFormsModule, LoginComponent, PagemoduleModule,
     MatButtonToggleModule, MatCardModule, MatMenuModule, MatFormFieldModule, MatInputModule, MatDialogActions, MatDialogClose, RouterModule,
-    MatDialogTitle, MatDialogContent, MatMenuModule, MatIconModule, RouterModule, HomeComponent, FooterComponent, TooltipModule,
+    MatDialogTitle, MatDialogContent, MatMenuModule, MatIconModule, RouterModule, HomeComponent, TooltipModule,
     DossierDetailsComponent, NgxSpinnerModule, TranslateModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',

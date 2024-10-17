@@ -85,7 +85,7 @@
     "Success": "Success",
     "Error": "Error",
     "Cancel": "Cancel",
-    "Success Payment Message": "Payment is successful and it will be reflected in your dossier file! transaction id -",
+    "Success Payment Message": "Payment is successful and it will be reflected in your dossier with 24 horse file! transaction id -",
     "Cancel Payment Message": "You have cancelled your payment successfully! transaction id -",
     "Error Payment Message": "Your Payment is not successful and please contact the support xxxxx for more details. transaction id -",
     "home_content_1": "Amicable and legal collection under one roof",
@@ -128,5 +128,7 @@
     "Alreadypaid_form_banner": "Your payment with the {{client_name}} was has not been booked on these open invoices in this file. Please contact {{client_name}} to resolve this further with them. As long as we do not receive confirmation of receipt of payment, the dossiers will continue",
     "Do_you_want_to_report_death": "Do you want to report death ?",
     "Kindly_upload_the_death_certificate_below": "Kindly upload the death certificate below",
-    "Debtor_deceased_form_banner": "Please visit your local city council and file for the death certificate"
+    "Debtor_deceased_form_banner": "Please visit your local city council and file for the death certificate",
+    "Check":"Check",
+    "Payment_Plan_confirm_message":"Repayment amount XXXAMOUNTXXX over XXXMONTHXXX month and then anothermonth at XXXRAMOUNTXXX" 
 }

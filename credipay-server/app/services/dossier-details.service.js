@@ -25,7 +25,7 @@ const getDossierDetails = async (dossier_id) => {
                 attributes: ['id', 'firmanaam']
             });
         }
-        let final_result = [{
+        let final_result = {
             'id': result?.id,
             'hoofdsom': "€ " + result?.hoofdsom ,
             'intrest': "€ " + result?.intrest ,
@@ -34,7 +34,8 @@ const getDossierDetails = async (dossier_id) => {
             'openstaandbedrag': "€ "+ result?.openstaandbedrag ,
             'klant': result1?.id,
             'firmanaam': result1?.firmanaam,
-        }];
+            'total_pay': result?.openstaandbedrag, 
+        };
         return final_result;
     } catch (error) {
         throw new ApiError(httpStatus.BAD_REQUEST, error);
@@ -166,11 +167,16 @@ const getDossierFacturenDetails = async (dossier_id) => {
 }
 
 
-const getDossierPaymentPlanCalculation = async (total_amount, amount) => {
+const getDossierPaymentPlanCalculation = async (dossier_id, amount) => {
 
-    console.log("total_amount", typeof (total_amount));
-    console.log("amount", typeof (amount));
+   
     const { credipay_paymentplan } = db;
+
+   
+    
+    let dossier_data = await getDossierDetails(dossier_id);
+
+    let total_amount = dossier_data?.total_pay;
 
     let result = await credipay_paymentplan.findOne({
         where: {
@@ -215,18 +221,28 @@ const getDossierPaymentPlanCalculation = async (total_amount, amount) => {
 
 }
 
-const eligibleDossierPaymentPlancheck = async (amount) => {
-    const { credipay_paymentplan } = db;
-    let result = await credipay_paymentplan.findOne({
-        where: {
-            from_price: { [Op.lte]: amount },
-            to_price: { [Op.gte]: amount },
+const eligibleDossierPaymentPlancheck = async (dossier_id) => {
+    try{
+        const { credipay_paymentplan } = db;
+
+        let dossier_data = await getDossierDetails(dossier_id);
+
+        let result = await credipay_paymentplan.findOne({
+            where: {
+                from_price: { [Op.lte]: dossier_data?.total_pay },
+                to_price: { [Op.gte]: dossier_data?.total_pay },
+            }
+        });
+
+        if (!result) {
+            throw new ApiError(httpStatus.BAD_REQUEST, "Your amount is high to provide the payment plan, please contact at the below number – 0032 15 690 390")
         }
-    })
-    if (!result) {
-        throw new ApiError(httpStatus.BAD_REQUEST, "Your amount is high to provide the payment plan, please contact at the below number – 0032 15 690 390")
+
+        return result;
+    }catch(error){
+        console.log("error===========>", error);
+        throw new ApiError(httpStatus.BAD_REQUEST, error.message);
     }
-    return result;
 }
 
 const updatelogBook = async (createbody, dossier_id) => {

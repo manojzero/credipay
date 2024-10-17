@@ -84,7 +84,7 @@
     "Success": "Succès",
     "Error": "Erreur",
     "Cancel": "Annuler",
-    "Success Payment Message": "Le paiement est réussi et cela sera reflété dans votre dossier ! identifiant de transaction -",
+    "Success Payment Message": "Le paiement est réussi et cela sera reflété dans votre dossier avec 24 chevaux ! identifiant de transaction -",
     "Cancel Payment Message": "Vous avez annulé votre paiement avec succès !  ID de transition -",
     "Error Payment Message": "Votre paiement n'a pas abouti et veuillez contacter le support xxxxx pour plus de détails.  ID de transition -",
     "home_content_1": "Recouvrement amiable et légal sous un même toit",
@@ -127,5 +127,7 @@
     "Alreadypaid_form_banner": "Votre paiement avec {{client_name}} n'a pas été comptabilisé sur ces factures ouvertes dans ce fichier. Veuillez contacter {{client_name}} pour résoudre ce problème avec eux. Tant que nous ne recevons pas de confirmation de réception du paiement, les dossiers continueront",
     "Do_you_want_to_report_death": "Voulez-vous signaler un décès ?",
     "Kindly_upload_the_death_certificate_below": "Veuillez télécharger le certificat de décès ci-dessous",
-    "Debtor_deceased_form_banner": "Veuillez vous rendre à votre mairie et déposer une demande de certificat de décès."
+    "Debtor_deceased_form_banner": "Veuillez vous rendre à votre mairie et déposer une demande de certificat de décès.",
+    "Check":"Vérifier",
+    "Payment_Plan_confirm_message":"Montant du remboursement XXXAMOUNTXXX sur XXXMONTHXXX mois puis un autre mois à XXXRAMOUNTXXX" 
 }

@@ -134,18 +134,17 @@ export class DossiersComponent implements OnInit {
   }
 
   paymentPlan() {
-    try {
+      this.spinner.show();
       this.errmessage = ''
-      let proceed = false;
+
       
-      let outstand = Number(this.Outstanding_Balance.replace("€", ''))
-      console.log("this.Outstanding_Balance", Number(outstand))
-      this.dossierService.getDossierPaymentplancheck(Number(outstand)).subscribe({
+      this.dossierService.getDossierPaymentplancheck().subscribe({
         next: (data: any) => {
-          this.spinner.show();
-          this.router.navigateByUrl('dossier-details/paymentplan/' + this.dossierDetails[0].Dossier + '/' + Number(this.Outstanding_Balance.replace("€", '')))
+          this.spinner.hide();
+          this.router.navigateByUrl('payment-plan');
         },
         error: (err: any) => {
+          this.spinner.hide();
           this.errmessage = err.error.response;
           Swal.fire({
             title: "Warning",
@@ -154,17 +153,16 @@ export class DossiersComponent implements OnInit {
             confirmButtonText: "OK",
             width: 430,
           })
-          console.log("poietr", err.error.response)
+        
         },
         complete: () => {
-          this.callSpinner();
+          this.spinner.hide();
         },
 
       })
-    } catch (error) {
-      console.log("=========" + error);
-    }
+
   }
+
   initform() {
     this.credisolvform = this.formBuilder.group({
       id: [0, Validators.required],

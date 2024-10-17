@@ -84,7 +84,7 @@
     "Success": "Succes",
     "Error": "Fout",
     "Cancel": "Annuleren",
-    "Success Payment Message": "De betaling is gelukt en wordt weergegeven in uw dossierbestand! transactie-ID -",
+    "Success Payment Message": "De betaling is gelukt en wordt weergegeven in uw dossier met 24 paardenbestand! transactie-ID -",
     "Cancel Payment Message": "U heeft uw betaling succesvol geannuleerd! transactie-ID -",
     "Error Payment Message": "Uw betaling is niet gelukt. Neem contact op met de ondersteuning xxxxx voor meer informatie. transactie-ID -",
     "home_content_1": "Minnelijke en juridische incasso onder één dak",
@@ -127,5 +127,7 @@
     "Alreadypaid_form_banner": "Uw betaling met de {{client_name}} is niet geboekt op deze openstaande facturen in dit bestand. Neem contact op met {{client_name}} om dit verder met hen op te lossen. Zolang wij geen bevestiging van ontvangst van betaling ontvangen, zullen de dossiers doorgaan",
     "Do_you_want_to_report_death": "Wilt u een overlijden melden ?",
     "Kindly_upload_the_death_certificate_below": "Upload hieronder de overlijdensakte",
-    "Debtor_deceased_form_banner": "Bezoek uw plaatselijke gemeentehuis en vraag om een ​​overlijdensakte"
+    "Debtor_deceased_form_banner": "Bezoek uw plaatselijke gemeentehuis en vraag om een ​​overlijdensakte",
+    "Check":"Rekening",
+    "Payment_Plan_confirm_message":"Aflossingsbedrag XXXAMOUNTXXX over de maand XXXMONTHXXX en daarna nog een maand op XXXRAMOUNTXXX" 
 }

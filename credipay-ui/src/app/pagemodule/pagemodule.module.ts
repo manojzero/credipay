@@ -16,6 +16,7 @@ import { PopoverModule } from "ngx-bootstrap/popover";
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ProfileService } from '../service/profile.service';
 import { DossierDetailsService } from '../service/dossier-details.service';
+
 // import { BrowserModule } from '@angular/platform-browser';
 
 

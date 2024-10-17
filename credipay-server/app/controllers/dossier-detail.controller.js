@@ -4,7 +4,7 @@ const httpStatus = require('http-status');
 const getAllDossierList = async (req, res) => {
     try {
         const result = await dossierDetailService.getDossierDetails(req.user?.dossier_id);
-        res.status(httpStatus.OK).send(result);
+        res.status(httpStatus.OK).send([result]);
     } catch (error) {
         res.status(httpStatus.BAD_REQUEST).send(error.message)
     }
@@ -20,7 +20,7 @@ const getDossierFacturenDetails = async (req, res) => {
 const getDossierPaymentPlanCalculation = async (req, res) => {
     try {
         console.log('returm')
-        const result = await dossierDetailService.getDossierPaymentPlanCalculation(req.params.totalamount, req.params.amount);
+        const result = await dossierDetailService.getDossierPaymentPlanCalculation(req.user?.dossier_id, req.params.amount);
         res.status(httpStatus.OK).send(result);
     } catch (error) {
         res.status(httpStatus.BAD_REQUEST).send(error)
@@ -28,7 +28,7 @@ const getDossierPaymentPlanCalculation = async (req, res) => {
 };
 const eligibleDossierPaymentPlancheck = async (req, res) => {
     try {
-        const result = await dossierDetailService.eligibleDossierPaymentPlancheck(req.params.totalamount);
+        const result = await dossierDetailService.eligibleDossierPaymentPlancheck(req.user?.dossier_id);
         res.status(httpStatus.OK).send(result);
     } catch (error) {
         res.status(httpStatus.BAD_REQUEST).send(error)

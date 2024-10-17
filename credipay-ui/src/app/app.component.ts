@@ -20,6 +20,7 @@ import { BsModalRef, BsModalService, ModalDirective, ModalModule } from 'ngx-boo
 import { AuthService } from './service/auth.service';
 import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { FooterComponent } from './pages/footer/footer.component';
 
 
 
@@ -30,7 +31,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
     MatButtonModule, MatDialogModule, MatToolbarModule, MatMenuModule, RouterModule,
     MatButtonToggleModule, MatCardModule, MatMenuModule, MatFormFieldModule, MatInputModule,
     MatDialogActions, MatDialogClose, DossierDetailsComponent, NgxSpinnerModule,
-    MatDialogTitle, MatDialogContent, PagemoduleModule, HttpClientModule, TranslateModule
+    MatDialogTitle, MatDialogContent, PagemoduleModule, HttpClientModule, TranslateModule, FooterComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',

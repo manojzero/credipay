@@ -18,7 +18,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
   styleUrl: './dossier-paymentplan.component.css',
   providers: [HttpClient, TranslateService, FormBuilder, AlertConfig]
 })
-export class DossierPaymentplanComponent {
+export class DossierPaymentplanComponent1 {
 
 
   dossierDetails: any;
@@ -79,7 +79,7 @@ export class DossierPaymentplanComponent {
     if (this.paymentForm.invalid) {
       return
     }
-    this.DossierDetailsService.getDossierPaymentplan(this.amount, this.paymentForm.value.monthly_amount).subscribe({
+    this.DossierDetailsService.getDossierPaymentplan(this.paymentForm.value.monthly_amount).subscribe({
       next: (data: any) => {
         this.data = data
         const text = "-months";
