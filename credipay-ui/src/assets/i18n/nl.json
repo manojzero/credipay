@@ -100,6 +100,7 @@
     "Disagree_Dispute": "Oneens/Betwist",
     "Already_paid": "Al betaald",
     "Debtor_deceased": "Schuldenaar overleden",
+    "Copy_Invoice": "Kopieer factuur(en)",
     "Choose_your_own_payment_plan": "Kies uw eigen betalingsplan ",
     "How_much_would_you_like_to_pay_per_month_in_euros": "Hoeveel wilt u per maand betalen in euro's ?",
     "Total_Months": "Totaal aantal maanden",
@@ -129,5 +130,6 @@
     "Kindly_upload_the_death_certificate_below": "Upload hieronder de overlijdensakte",
     "Debtor_deceased_form_banner": "Bezoek uw plaatselijke gemeentehuis en vraag om een ​​overlijdensakte",
     "Check":"Rekening",
-    "Payment_Plan_confirm_message":"Aflossingsbedrag XXXAMOUNTXXX over de maand XXXMONTHXXX en daarna nog een maand op XXXRAMOUNTXXX" 
+    "Payment_Plan_confirm_message":"Aflossingsbedrag XXXAMOUNTXXX over de maand XXXMONTHXXX en daarna nog een maand op XXXRAMOUNTXXX",
+    "Payment_plan_updated_message":"Betaalplan succesvol ingediend"
 }

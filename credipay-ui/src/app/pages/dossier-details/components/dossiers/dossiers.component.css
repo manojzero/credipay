@@ -44,9 +44,7 @@ table.my-table>tbody>tr>td {
 
 
 
-.wrapper {
-    margin-top: 100px;
-}
+
 
 .link {
     color: blue;
@@ -65,7 +63,7 @@ table.my-table>tbody>tr>td {
 
 .card {
     margin-left: 3%;
-    margin-top: 6%;
+
     width: 95%;
     background-color: #FFF;
     color: black !important;

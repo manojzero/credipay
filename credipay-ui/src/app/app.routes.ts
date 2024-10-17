@@ -30,15 +30,15 @@ export const routes: Routes = [
         data: { title: 'dossier-details' }
     },
     {
-        path: 'dossier-details/facturen/:dossier_id',  canActivate: [AuthGuard],
+        path: 'dossier-details/facturen',  canActivate: [AuthGuard],
         component: DossiersComponent,
         data: { title: 'dossiers' }
     },
-    {
-        path: 'dossier-details/paymentplan/:dossier_id/:amount',  canActivate: [AuthGuard],
-        component: DossierPaymentplanComponent1,
-        data: { title: 'dossiers-paymentplan' }
-    },
+    // {
+    //     path: 'dossier-details/paymentplan/:dossier_id/:amount',  canActivate: [AuthGuard],
+    //     component: DossierPaymentplanComponent1,
+    //     data: { title: 'dossiers-paymentplan' }
+    // },
     {
         path: 'dossiers-question/:options',  canActivate: [AuthGuard],
         component: DossiersQuestionComponent,

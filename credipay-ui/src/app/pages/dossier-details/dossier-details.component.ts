@@ -50,12 +50,12 @@ export class DossierDetailsComponent implements OnInit {
     
   }
 
-  nav(path: string) {
+  nav() {
     try {
       console.log("-------------", this.dossierData[0].firmanaam);
       this.spinner.show();
       // this.router.navigate([path])
-      this.router.navigate(['/dossier-details/facturen/' + path], {
+      this.router.navigate(['/dossier-details/facturen'], {
         state: {
           client_name: this.dossierData[0].firmanaam
         }

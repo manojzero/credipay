@@ -100,6 +100,7 @@
     "Disagree_Dispute": "Désaccord/Contestation",
     "Already_paid": "Déjà payé",
     "Debtor_deceased": "Débiteur décédé",
+    "Copy_Invoice": "Copier les factures",
     "Choose_your_own_payment_plan": "Choisissez votre propre plan de paiement ",
     "How_much_would_you_like_to_pay_per_month_in_euros": "Combien souhaitez-vous payer par mois en euros ?",
     "Total_Months": "Nombre total de mois",
@@ -129,5 +130,6 @@
     "Kindly_upload_the_death_certificate_below": "Veuillez télécharger le certificat de décès ci-dessous",
     "Debtor_deceased_form_banner": "Veuillez vous rendre à votre mairie et déposer une demande de certificat de décès.",
     "Check":"Vérifier",
-    "Payment_Plan_confirm_message":"Montant du remboursement XXXAMOUNTXXX sur XXXMONTHXXX mois puis un autre mois à XXXRAMOUNTXXX" 
+    "Payment_Plan_confirm_message":"Montant du remboursement XXXAMOUNTXXX sur XXXMONTHXXX mois puis un autre mois à XXXRAMOUNTXXX",
+    "Payment_plan_updated_message":"Plan de paiement soumis avec succès"
 }

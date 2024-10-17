@@ -22,7 +22,7 @@
                     <tr>
                         <!-- <td [routerLink]='["/dossiers",details.Referentie]'>{{details.Referentie}}</td>   href="/dossiers/{{details.Referentie}}"-->
                         <td>
-                            <a (click)="nav(details.id)" [routerLink]="['/dossier-details/facturen/',details?.id]" class="link">{{details?.id}}</a>
+                            <a (click)="nav()" [routerLink]="['/dossier-details/facturen']" class="link">{{details?.id}}</a>
                         </td>
                         <td>{{details?.firmanaam}}</td>
                         <td>{{details?.openstaandbedrag}}</td>

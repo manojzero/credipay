@@ -101,6 +101,7 @@
     "Disagree_Dispute": "Disagree/Dispute",
     "Already_paid": "Already Paid",
     "Debtor_deceased": "Debtor deceased",
+    "Copy_Invoice": "Copy Invoice(s)",
     "Choose_your_own_payment_plan": "Choose your own payment plan ",
     "How_much_would_you_like_to_pay_per_month_in_euros": "How much would you like to pay per month in euros ?",
     "Total_Months": "Total Months",
@@ -130,5 +131,6 @@
     "Kindly_upload_the_death_certificate_below": "Kindly upload the death certificate below",
     "Debtor_deceased_form_banner": "Please visit your local city council and file for the death certificate",
     "Check":"Check",
-    "Payment_Plan_confirm_message":"Repayment amount XXXAMOUNTXXX over XXXMONTHXXX month and then anothermonth at XXXRAMOUNTXXX" 
+    "Payment_Plan_confirm_message":"Repayment amount XXXAMOUNTXXX over XXXMONTHXXX month and then anothermonth at XXXRAMOUNTXXX",
+    "Payment_plan_updated_message":"Paymentplan submited successfully"
 }

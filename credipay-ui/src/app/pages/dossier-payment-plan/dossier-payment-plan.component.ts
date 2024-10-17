@@ -9,7 +9,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { PagemoduleModule } from '../../pagemodule/pagemodule.module';
 import { DossierDetailsService } from '../../service/dossier-details.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser'
-
+import {Location} from '@angular/common';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-dossier-payment-plan',
   standalone: true,
@@ -28,7 +29,7 @@ export class DossierPaymentPlanComponent {
   final_confirm_message: any = "";
   constructor(public translate: TranslateService, private formBuilder: FormBuilder, private route: ActivatedRoute,
     public spinner: NgxSpinnerService, private dossierServ: DossierDetailsService, private sanitized: DomSanitizer,
-    private router: Router
+    private router: Router, private location: Location
   ) {
 
   }
@@ -117,8 +118,16 @@ export class DossierPaymentPlanComponent {
     this.spinner.show();
     this.dossierServ.submitPaymentPlan(this.paymentForm.value).subscribe({
       next: (value: any) => {
-        this.router.navigate(['/dossier-details']);
         this.spinner.hide();
+        Swal.fire({
+        
+          text: this.translate.instant('Payment_plan_updated_message'),
+          icon: "success"
+        }).then(()=>{
+          this.router.navigate(['/dossier-details']);
+        })
+       
+        
       }, error: (err) => {
         this.errmessage = err.error.response;
         this.spinner.hide();
@@ -126,5 +135,9 @@ export class DossierPaymentPlanComponent {
         this.spinner.hide();
       },
     });
+  }
+
+  back() {
+    this.location.back();
   }
 }

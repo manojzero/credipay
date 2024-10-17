@@ -11,7 +11,7 @@ import Swal from 'sweetalert2';
 import { CommonModule } from '@angular/common';
 import { PagemoduleModule } from '../../../../pagemodule/pagemodule.module';
 import {Title} from "@angular/platform-browser";
-
+import {Location} from '@angular/common';
 @Component({
   selector: 'app-dossiers',
   standalone: true,
@@ -40,7 +40,7 @@ export class DossiersComponent implements OnInit {
   constructor(private authService: AuthService, private spinner: NgxSpinnerService,
     private router: Router, private activatedroute: ActivatedRoute, private elementRef: ElementRef,
     private renderer: Renderer2, public translate: TranslateService, private dossierService: DossierDetailsService, private formBuilder: FormBuilder,
-    private titleService:Title) {
+    private titleService:Title, private location: Location) {
    
    
    
@@ -189,5 +189,9 @@ export class DossiersComponent implements OnInit {
     } catch (error) {
       console.log("=========" + error);
     }
+  }
+
+  back() {
+    this.location.back();
   }
 }

@@ -1,4 +1,7 @@
 <div class="wrapper">
+    <div class="btn_back" (click)="back()">
+        <i class="fa fa-arrow-left" aria-hidden="true"></i>  Back
+    </div>
     <div class="card">
         <div class="card-body"><br>
             <div style="overflow-x:auto;">
@@ -100,9 +103,7 @@
                 </p>
                 <p style="font-size: 15px;font-weight: 600; text-align: center;">{{'Outstanding balance'|translate}} : {{Outstanding_Balance}}
                 </p>
-                <!-- <p style="color: blue;font-weight: 600;">I want to pay online</p>  
-                   <p>To make a payment online, first enter the desired amount and then confirm.</p>  
-                   <p>Amount to be paid : {{Outstanding_Balance}}</p>   -->
+               
             </div>
             <div class="col-12 modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{'Close'|translate}}</button>
@@ -138,6 +139,7 @@
                     </b>
                 </h4>
                 <div>
+                    
                     <label>
                       <input type="radio" name="options" value="disagree" [(ngModel)]="selectedOption" aria-selected="true">
                          &nbsp; {{'Disagree_Dispute'|translate}}
@@ -151,6 +153,12 @@
                     <label>
                       <input type="radio" name="options" value="deceased" [(ngModel)]="selectedOption">
                       &nbsp; {{'Debtor_deceased'|translate}} 
+                    </label>
+
+                    <br>
+                    <label>
+                      <input type="radio" name="options" value="copyinvoice" [(ngModel)]="selectedOption">
+                      &nbsp; {{'Copy_Invoice'|translate}} 
                     </label>
                   </div>
                   
