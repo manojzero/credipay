@@ -34,7 +34,7 @@
                     <div class="col-md-10">
                         <h4 class="mb-3">{{ 'Please_upload_the_copy_of_the_letter' | translate}}</h4>
                         <div class="custom-control custom-radio">
-                            <input type="file" name="disputeletter"  formControlName="file" (change)="uploadfiles($event)" required>&nbsp;
+                            <input type="file" name="disputeletter" accept="application/pdf,image/*" formControlName="file" (change)="uploadfiles($event)" required>&nbsp;
                         </div>
                     </div>
                 </div>
