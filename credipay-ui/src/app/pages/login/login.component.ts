@@ -82,6 +82,7 @@ export class LoginComponent implements OnInit {
       },
       error: (err: any) => {
         this.spinner.hide();
+        this.message = err.error.message
       },
       complete: () => {
         this.spinner.hide();

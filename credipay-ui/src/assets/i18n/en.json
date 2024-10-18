@@ -143,5 +143,9 @@
     "Mobile_is_required":"Mobile is required",
     "invalid_moblie_number":"Invalid mobile number",
     "Ok":"Ok",
-    "Invoice_list":"Invoice List"
+    "Invoice_list":"Invoice List",
+    "Back":"Back",
+    "min_value":"Amount entered cannot be assigned with the payment plan, the minimum amount should be € {{value}}",
+    "Amount entered cannot be more than total amount":"Amount entered cannot be more than € {{value}}",
+    "Your amount is high to provide the payment plan, please contact at the below number – 0032 15 690 390": "Your amount is high to provide the payment plan, please contact at the below number – 0032 15 690 390"
 }

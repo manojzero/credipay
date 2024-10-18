@@ -1,6 +1,6 @@
 <div class="wrapper">
 <div class="btn_back" (click)="back()">
-    <i class="fa fa-arrow-left" aria-hidden="true"></i>  Back
+    <i class="fa fa-arrow-left" aria-hidden="true"></i>  {{'Back' | translate}}
 </div>
         <div class="card mx-auto">
             <div class="card-header">
@@ -11,7 +11,12 @@
                 @if (errmessage.length !=0) {
                    
                     <alert type="warning" [isOpen]="errmessage.length > 0">
-                        <strong>{{this.errmessage}}</strong>
+                        <strong>@if(this.min_value == true){
+                            {{ 'min_value' | translate:{ value : this.errmessage } }}
+                            }@else{
+                                {{this.errmessage  | translate:{ value : this.total_pay } }}
+                            }
+                            </strong>
                     </alert>
                     }
                 <form [formGroup]="paymentForm" #ngForm="ngForm" >

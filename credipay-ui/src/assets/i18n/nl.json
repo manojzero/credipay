@@ -141,5 +141,9 @@
     "Mobile_is_required":"Mobiel is vereist",
     "invalid_moblie_number":"Ongeldig mobiel nummer",
     "Ok":"OK",
-    "Invoice_list":"Factuurlijst"
+    "Invoice_list":"Factuurlijst",
+    "Back":"Rug",
+    "min_value":"Het ingevoerde bedrag kan niet worden toegewezen aan het betalingsplan, het minimumbedrag moet € {{value}}",
+    "Amount entered cannot be more than total amount":"Het ingevoerde bedrag mag niet hoger zijn dan € {{value}}",
+    "Your amount is high to provide the payment plan, please contact at the below number – 0032 15 690 390": "Uw bedrag is hoog om het betalingsplan te verstrekken, neem dan contact op met het onderstaande nummer - 0032 15 690 390"
 }

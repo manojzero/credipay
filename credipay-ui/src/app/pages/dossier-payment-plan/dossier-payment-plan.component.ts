@@ -8,7 +8,7 @@ import { AlertConfig, AlertModule } from 'ngx-bootstrap/alert';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { PagemoduleModule } from '../../pagemodule/pagemodule.module';
 import { DossierDetailsService } from '../../service/dossier-details.service';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser'
+import { DomSanitizer } from '@angular/platform-browser'
 import {Location} from '@angular/common';
 import Swal from 'sweetalert2';
 @Component({
@@ -26,6 +26,7 @@ export class DossierPaymentPlanComponent {
   is_eligible_plan: any = false;
   minDate: String = '';
   maxDate: String = '';
+  min_value: boolean= false;
   final_confirm_message: any = "";
   constructor(public translate: TranslateService, private formBuilder: FormBuilder, private route: ActivatedRoute,
     public spinner: NgxSpinnerService, private dossierServ: DossierDetailsService, private sanitized: DomSanitizer,
@@ -48,7 +49,7 @@ export class DossierPaymentPlanComponent {
 
   initForm() {
     this.paymentForm = this.formBuilder.group({
-      monthly_amount: ['', [Validators.required,  Validators.max(this.total_pay)]],
+      monthly_amount: [0, [Validators.required]],
       totalmonths: [0, Validators.required],
       remainingamount: [0, Validators.required],
       paymentDate: ["00-00-0000", Validators.required],
@@ -79,7 +80,13 @@ export class DossierPaymentPlanComponent {
         console.log("0000", this.paymentForm.controls['paymentDate'].errors );
       },
       error: (err: any) => {    
+        if(typeof err.error.response === 'number' && !isNaN(err.error.response)){
+        this.min_value = true
+        this.errmessage = String(err.error.response);
+        }else{
+        this.min_value = false
         this.errmessage = err.error.response;
+      }
         this.paymentForm.controls['totalmonths'].setValue(0);
         this.paymentForm.controls['remainingamount'].setValue(0);
 

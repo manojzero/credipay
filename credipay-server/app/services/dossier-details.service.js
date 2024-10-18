@@ -205,7 +205,7 @@ const getDossierPaymentPlanCalculation = async (dossier_id, amount) => {
 
             }
 
-            throw new ApiError(httpStatus.BAD_REQUEST, "Amount entered cannot be assigned with the payment plan, the minimum amount should be € " + min_amount)
+            throw new ApiError(httpStatus.BAD_REQUEST, min_amount)
         }
         else {
             return_data.months = Math.trunc(c_plan);

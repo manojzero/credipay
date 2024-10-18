@@ -142,5 +142,9 @@
     "Mobile_is_required":"Le mobile est requis",
     "invalid_moblie_number":"Numéro de portable invalide",
     "Ok":"D'accord",
-    "Invoice_list":"Liste des factures"
+    "Invoice_list":"Liste des factures",
+    "Back":"Dos",
+    "min_value":"Le montant saisi ne peut pas être affecté au plan de paiement, le montant minimum doit être de € {{value}}",
+    "Amount entered cannot be more than total amount":"Le montant saisi ne peut pas être supérieur à € {{value}}",
+    "Your amount is high to provide the payment plan, please contact at the below number – 0032 15 690 390": "Votre montant est trop élevé pour fournir le plan de paiement, veuillez nous contacter au numéro ci-dessous – 0032 15 690 390"
 }

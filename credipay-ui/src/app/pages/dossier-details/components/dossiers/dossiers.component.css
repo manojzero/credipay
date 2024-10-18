@@ -43,9 +43,6 @@ table.my-table>tbody>tr>td {
 }
 
 
-
-
-
 .link {
     color: blue;
     /* Change the color to your desired color */
@@ -95,3 +92,8 @@ input::-webkit-inner-spin-button {
 h4{
     color: black;
 }
+.btn.btn-secondary{
+    background-color: #070000 !important; 
+    background-image: none !important;
+}
+
