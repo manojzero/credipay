@@ -96,7 +96,7 @@ export class QusAlreadyPaidComponent  implements OnInit {
       let invoce_list = this.questionform.get('invoicelist').value;
       (this.questionform.controls['datas'] as FormArray).clear();
       invoce_list.forEach((ele: any) => {
-        this.questionform.get("datas").push(this.recordForm(ele?.invoice_number))
+        this.questionform.get("datas").push(this.recordForm(ele))
       });
       console.log("this.questionform", this.questionform);
     }); 
@@ -132,6 +132,7 @@ export class QusAlreadyPaidComponent  implements OnInit {
   }
 
   submit(){
+    console.log("test");
     if (this.questionform.invalid) {
       return
     }
