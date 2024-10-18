@@ -23,14 +23,48 @@
 
 
             @if(questionform.controls['qustion1'].value == "Credisolv"){
-                <div class="row m-0  my-3">
-                    <div class="col-md-10">
-                        <h4 class="mb-3">{{ 'Kindly_upload_the_death_certificate_below' | translate}}</h4>
-                        <div class="custom-control custom-radio">
-                            <input type="file" name="deathcertificateletter"  formControlName="file" (change)="uploadfiles($event)" required>&nbsp;
+            
+                    <div class="row m-0  my-3" formArrayName="datas" *ngFor="let a of questionform.get('datas')['controls']; let i = index">
+                        <div class="col-md-10" [formGroupName]="i">
+                            <h4 class="mb-3">{{ 'Please_provide_the_below_details' | translate}}</h4>
+                            <div>
+                                <table class="w-100">
+                                    <tr>
+                                        <th>{{'Date_of_Birth'|translate}}</th>
+                                        <td>
+                                            <input type="date" class="form-control" formControlName="date" 
+                                            [ngClass]="{ 'is-invalid':  ngForm.submitted  && questionform.controls['datas']['controls'][i]['controls']['date'].errors }">
+                                        </td>
+                                    </tr>
+                                    <br>
+                                    <tr>
+                                        <th>{{'Amount_in_Euros'|translate}}</th>
+                                        <td>
+                                            <input type="number" class="form-control" formControlName="amount" min="0" 
+                                            [ngClass]="{ 'is-invalid':  ngForm.submitted  && questionform.controls['datas']['controls'][i]['controls']['amount'].errors }">
+                                        </td>
+                                    </tr>
+                                    <br>
+                                    <tr>
+                                        <th>{{'IBAN_From_which_account_did_you_pay'|translate}}</th>
+                                        <td>
+                                            <input type="text" class="form-control" formControlName="ibanfrom" 
+                                            [ngClass]="{ 'is-invalid':  ngForm.submitted  && questionform.controls['datas']['controls'][i]['controls']['ibanfrom'].errors }">
+                                        </td>
+                                    </tr>
+                                    <br>
+                                    <tr>
+                                        <th>{{'IBAN_To_which_account_did_you_transfer'|translate}}</th>
+                                        <td>
+                                            <input type="text" class="form-control" formControlName="ibanto" 
+                                            [ngClass]="{ 'is-invalid':  ngForm.submitted  && questionform.controls['datas']['controls'][i]['controls']['ibanto'].errors }">
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
                         </div>
                     </div>
-                </div>
+                
             }
             @if(questionform.controls['qustion1'].value == "Client"){
                 <div class="row m-0 my-3">
@@ -45,13 +79,14 @@
                     </div>
                 </div>
             }
-            @if(questionform.valid){
+            @if(questionform.controls['qustion1'].value == "Credisolv"){
                 <div class="row m-0 my-3">
                     <div class="col-md-12 text-center">
                         <button type="submit" class="btn btn-primary" (click)="submit()">{{'Submit' | translate}}</button>
                     </div>
                 </div>
             }
+            
          
         </form>
 </div>

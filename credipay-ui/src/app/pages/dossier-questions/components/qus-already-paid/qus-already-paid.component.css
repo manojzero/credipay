@@ -28,3 +28,11 @@ h4{
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+.form-control{
+    color: black !important;
+}
+
+table tr{
+    margin: 10px;
+}

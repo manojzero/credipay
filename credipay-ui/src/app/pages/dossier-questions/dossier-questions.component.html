@@ -1,5 +1,9 @@
 <div class="wrapper">
+    <div class="btn_back" (click)="back()">
+        <i class="fa fa-arrow-left" aria-hidden="true"></i>  Back
+    </div>
     <div class="card m-3 mx-auto">
+        
         <div class="card-body">
             <div class="card-header text-center">
              
@@ -21,13 +25,13 @@
             </div>
 
             @if(selected_option=="disagree"){ 
-                <app-qus-disagree-dispute></app-qus-disagree-dispute>
+                <app-qus-disagree-dispute [client_name]="client_name"></app-qus-disagree-dispute>
             }
             @if(selected_option=="alreadypaid"){
-                <app-qus-already-paid></app-qus-already-paid>
+                <app-qus-already-paid [client_name]="client_name"></app-qus-already-paid>
             }
             @if(selected_option=="deceased"){
-                <app-qus-debtor-deceased></app-qus-debtor-deceased>
+                <app-qus-debtor-deceased [client_name]="client_name"></app-qus-debtor-deceased>
             }
             @if(selected_option=="copyinvoice"){
                 <app-qus-copy-invoice></app-qus-copy-invoice>

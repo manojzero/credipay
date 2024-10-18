@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -18,7 +18,7 @@ import { PagemoduleModule } from '../../../../pagemodule/pagemodule.module';
 })
 export class QusDebtorDeceasedComponent  implements OnInit {
   public questionform: any = FormGroup;
-  public client_name: any = "";
+  @Input() client_name: string ="";
 
   
   constructor(public spinner: NgxSpinnerService, private formBuilder: FormBuilder,  private router: Router,

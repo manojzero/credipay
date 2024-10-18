@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -10,18 +10,20 @@ import { AlertModule } from 'ngx-bootstrap/alert';
 import { PagemoduleModule } from '../../../../pagemodule/pagemodule.module';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
+import { CommonModule, NgFor } from '@angular/common';
 
 
 @Component({
   selector: 'app-qus-already-paid',
   standalone: true,
-  imports: [TranslateModule, AlertModule, FormsModule, ReactiveFormsModule, NgMultiSelectDropDownModule],
+  imports: [NgFor, TranslateModule, AlertModule, FormsModule, ReactiveFormsModule, NgMultiSelectDropDownModule, CommonModule],
   templateUrl: './qus-already-paid.component.html',
   styleUrl: './qus-already-paid.component.css'
 })
 export class QusAlreadyPaidComponent  implements OnInit {
   public questionform: any = FormGroup;
-  public client_name: any = "";
+  @Input() client_name: string ="";
+  
   dropdownList: any = [];
   dropdownSettings: any = {};
   constructor(public spinner: NgxSpinnerService, private formBuilder: FormBuilder,  private router: Router,
@@ -77,20 +79,31 @@ export class QusAlreadyPaidComponent  implements OnInit {
     this.questionform = this.formBuilder.group({
       invoicelist:["",  Validators.required],
       qustion1:["",  Validators.required],
-      file: ["",  Validators.required],
-      deathcertificate:["",  Validators.required],
-      deathcertificatename:["",  Validators.required]
+      datas: this.formBuilder.array([])
     })
     this.onChanges();
   }
 
+  recordForm(id: any): FormGroup {
+    return this.formBuilder.group({
+      id: [id, Validators.required],
+      date: ["",  Validators.required],
+      amount: ["",  Validators.required],
+      ibanfrom:["",  Validators.required],
+      ibanto:["",  Validators.required]
+    });
+  }
+
   onChanges(): void {
     this.questionform.get('qustion1').valueChanges.subscribe((val: any) => {
-      this.questionform.controls['file'].setValue("");
-      this.questionform.controls['deathcertificate'].setValue("");
-      this.questionform.controls['deathcertificatename'].setValue("");
-    });
-  
+      let invoce_list = this.questionform.get('invoicelist').value;
+      (this.questionform.controls['datas'] as FormArray).clear();
+      invoce_list.forEach((ele: any) => {
+        this.questionform.get("datas").push(this.recordForm(ele?.invoice_number))
+      });
+      console.log("this.questionform", this.questionform);
+    }); 
+    
   }
   
   uploadfiles(event: any): void {
@@ -101,10 +114,16 @@ export class QusAlreadyPaidComponent  implements OnInit {
         this.convertFile(file).then((base64: any) => {
           this.questionform.controls['deathcertificate'].setValue(base64);
           this.questionform.controls['deathcertificatename'].setValue(file.name);
-        });
+        })
       
     }
+    
 
+  }
+
+  getDataDetails(): any {
+    return this.questionform()
+      .get('datas') as FormArray;
   }
 
   public convertFile(file: File) {

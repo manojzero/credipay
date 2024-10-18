@@ -180,7 +180,7 @@ export class DossiersComponent implements OnInit {
       console.log("------------- DOSS ENRTY" + this.selectedOption);
       this.spinner.show();
       // this.router.navigate([path])
-      this.router.navigate(['/dossiers-question/' + this.selectedOption], {
+      this.router.navigate(['/dossier-questions/' + this.selectedOption], {
         state: {
           client_name: this.client_name
         }
