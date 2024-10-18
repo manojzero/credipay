@@ -1,0 +1,64 @@
+<div class="wrapper">
+    <div style="overflow-x:auto;">
+        <form [formGroup]="questionform" #ngForm="ngForm">
+            <div class="row m-0 my-3">
+                <div class="col-md-10">
+                    <h4 class="mb-3">{{ 'Disagree_Dispute_Qustion_1' | translate }}</h4>
+                    <div class="custom-control custom-radio">
+                        <input id="q1y" type="radio" value="Yes"  formControlName="qustion1">&nbsp;
+                        <label class="custom-control-label" for="q1y">{{'Yes'|translate}}</label>&nbsp;
+                        <input id="q1n" type="radio" value="No"   formControlName="qustion1">&nbsp;
+                        <label class="custom-control-label" for="q1n">{{'No'|translate}}</label>
+   
+                    </div> 
+                  
+                </div>
+            </div>
+            @if(questionform.controls['qustion1'].value == "Yes"){
+                <div class="row m-0  my-3">
+                    <div class="col-md-10">
+                        <h4 class="mb-3">{{ 'Disagree_Dispute_Qustion_2' | translate }}</h4>
+                        <div class="custom-control custom-radio">
+                            <input id="q2y" type="radio" value="Yes"  formControlName="qustion2">&nbsp;
+                            <label class="custom-control-label" for="q2y">{{'Yes' | translate}}</label>&nbsp;
+                            <input id="q2n" type="radio" value="No" formControlName="qustion2">&nbsp;
+                            <label class="custom-control-label" for="q2n">{{'No' | translate}}</label>
+    
+                        </div> 
+                    
+                    </div>
+                </div>
+            }
+            @if(questionform.controls['qustion2'].value == "Yes"){
+                <div class="row m-0  my-3">
+                    <div class="col-md-10">
+                        <h4 class="mb-3">{{ 'Please_upload_the_copy_of_the_letter' | translate}}</h4>
+                        <div class="custom-control custom-radio">
+                            <input type="file" name="disputeletter"  formControlName="file" (change)="uploadfiles($event)" required>&nbsp;
+                        </div>
+                    </div>
+                </div>
+            }
+            @if(questionform.controls['qustion2'].value == "No"){
+                <div class="row m-0 my-3">
+                    <div class="col-md-12 ">
+                        <div class="card inner mx-auto">
+                            <h4 class="mb-3 text-center">{{ 'Disagree_Dispute_Qustion_4' | translate: { client_name: this.client_name } }}</h4>
+
+                            <br>
+
+                            <button type="button" class="btn btn-primary" (click)="back()">{{'Ok' | translate}}</button>
+                        </div>
+                    </div>
+                </div>
+            }
+            @if(questionform.valid){
+                <div class="row m-0 my-3">
+                    <div class="col-md-12 text-center">
+                        <button type="submit" class="btn btn-primary" (click)="submit()">{{'Submit' | translate}}</button>
+                    </div>
+                </div>
+            }
+         
+        </form>
+</div>

@@ -1,0 +1,17 @@
+
+.card-header{
+    background-color: black;
+}
+
+.form-control {
+    color: black !important;
+}
+
+
+.card {
+    width: 90%;
+    background-color: #FFF;
+    color: black !important;
+    border-radius: 1.2857rem;
+    box-shadow: 0 0px 30px 14px rgba(0, 0, 0, 0.2) !important;
+}

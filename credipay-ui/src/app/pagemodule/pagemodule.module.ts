@@ -16,7 +16,7 @@ import { PopoverModule } from "ngx-bootstrap/popover";
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ProfileService } from '../service/profile.service';
 import { DossierDetailsService } from '../service/dossier-details.service';
-
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 // import { BrowserModule } from '@angular/platform-browser';
 
 
@@ -40,7 +40,8 @@ import { DossierDetailsService } from '../service/dossier-details.service';
     BsDatepickerModule.forRoot(),
     CarouselModule.forRoot(),
     ModalModule.forRoot(),
-    HttpClientModule
+    HttpClientModule,
+    NgMultiSelectDropDownModule.forRoot()
   ],
   providers: [BsModalService,HttpClient,ProfileService,DossierDetailsService],
 })

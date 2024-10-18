@@ -42,3 +42,15 @@
     border-radius: 5px;
     margin: 0px 10px 10px 20px;
   }
+
+  
+.multiselect-dropdown  {
+  max-width: 400px;
+}
+
+.multiselect-dropdown .selected-item {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width:300px
+}

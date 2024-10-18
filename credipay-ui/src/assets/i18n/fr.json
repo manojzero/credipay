@@ -140,5 +140,7 @@
     "Telephone_is_required":"Le téléphone est obligatoire",
     "invalid_telephone_number":"Numéro de téléphone invalide",
     "Mobile_is_required":"Le mobile est requis",
-    "invalid_moblie_number":"Numéro de portable invalide"
+    "invalid_moblie_number":"Numéro de portable invalide",
+    "Ok":"D'accord",
+    "Invoice_list":"Liste des factures"
 }

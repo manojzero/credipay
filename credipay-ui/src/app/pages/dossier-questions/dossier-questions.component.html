@@ -1,0 +1,38 @@
+<div class="wrapper">
+    <div class="card m-3 mx-auto">
+        <div class="card-body">
+            <div class="card-header text-center">
+             
+                    <h4 class="card-title p-1"><b>{{'do_you_have_any_question'|translate}} -
+                        @if(selected_option=="disagree"){ 
+                            {{'Disagree_Dispute' | translate}}
+                        }
+                        @if(selected_option=="alreadypaid"){
+                            {{'Already_paid' | translate}}
+                        }
+                        @if(selected_option=="deceased"){
+                            {{'Debtor_deceased' | translate}}
+                        }
+                        @if(selected_option=="copyinvoice"){
+                            {{'Copy_Invoice' | translate}}
+                        }
+                    </b></h4>
+                
+            </div>
+
+            @if(selected_option=="disagree"){ 
+                <app-qus-disagree-dispute></app-qus-disagree-dispute>
+            }
+            @if(selected_option=="alreadypaid"){
+                <app-qus-already-paid></app-qus-already-paid>
+            }
+            @if(selected_option=="deceased"){
+                <app-qus-debtor-deceased></app-qus-debtor-deceased>
+            }
+            @if(selected_option=="copyinvoice"){
+                <app-qus-copy-invoice></app-qus-copy-invoice>
+            }
+        </div>
+
+    </div>
+</div>

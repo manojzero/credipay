@@ -12,6 +12,7 @@ import { PaymentCancelComponent } from './pages/payment-cancel/payment-cancel.co
 import { AuthGuard } from './service/auth.guard';
 import { DossierPaymentPlanComponent } from './pages/dossier-payment-plan/dossier-payment-plan.component';
 import { DossierPaymentplanComponent1 } from './pages/dossier-details/components/dossier-paymentplan/dossier-paymentplan.component';
+import { DossierQuestionsComponent } from './pages/dossier-questions/dossier-questions.component';
 
 export const routes: Routes = [
     {
@@ -39,6 +40,11 @@ export const routes: Routes = [
     //     component: DossierPaymentplanComponent1,
     //     data: { title: 'dossiers-paymentplan' }
     // },
+    {
+        path: 'dossier-questions/:options',  canActivate: [AuthGuard],
+        component: DossierQuestionsComponent,
+        data: { title: 'dossier-questions' }
+    },
     {
         path: 'dossiers-question/:options',  canActivate: [AuthGuard],
         component: DossiersQuestionComponent,

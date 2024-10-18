@@ -139,5 +139,7 @@
     "Telephone_is_required":"Telefoon is vereist",
     "invalid_telephone_number":"Ongeldig telefoonnummer",
     "Mobile_is_required":"Mobiel is vereist",
-    "invalid_moblie_number":"Ongeldig mobiel nummer"
+    "invalid_moblie_number":"Ongeldig mobiel nummer",
+    "Ok":"OK",
+    "Invoice_list":"Factuurlijst"
 }

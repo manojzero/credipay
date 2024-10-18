@@ -141,5 +141,7 @@
     "Telephone_is_required":"Telephone is required",
     "invalid_telephone_number":"Invalid telephone number",
     "Mobile_is_required":"Mobile is required",
-    "invalid_moblie_number":"Invalid mobile number"
+    "invalid_moblie_number":"Invalid mobile number",
+    "Ok":"Ok",
+    "Invoice_list":"Invoice List"
 }
