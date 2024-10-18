@@ -11,6 +11,8 @@ router.get('/eligible-dossier-payment-plan-check', auth, dossierController.eligi
 router.post('/update-logbook/:type', auth, dossierController.updatelogBook);
 router.get('/dossier-facturen-invoice-details', auth, dossierController.getDossierFacturenInvoiceDetails);
 router.post('/submit-payment-plan', auth, dossierController.submitPaymentplan);
+router.post('/submit-the-question/:type', auth, dossierController.submitQuestions);
+
 
 router.post('/payment-success',  dossierController.paymentSuccess);
 router.post('/payment-error',  dossierController.paymentError);
