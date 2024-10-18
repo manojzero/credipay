@@ -164,10 +164,12 @@
                   
             </div>
             <div class="col-12 modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{'Close'|translate}}</button> @if (selectedOption=='disagree') {<button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="nav()">{{'Submit'|translate}}</button>}
-                @else if(selectedOption == 'alreadypaid'){
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="nav()">{{'Submit'|translate}}</button> } @else if (selectedOption == 'deceased') {<button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="nav()">{{'Submit'|translate}}</button>}
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{'Close'|translate}}</button>
+                
+                @if (selectedOption=='disagree' || selectedOption == 'alreadypaid' || selectedOption == 'deceased' || selectedOption == 'copyinvoice') {
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="nav()">{{'Submit'|translate}}</button>}
 
+               
             </div>
         </div>
     </div>

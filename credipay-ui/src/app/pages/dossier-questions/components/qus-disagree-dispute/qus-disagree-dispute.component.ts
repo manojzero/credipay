@@ -8,6 +8,7 @@ import { DossierDetailsService } from '../../../../service/dossier-details.servi
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { AlertModule } from 'ngx-bootstrap/alert';
 import { PagemoduleModule } from '../../../../pagemodule/pagemodule.module';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-qus-disagree-dispute',
@@ -22,7 +23,7 @@ export class QusDisagreeDisputeComponent  implements OnInit{
   @Input() client_name: string ="";
   
   constructor(public spinner: NgxSpinnerService, private formBuilder: FormBuilder,  private router: Router,
-    public translate: TranslateService) {
+    public translate: TranslateService, private dossierServ: DossierDetailsService) {
 
   }
 
@@ -88,6 +89,26 @@ export class QusDisagreeDisputeComponent  implements OnInit{
     if (this.questionform.invalid) {
       return
     }
+
+    this.spinner.show();
+    this.dossierServ.submitQuestion("dispute",this.questionform.value).subscribe({
+      next: (value: any) => {
+        this.spinner.hide();
+        Swal.fire({
+        
+          text: this.translate.instant('Data_submitted_message'),
+          icon: "success"
+        }).then(()=>{
+          this.router.navigate(['/dossier-details']);
+        })
+        
+      }, error: (err) => {
+       
+        this.spinner.hide();
+      }, complete: () => {
+        this.spinner.hide();
+      },
+    });
   }
 
   back(){

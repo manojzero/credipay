@@ -20,6 +20,8 @@ export class DossierDetailsService {
   private submitPaymentPlanURL = environment.apiURL + "dossier/submit-payment-plan";
   private getInvoiceListURL = environment.apiURL + "dossier/dossier-facturen-invoice-details";
 
+  private submitQuestionURL: string = environment.apiURL + "dossier/submit-the-question"
+
   constructor(private http: HttpClient, private spinner: NgxSpinnerService, private router: Router) {
   }
 
@@ -46,4 +48,9 @@ export class DossierDetailsService {
   getInvoiceList(): Observable<any> {
     return this.http.get<any>(this.getInvoiceListURL, { 'headers': this.headers, withCredentials: true });
   }
+
+  submitQuestion(type: any, body: any): Observable<any> {
+    return this.http.post<any>(this.submitQuestionURL+ "/" + type, body, { 'headers': this.headers, withCredentials: true });
+  }
+
 }

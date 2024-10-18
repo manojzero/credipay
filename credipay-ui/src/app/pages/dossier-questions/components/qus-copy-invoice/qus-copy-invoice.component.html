@@ -1,1 +1,95 @@
-<p>qus-copy-invoice works!</p>
+<div class="wrapper">
+    <div style="overflow-x:auto;">
+        <form [formGroup]="questionform" #ngForm="ngForm">
+            @if(this.email_address?.length > 0){
+                <div class="row m-0 my-3">
+                    <div class="col-md-10 tbl_info_data">
+                        <h4 class="mb-3">{{ 'Invoice_list' | translate }}</h4>
+                        <table class="table table-hover table-bold mx-auto">
+                            <thead>
+                                <tr>
+                                    <th scope="col"></th>
+                                    <th scope="col">{{'Dossier'|translate}}</th>
+                                    <th scope="col">{{'Invoice Reference'|translate}}</th>
+                                    <th scope="col">{{'Invoice Date'|translate}}</th>
+                                    <th scope="col">{{'Principal Sum'|translate}}</th>
+                                    <th scope="col">{{'Interest'|translate}}</th>
+                                    <th scope="col">{{'Interests Damages Clause'|translate}}</th>
+                                    <th scope="col">{{'Collection costs'|translate}}</th>
+                                    <th scope="col">{{'Total'|translate}}</th>
+                                   
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if(dossierDetails.length > 0) { 
+                                    
+                                    @for(details of dossierDetails;track details) {
+                                <tr>
+                                    <td>
+                                        <input
+                                        type="checkbox"
+                                        [value]="details.Invoice_Reference"
+                                        (change)="toggleSelection(details.Invoice_Reference)"
+                                      />
+                                    </td>
+                                    <td>{{details.Dossier}}</td>
+                                    <td>{{details.Invoice_Reference}}</td>
+                                    <td>{{details.Date_decheance}}</td>
+                                    <td>{{details.Somme_principle}}</td>
+                                    <td>{{details.Interest}}</td>
+                                    <td>{{details.Interests_damages_clause}}</td>
+                                    <td>{{details.Collection_costs}}</td>
+                                    <td>{{details.Total}}</td>
+                                  
+                                </tr>
+                                } } @else {
+                                <tr>
+                                    <td colspan="3" style="text-align: center;">{{'No data found!!!'|translate}}</td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row m-0 my-3">
+                    <div class="col-md-10">
+                        <h4 class="mb-3">{{ 'Copy_of_invoice_question_1' | translate }}</h4>
+                        <div class="custom-control custom-radio">
+                            <input id="q1y" type="radio" value="Yes"  formControlName="qustion1">&nbsp;
+                            <label class="custom-control-label" for="q1y">{{'Yes'|translate}}</label>&nbsp;
+                            <input id="q1n" type="radio" value="No"   formControlName="qustion1">&nbsp;
+                            <label class="custom-control-label" for="q1n">{{'No'|translate}}</label>
+    
+                        </div> 
+                    
+                    </div>
+                </div>
+            }
+            @else{
+                <div class="row m-0 my-3">
+                    <div class="col-md-10">
+                        <h4 class="mb-3">{{ 'Would_you_like_to_add_your_email' | translate }}</h4>
+                        <div class="custom-control custom-radio">
+                            <input id="q1y" type="radio" value="Yes"  formControlName="qustion2">&nbsp;
+                            <label class="custom-control-label" for="q1y">{{'Yes'|translate}}</label>&nbsp;
+                            <input id="q1n" type="radio" value="No"   formControlName="qustion1">&nbsp;
+                            <label class="custom-control-label" for="q1n">{{'No'|translate}}</label>
+    
+                        </div> 
+                    
+                    </div>
+                </div>
+            }
+
+       
+            @if(questionform.valid){
+                <div class="row m-0 my-3">
+                    <div class="col-md-12 text-center">
+                        <button type="submit" class="btn btn-primary" (click)="submit()">{{'Submit' | translate}}</button>
+                    </div>
+                </div>
+            }
+            
+         
+        </form>
+</div>

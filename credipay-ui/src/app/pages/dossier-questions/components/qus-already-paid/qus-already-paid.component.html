@@ -2,9 +2,54 @@
     <div style="overflow-x:auto;">
         <form [formGroup]="questionform" #ngForm="ngForm">
             <div class="row m-0 my-3">
-                <div class="col-md-10">
+                <div class="col-md-10 tbl_info_data">
                     <h4 class="mb-3">{{ 'Invoice_list' | translate }}</h4>
-                    <ng-multiselect-dropdown class="ddinvoice" [settings]="dropdownSettings" [data]="dropdownList" formControlName="invoicelist"></ng-multiselect-dropdown>
+                   
+                    <table class="table table-hover table-bold mx-auto">
+                        <thead>
+                            <tr>
+                                <th scope="col"></th>
+                                <th scope="col">{{'Dossier'|translate}}</th>
+                                <th scope="col">{{'Invoice Reference'|translate}}</th>
+                                <th scope="col">{{'Invoice Date'|translate}}</th>
+                                <th scope="col">{{'Principal Sum'|translate}}</th>
+                                <th scope="col">{{'Interest'|translate}}</th>
+                                <th scope="col">{{'Interests Damages Clause'|translate}}</th>
+                                <th scope="col">{{'Collection costs'|translate}}</th>
+                                <th scope="col">{{'Total'|translate}}</th>
+                               
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if(dossierDetails.length > 0) { 
+                                
+                                @for(details of dossierDetails;track details) {
+                            <tr>
+                                <td>
+                                    <input
+                                    type="checkbox"
+                                    [value]="details.Invoice_Reference"
+                                    (change)="toggleSelection(details.Invoice_Reference)"
+                                  />
+                                </td>
+                                <td>{{details.Dossier}}</td>
+                                <td>{{details.Invoice_Reference}}</td>
+                                <td>{{details.Date_decheance}}</td>
+                                <td>{{details.Somme_principle}}</td>
+                                <td>{{details.Interest}}</td>
+                                <td>{{details.Interests_damages_clause}}</td>
+                                <td>{{details.Collection_costs}}</td>
+                                <td>{{details.Total}}</td>
+                              
+                            </tr>
+                            } } @else {
+                            <tr>
+                                <td colspan="3" style="text-align: center;">{{'No data found!!!'|translate}}</td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                    
                 </div>
             </div>
             <div class="row m-0 my-3">
@@ -26,7 +71,7 @@
             
                     <div class="row m-0  my-3" formArrayName="datas" *ngFor="let a of questionform.get('datas')['controls']; let i = index">
                         <div class="col-md-10" [formGroupName]="i">
-                            <h4 class="mb-3">{{ 'Please_provide_the_below_details' | translate}}</h4>
+                            <h4 class="mb-3">{{ 'Please_provide_the_below_details' | translate}} - {{this.questionform.get('datas')['controls'][i]['controls']['id'].value}} </h4>
                             <div>
                                 <table class="w-100">
                                     <tr>

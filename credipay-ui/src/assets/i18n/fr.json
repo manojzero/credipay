@@ -132,7 +132,6 @@
     "Check":"Vérifier",
     "Payment_Plan_confirm_message":"Montant du remboursement XXXAMOUNTXXX sur XXXMONTHXXX mois puis un autre mois à XXXRAMOUNTXXX",
     "Payment_plan_updated_message":"Plan de paiement soumis avec succès",
-    "Payment_Plan_confirm_message":"Montant du remboursement XXXAMOUNTXXX sur XXXMONTHXXX mois puis un autre mois à XXXRAMOUNTXXX" ,
     "Select_language": "Sélectionner la langue",
     "User Updated Successfully" : "Mise à jour de l'utilisateur réussie",
     "Email_address_is_required":"L'adresse e-mail est obligatoire",
@@ -146,5 +145,8 @@
     "Back":"Dos",
     "min_value":"Le montant saisi ne peut pas être affecté au plan de paiement, le montant minimum doit être de € {{value}}",
     "Amount entered cannot be more than total amount":"Le montant saisi ne peut pas être supérieur à € {{value}}",
-    "Your amount is high to provide the payment plan, please contact at the below number – 0032 15 690 390": "Votre montant est trop élevé pour fournir le plan de paiement, veuillez nous contacter au numéro ci-dessous – 0032 15 690 390"
+    "Your amount is high to provide the payment plan, please contact at the below number – 0032 15 690 390": "Votre montant est trop élevé pour fournir le plan de paiement, veuillez nous contacter au numéro ci-dessous – 0032 15 690 390",
+    "Copy_of_invoice_question_1":"You want to get a copy of these open invoices?",
+    "Would_you_like_to_add_your_email":"Souhaitez-vous ajouter votre email?",
+    "Data_submitted_message":"Données soumises avec succès"
 }

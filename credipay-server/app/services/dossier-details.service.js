@@ -550,16 +550,70 @@ const paymentError = async (data) => {
 const getDossierFacturenInvoiceDetails = async (dossier_id) => {
     const { dossiers, facturen, klanten, betalingen } = db;
     try {
-        let dossier = await facturen.findAll({
-            where:{
-                dossier : dossier_id
+        let final_result = [];
+        let result = await facturen.findAll({
+            attributes: {
+                
+                include: [
+                    [
+                        Sequelize.literal('(select sum(aanincasso)+ sum(aanklant) as totalamount from  betalingen WHERE `factuur` = `facturen`.`id`)'),
+                        'paymentdone',
+                    ],
+                ]},
+     
+            where: {
+                dossier: dossier_id
             },
-            attributes :[
-                ['dossier','dossier'],
-                ['referentie','invoice_number']
-            ]
-        })
-        return dossier
+            order: [
+                ['datum', 'ASC'],
+            ],
+            
+        });
+
+  
+    
+        
+        result.forEach(element => {
+            element =JSON.stringify(element);
+            element =JSON.parse(element);
+
+         
+            let Interests_damages_clause = "--";
+            let Collection_costs = "--";
+            let Payments_made = "--";
+
+            if (element?.schadebeding != '0.00') {
+                Interests_damages_clause = "€ " + element?.schadebeding
+                
+            }
+            if (element?.inningskost != '0.00') {
+                Collection_costs = "€ " + element?.inningskost;
+                
+            }
+            if (element?.paymentdone != '0.00' && element?.paymentdone) {
+                Payments_made = "€ " + element?.paymentdone;
+                
+            }
+         
+          
+            let json = {
+                "Dossier": dossier_id,
+                "Invoice_Reference": element?.referentie,
+                "Date_decheance": element?.datum,
+                "Somme_principle": "€ " + element?.hoofdsom,
+                "Interest": "€ " + element?.intrest,
+                "Interests_damages_clause": Interests_damages_clause,
+                "Collection_costs": Collection_costs,
+                "Total": "€ " + element?.totaal,
+                "Payments_made": Payments_made,
+                "Pay": "€ " + (element?.totaal-element?.paymentdone).toFixed(2),
+            }
+            final_result.push(
+                json
+            );
+           
+        });
+        return final_result;
     } catch (error) {
         throw new ApiError(httpStatus.BAD_REQUEST, error);
     }

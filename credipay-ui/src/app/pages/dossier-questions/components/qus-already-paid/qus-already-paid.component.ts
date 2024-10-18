@@ -11,6 +11,8 @@ import { PagemoduleModule } from '../../../../pagemodule/pagemodule.module';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { CommonModule, NgFor } from '@angular/common';
+import { SelectionModel } from '@angular/cdk/collections';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -23,9 +25,9 @@ import { CommonModule, NgFor } from '@angular/common';
 export class QusAlreadyPaidComponent  implements OnInit {
   public questionform: any = FormGroup;
   @Input() client_name: string ="";
+  dossierDetails: any = [];
   
-  dropdownList: any = [];
-  dropdownSettings: any = {};
+  selection = new SelectionModel<any>(true, []);
   constructor(public spinner: NgxSpinnerService, private formBuilder: FormBuilder,  private router: Router,
     public translate: TranslateService, private dossierServ: DossierDetailsService) {
 
@@ -40,16 +42,6 @@ export class QusAlreadyPaidComponent  implements OnInit {
   ngOnInit(): void {
     this.initform();
     this.getInvoiceList();
-   
-
-    this.dropdownSettings = {
-      singleSelection: false,
-      idField: 'invoice_number',
-      textField: 'invoice_number',
-      itemsShowLimit: 1,
-      allowSearchFilter: false,
-      enableCheckAll: false
-    };
   }
 
 
@@ -59,9 +51,8 @@ export class QusAlreadyPaidComponent  implements OnInit {
     this.dossierServ.getInvoiceList().subscribe({
       next: (data: any) => {
         console.log("data", data);
-        this.dropdownList = data;
         this.spinner.hide();
-     
+        this.dossierDetails =data;
       },
       error: (err: any) => {
         this.spinner.hide();
@@ -82,6 +73,12 @@ export class QusAlreadyPaidComponent  implements OnInit {
       datas: this.formBuilder.array([])
     })
     this.onChanges();
+  }
+
+  toggleSelection(row: any): void  {
+    this.selection.toggle(row);
+
+    this.questionform.get('invoicelist').setValue(this.selection.selected)
   }
 
   recordForm(id: any): FormGroup {
@@ -115,9 +112,7 @@ export class QusAlreadyPaidComponent  implements OnInit {
           this.questionform.controls['deathcertificate'].setValue(base64);
           this.questionform.controls['deathcertificatename'].setValue(file.name);
         })
-      
     }
-    
 
   }
 
@@ -140,6 +135,26 @@ export class QusAlreadyPaidComponent  implements OnInit {
     if (this.questionform.invalid) {
       return
     }
+
+    this.spinner.show();
+    this.dossierServ.submitQuestion("alreadypaid",this.questionform.value).subscribe({
+      next: (value: any) => {
+        this.spinner.hide();
+        Swal.fire({
+        
+          text: this.translate.instant('Data_submitted_message'),
+          icon: "success"
+        }).then(()=>{
+          this.router.navigate(['/dossier-details']);
+        })
+        
+      }, error: (err) => {
+       
+        this.spinner.hide();
+      }, complete: () => {
+        this.spinner.hide();
+      },
+    });
   }
 
   back(){

@@ -182,7 +182,8 @@ export class DossiersComponent implements OnInit {
       // this.router.navigate([path])
       this.router.navigate(['/dossier-questions/' + this.selectedOption], {
         state: {
-          client_name: this.client_name
+          client_name: this.client_name,
+          
         }
       });
       this.callSpinner();
