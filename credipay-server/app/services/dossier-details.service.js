@@ -6,6 +6,8 @@ const { Op, where } = require("sequelize");
 const fileprocessor = require("../utils/fileprocessor")
 const config=require('../config/config');
 const debiteurs = require("../models/debiteurs");
+const emailService = require("../utils/emailservice");
+// const facturen = require("../models/facturen");
 
 const getDossierDetails = async (dossier_id) => {
     try {
@@ -261,7 +263,7 @@ const updatelogBook = async (createbody, type, dossier_id) => {
     const { logboek, templatestreinen,dossiers,debiteurs,sequelize } = db;
     try {
         
-        let filepath = "";
+        // let filepath = "";
         let description ="";
         let debiteur_id = "";
         let modified_by = "";
@@ -286,48 +288,29 @@ const updatelogBook = async (createbody, type, dossier_id) => {
 
         debiteur_id = debiteur.id;
         
-        if(type == 'file'){
-
-            description = createbody.dateOfBirth + ',' + createbody.amount + ',' + createbody.ibanFrom + ',' + createbody.ibanTo;
-            if (createbody.deathcertificate) {
-                filepath = await fileprocessor.savePublicPDFFile(createbody.deathcertificate, createbody.deathcertificatename)
-                let code = "ALARM_DECEASED";
-                let templatestreinenCode = await templatestreinen.findOne({
-                    where: {
-                        code: code
-                    }
-                })
-                console.log("templatestreinenCode====", templatestreinenCode);
-            }
-            if (createbody.disputeletter) {
-                filepath = await fileprocessor.savePublicPDFFile(createbody.disputeletter, createbody.disputelettername)
-                let code = "ALARM_DISPUTE";
-                let templatestreinenCode = await templatestreinen.findOne({
-                    where: {
-                        code: code
-                    }
-                })
-                console.log("templatestreinenCode====", templatestreinenCode);
-            }
-            if (createbody.disagrementletter) {
-                filepath = await fileprocessor.savePublicPDFFile(createbody.disagrementletter, createbody.disagrementlettername)
-                let code = "ALARM_ALREADYPAID";
-                let templatestreinenCode = await templatestreinen.findOne({
-                    where: {
-                        code: code
-                    }
-                })
-                console.log("templatestreinenCode====", templatestreinenCode);
-                
-            }
+        if(type == 'alreadypaid'){
+            console.log("sfsdfsdgsdfsdffsfd");
+            
+            for (let index = 0; index < createbody.datas.length; index++) {
+                description = description + "The invoice number is "+createbody.datas[index].id + ',' +createbody.datas[index].date + ',' + createbody.datas[index].amount + ',' + createbody.datas[index].ibanfrom + ',' + createbody.datas[index].ibanto+","; 
+            } 
+            createbody.filepath ='';  
         }else if(type == 'confirm-paymentplan'){
             description = "Choose a Payment Plan yourself Re-Payment amount "+ createbody.monthly_amount +" for "+ createbody.totalmonths +" months and then another month at "+ createbody.remainingamount + " date "+createbody.paymentDate;
+            createbody.filepath =''; 
+        }else if(type == 'copyinvoice'){
+            console.log("JYGJJHGFHFHFDFHTDHDHDHG");
+            
+            for (let index = 0; index < createbody.invoicelist.length; index++) {
+                description = description + "The Selected Invoice is- "+ createbody.invoicelist[index]+","; 
+            }
+            createbody.filepath =''; 
         }
 
         console.log("description=====",description);
         
 
-        console.log("filepath" + JSON.stringify(filepath))
+        console.log("filepath" + JSON.stringify(createbody.filepath))
         let date_time = new Date();
         let date = ("0" + date_time.getDate()).slice(-2);
         let month = ("0" + (date_time.getMonth() + 1)).slice(-2);
@@ -344,7 +327,7 @@ const updatelogBook = async (createbody, type, dossier_id) => {
             omschrijving: description,
             datum: year + "-" + month + "-" + date,
             omschrijvingintern: '',
-            bestand: filepath ? filepath : '',
+            bestand: createbody.filepath,
             verwerkt: 1,
             template: 0,
             bestand2: '',
@@ -357,7 +340,7 @@ const updatelogBook = async (createbody, type, dossier_id) => {
             teldoor: 0,
             smsmsgid: 0,
             smsmsgidtxt: '',
-            smsresponse: '',
+            smsresponse: 0,
             smsfeedback: '',
             adres: ''
         }
@@ -437,7 +420,7 @@ const paymentSuccess = async (data) => {
             dossier_id : dossier_id,
             type : "Online",
             status : "Success",
-            response : data,
+            response : JSON.stringify(data),
             date : year + "-" + month + "-" + date
         }
 
@@ -477,7 +460,7 @@ const paymentSuccess = async (data) => {
 const paymentError = async (data) => {
 
     try {
-        const { logboek, dossiers } = db;
+        const { logboek, dossiers, credipay_transaction_payments } = db;
 
         let dossier_id = "";
         let debiteur_id = "";
@@ -508,7 +491,7 @@ const paymentError = async (data) => {
             dossier_id : dossier_id,
             type : "Online",
             status : "Error",
-            response : data,
+            response : JSON.stringify(data),
             date : year + "-" + month + "-" + date
         }
 
@@ -543,13 +526,24 @@ const paymentError = async (data) => {
         let result = await logboek.create(createJson);
         return result;
     } catch (error) {
-        throw new ApiError(httpStatus.BAD_REQUEST);
+        console.log("error===",error);
+        
+        throw new ApiError(httpStatus.BAD_REQUEST,error);
     }
 }
 
 const getDossierFacturenInvoiceDetails = async (dossier_id) => {
     const { dossiers, facturen, klanten, betalingen } = db;
     try {
+        // let dossier = await facturen.findAll({
+        //     where:{
+        //         dossier : dossier_id
+        //     },
+        //     attributes :[
+        //         ['dossier','dossier'],
+        //         ['referentie','invoice_number']
+        //     ]
+        // })
         let final_result = [];
         let result = await facturen.findAll({
             attributes: {
@@ -560,19 +554,33 @@ const getDossierFacturenInvoiceDetails = async (dossier_id) => {
                         'paymentdone',
                     ],
                 ]},
-     
+            // include:{
+            //     model: betalingen,
+            // },
             where: {
                 dossier: dossier_id
             },
             order: [
                 ['datum', 'ASC'],
             ],
-            
+            // attributes: ['id', 'referentie', 'datum', 'hoofdsom', 'intrest', 'schadebeding', 'inningskost', 'totaal', 'betaaldincasso', 'rest','reedsbetaaldvoorincasso', 'paymentdone'],
         });
 
-  
-    
+        let dossiers_data = await dossiers.findOne({
+            where: {
+                id: dossier_id
+            }
+        })
         
+        let transaction_id = dossier_id +"_"+ dossiers_data?.debiteur+"100";
+
+        let Somme_principle = 0.00;
+        let Interest = 0.00;
+        let Num_Interests_damages_clause = 0.00;
+        let Total = 0.00;
+        let Pay = 0.00;
+        let Total_paid = 0.00;
+        let Total_Collection_Cost = 0.00;
         result.forEach(element => {
             element =JSON.stringify(element);
             element =JSON.parse(element);
@@ -584,18 +592,28 @@ const getDossierFacturenInvoiceDetails = async (dossier_id) => {
 
             if (element?.schadebeding != '0.00') {
                 Interests_damages_clause = "€ " + element?.schadebeding
-                
+                Num_Interests_damages_clause = Number(Num_Interests_damages_clause) + Number(element?.schadebeding);
             }
             if (element?.inningskost != '0.00') {
                 Collection_costs = "€ " + element?.inningskost;
-                
+                Total_Collection_Cost = Number(Total_Collection_Cost) + Number(element?.inningskost);
             }
             if (element?.paymentdone != '0.00' && element?.paymentdone) {
                 Payments_made = "€ " + element?.paymentdone;
-                
+                Total_paid = Number(Total_paid) + Number(element?.paymentdone);
             }
-         
-          
+            if (element?.hoofdsom != '0.00') {
+                Somme_principle = Number(Somme_principle) + Number(element?.hoofdsom);
+            }
+            if (element?.intrest != '0.00') {
+                Interest = Number(Interest) + Number(element?.intrest);
+            }
+            if (element?.totaal != '0.00') {
+                Total = Number(Total) + Number(element?.totaal);
+            }
+            if (element?.rest != '0.00') {
+                Pay = Number(Pay) + Number(element?.rest);
+            }
             let json = {
                 "Dossier": dossier_id,
                 "Invoice_Reference": element?.referentie,
@@ -613,9 +631,150 @@ const getDossierFacturenInvoiceDetails = async (dossier_id) => {
             );
            
         });
-        return final_result;
+
+        return final_result
     } catch (error) {
         throw new ApiError(httpStatus.BAD_REQUEST, error);
+    }
+}
+
+const submitQuestions = async ( Userbody, type, dossier_id)=>{
+    const { dossiers, dossiermanueleitems, klanten, aansprekingen, debiteurs,facturen } = db;
+    try {
+        console.log(",createbody=======",Userbody);
+        
+        let filepath = "";
+
+        if (type == 'deceased') {
+
+            let dossier_update_action = await dossiers.update({ volgendeactie: 63}, // ALARM_DECEASED
+                {
+                where:{  id : dossier_id }
+            })
+
+            filepath = await fileprocessor.savePublicPDFFile(Userbody.deathcertificate, Userbody.deathcertificatename)
+            Userbody.filepath = filepath;
+            await updatelogBook(Userbody, 'file', dossier_id);
+
+        }else if (type == 'dispute') {
+
+            console.log("Disputr======================");
+            
+            filepath = await fileprocessor.savePublicPDFFile(Userbody.disagrementletter, Userbody.disagrementlettername)
+            Userbody.filepath = filepath;
+            let dossier_data = await dossiers.findOne({
+                where:{
+                    id : dossier_id
+                }
+            })
+
+            const myDate = new Date(dossier_data.volgendeactiedatum);
+            myDate.setDate(myDate.getDate() + 7);// Add 7 days
+            console.log(myDate.toISOString().split('T')[0]);
+            let updated_date = myDate.toISOString().split('T')[0];
+
+            let json = {
+                volgendeactie: 61,// ALARM_DISPUTE
+                volgendeactiedatum:updated_date
+            }
+
+            let dossier_update_action = await dossiers.update(json,
+                {
+                where:{  id : dossier_id }
+            })
+
+            await updatelogBook(Userbody, 'file', dossier_id);
+        }else if (type == 'alreadypaid') {
+
+            let dossier_update_action = await dossiers.update({ volgendeactie: 62}, // ALARM_ALREADYPAID
+                {
+                where:{ id : dossier_id  }
+            })
+
+            // filepath = await fileprocessor.savePublicPDFFile(createbody.disagrementletter, createbody.disagrementlettername)
+            // Userbody.filepath = filepath;
+            await updatelogBook(Userbody, 'alreadypaid', dossier_id);
+        }else if (type == 'invoice'){
+            let dossier_data = await dossiers.findOne({
+                where:{
+                    id : dossier_id
+                }
+            })
+
+            const myDate = new Date(dossier_data.volgendeactiedatum);
+            myDate.setDate(myDate.getDate() + 10);// Add 10 days
+            console.log(myDate.toISOString().split('T')[0]);
+            let updated_date = myDate.toISOString().split('T')[0];
+
+            let json = {
+                volgendeactiedatum:updated_date
+            }
+
+            let dossier_update_action = await dossiers.update(json,
+                {
+                where:{  id : dossier_id }
+            });
+
+            await updatelogBook(Userbody, 'copyinvoice', dossier_id);
+
+
+            let result = await dossiers.findOne({
+                where: {
+                    id: dossier_id
+                },
+                attributes: ['id', 'hoofdsom', 'intrest', 'schadebeding', 'inningskost', 'openstaandbedrag', 'klant','debiteur'],
+            });
+
+            let debiteur_data = await debiteurs.findOne({
+                where : { id : result.debiteur}
+            })
+            let klanten_data = "";
+            let title = "";
+            console.log("-----------", result);
+            if (result) {
+                klanten_data = await klanten.findOne({
+                    where: {
+                        id: result?.klant
+                    },
+                    attributes: ['id', 'firmanaam','aanspreking','naam','voornaam']
+                });
+
+                let title = await aansprekingen.findOne({
+                    where : { id : klanten_data.aanspreking}
+                })
+            }
+            let customer_name = "";
+            let name = "";
+            // let 
+            customer_name = title + " " + klanten_data.naam + " " + klanten_data.voornaam
+            name = debiteur_data.naam+ " " +debiteur_data.voornaam;
+            if(customer_name == "") {
+                customer_name = klanten_data.firmanaam
+            }
+            if(name == ""){
+                name = debiteur_data.firmanaam
+            }
+
+            let facturen_data = await facturen.findOne({
+                where: { dossier : dossier_id}
+            })
+
+            let mapObj = {
+                XXXKLANTAANSPREEKNAAMXXX : customer_name,
+                XXXNAAMXXX : name,
+                XXXDOSSIERXXX : dossier_id,
+                XXXOPENSTAANDXXX : result.openstaandbedrag,
+                XXXFACTURENOVERZICHTXXX : facturen_data.referentie + ", " + facturen_data.datum + ", " + facturen_data.hoofdsom,
+                XXXDOSSIERBEHEERDERXXX : name
+
+            }
+
+            emailService.emailsendBytitle(mapObj, 'Opvragen ontbrekende FACTUUR',debiteur_data.taal,debiteur_data.email);
+        }
+    } catch (error) {
+        console.log("error===",error);
+        
+        throw new ApiError(httpStatus.BAD_REQUEST,error);
     }
 }
 
@@ -629,5 +788,6 @@ module.exports = {
     submitPaymentplan,
     paymentSuccess,
     paymentError,
-    getDossierFacturenInvoiceDetails
+    getDossierFacturenInvoiceDetails,
+    submitQuestions
 }

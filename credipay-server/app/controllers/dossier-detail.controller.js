@@ -79,6 +79,15 @@ const getDossierFacturenInvoiceDetails = async (req, res) => {
     }
 };
 
+const submitQuestions = async (req, res) => {
+    try {
+        const result = await dossierDetailService.submitQuestions(req.body,req.params.type,req.user?.dossier_id);
+        res.status(httpStatus.OK).send({message:result});
+    } catch (error) {
+        res.status(httpStatus.BAD_REQUEST).send(error)
+    }
+};
+
 module.exports = {
     getAllDossierList,
     getDossierFacturenDetails,
@@ -88,5 +97,6 @@ module.exports = {
     submitPaymentplan,
     paymentSuccess,
     paymentError,
-    getDossierFacturenInvoiceDetails
+    getDossierFacturenInvoiceDetails,
+    submitQuestions
 }
