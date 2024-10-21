@@ -62,6 +62,7 @@ export class MyProfileComponent {
     this.message = ''; this.checkmesage = false;
     this.submitted = true;
     if (this.profileForm.invalid) {
+      this.spinner.hide();
       return;
     }
     let final_form = {

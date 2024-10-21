@@ -152,8 +152,8 @@ const getDossierFacturenDetails = async (dossier_id) => {
             { Dossier: "A PAYER", Somme_principle: '', Interest: '', Interests_damages_clause: '', Collection_costs: '', Total: '', Payments_made: '', Pay: '€ ' + (Pay.toFixed(2) - Total_paid.toFixed(2)).toFixed(2) },
         ]
 
-        let payment_link = config.paymentConfig.payment_url +"/execute?requesterVAT="+ config.paymentConfig.vat_number+"&language=XXXlanguageXXX&remittanceInfo="+transaction_id+"&amountInCents="+(Pay.toFixed(2)*100)+"&confirmationURL="+ config.paymentConfig.payment_success_url+"&errorURL="+config.paymentConfig.payment_error_url+"&cancelURL="+config.paymentConfig.payment_cancel_url;
-        let paymentbutton_link = config.paymentConfig.payment_url +"?requesterVAT="+ config.paymentConfig.vat_number+"&language=XXXlanguageXXX&remittanceInfo="+transaction_id+"&amountInCents="+(Pay.toFixed(2)*100)+"&confirmationURL="+ config.paymentConfig.payment_success_url+"&errorURL="+config.paymentConfig.payment_error_url+"&cancelURL="+config.paymentConfig.payment_cancel_url;
+        let payment_link = config.paymentConfig.payment_url +"/execute?requesterVAT="+ config.paymentConfig.vat_number+"&language=XXXlanguageXXX&remittanceInfo="+transaction_id+"&amountInCents="+((Pay.toFixed(2) - Total_paid.toFixed(2))*100)+"&confirmationURL="+ config.paymentConfig.payment_success_url+"&errorURL="+config.paymentConfig.payment_error_url+"&cancelURL="+config.paymentConfig.payment_cancel_url;
+        let paymentbutton_link = config.paymentConfig.payment_url +"?requesterVAT="+ config.paymentConfig.vat_number+"&language=XXXlanguageXXX&remittanceInfo="+transaction_id+"&amountInCents="+((Pay.toFixed(2) - Total_paid.toFixed(2))*100)+"&confirmationURL="+ config.paymentConfig.payment_success_url+"&errorURL="+config.paymentConfig.payment_error_url+"&cancelURL="+config.paymentConfig.payment_cancel_url;
 
 
         let final_data = [{
@@ -236,7 +236,13 @@ const eligibleDossierPaymentPlancheck = async (dossier_id) => {
             }
         })
 
-        if(payment_plan_check){
+        let is_already_paid = await credipay_transaction_payments.findOne({
+            where : {
+                dossier_id : dossier_id , type : 'Online' , status :'Success'
+            }
+        })
+        
+        if(payment_plan_check || is_already_paid){
             throw new ApiError(httpStatus.BAD_REQUEST, "You have already opted for Payment plan and its under review. Please contact at the below number – 0032 15 690 390 for more details.")
         }
 
@@ -573,9 +579,7 @@ const getDossierFacturenInvoiceDetails = async (dossier_id) => {
                 id: dossier_id
             }
         })
-        
-        let transaction_id = dossier_id +"_"+ dossiers_data?.debiteur+"100";
-
+    
         let Somme_principle = 0.00;
         let Interest = 0.00;
         let Num_Interests_damages_clause = 0.00;

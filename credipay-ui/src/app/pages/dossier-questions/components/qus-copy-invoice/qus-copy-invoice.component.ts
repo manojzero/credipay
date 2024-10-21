@@ -121,6 +121,12 @@ toggleSelection(row: any): void  {
         this.router.navigate(['/dossier-details']);
       }
   }); 
+
+    this.questionform.get('qustion1').valueChanges.subscribe((val: any) => {
+       if (val == "No"){
+        this.router.navigate(['/dossier-details']);
+      }
+  }); 
     
   }
   
