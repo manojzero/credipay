@@ -45,11 +45,11 @@ export const routes: Routes = [
         component: DossierQuestionsComponent,
         data: { title: 'dossier-questions' }
     },
-    {
-        path: 'dossiers-question/:options',  canActivate: [AuthGuard],
-        component: DossiersQuestionComponent,
-        data: { title: 'dossiers-question' }
-    },
+    // {
+    //     path: 'dossiers-question/:options',  canActivate: [AuthGuard],
+    //     component: DossiersQuestionComponent,
+    //     data: { title: 'dossiers-question' }
+    // },
     {
         path: 'payment-plan',  canActivate: [AuthGuard],
         component: DossierPaymentPlanComponent,
