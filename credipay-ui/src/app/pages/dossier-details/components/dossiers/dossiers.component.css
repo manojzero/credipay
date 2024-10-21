@@ -97,3 +97,8 @@ h4{
     background-image: none !important;
 }
 
+@media only screen and (max-width: 600px) {
+    .modal-footer {
+      justify-content: center !important;
+    }
+}

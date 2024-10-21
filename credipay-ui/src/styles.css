@@ -54,3 +54,10 @@
   text-overflow: ellipsis;
   width:300px
 }
+
+@media only screen and (max-width: 600px) {
+  table{
+    margin-left: 0% !important;
+  }
+}
+

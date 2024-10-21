@@ -41,6 +41,7 @@
 
 .navbar-collapse{
   background-color: #ce0405 !important;
+  z-index: 100 !important;
 }
 
 .multi{
@@ -59,3 +60,6 @@
   box-shadow: none !important;
 }
 
+.collapse navbar-collapse{
+  z-index: 100 !important;
+}

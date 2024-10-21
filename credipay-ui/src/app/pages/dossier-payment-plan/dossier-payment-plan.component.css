@@ -38,3 +38,7 @@
     background-color: #070000 !important; 
     background-image: none !important;
 }
+
+.is-required{
+    color: red !important;
+}

@@ -29,7 +29,9 @@ export class AuthGuard implements CanActivate {
       return this.profServ.getuserdetails().pipe(map((response: any) => {
         this.spinner.hide();
         if (response) {
-          localStorage.setItem('isloggedin', "true");
+          if (typeof window !== 'undefined' && window?.localStorage) {
+           localStorage.setItem('isloggedin', "true");
+          }
           this.global.setloginuserinfo(response?.result);
 
             return true;
@@ -40,7 +42,10 @@ export class AuthGuard implements CanActivate {
       }), catchError((error) => {
         this.spinner.hide();
           this.global.setloginuserinfo({});
-          localStorage.clear();
+          if (typeof window !== 'undefined' && window?.localStorage) {
+            localStorage.clear();
+           }
+         
           this.router.navigate([''])
           return of(true);
       }));

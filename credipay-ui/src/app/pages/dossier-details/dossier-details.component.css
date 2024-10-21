@@ -88,3 +88,9 @@ table.my-table>tbody>tr>td {
     padding: 1%;
     text-wrap: wrap;
 }
+
+@media only screen and (max-width: 600px) {
+    .modal-footer {
+      justify-content: center !important;
+    }
+  }

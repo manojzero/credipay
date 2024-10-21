@@ -71,7 +71,7 @@
                     </tbody>
                 </table>
                 @if(Outstanding_Balance != '€ 0.00'){
-                <div class="col-10 modal-footer">
+                <div class="col-12 modal-footer">
                     <button class="btn btn-secondary" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="onFullPay('popup')">{{'Pay in full'|translate}}</button>
                     <button class="btn btn-primary" type="button" (click)="paymentPlan()">{{'Choose Payment Plan'|translate}}</button>
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#havequestions">{{'do_you_have_any_question'|translate}}</button>

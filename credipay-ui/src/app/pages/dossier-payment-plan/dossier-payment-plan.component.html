@@ -59,7 +59,10 @@
                                 <span>{{'Select_payment_date' | translate}} <br>
                                 </span><input type="date" placeholder="YYYY-MM-DD" formControlName="paymentDate" class="form-control" [min]="minDate" [max]="maxDate" 
                                 [ngClass]="{ 'is-invalid':  ngForm.submitted  && paymentForm.controls['paymentDate'].errors }">
-                                
+
+                                <div class="is-required" *ngIf="ngForm.submitted  && paymentForm.controls['paymentDate'].errors ">{{'Payment_date_is_required' | translate}}
+
+                                </div>
                             </div>
                         </div>
                         <br>
@@ -70,7 +73,7 @@
                                 <button type="button" (click)="cancelplan()" class="btn btn-secondary float-left">{{'Cancel'| translate}}</button>
                             </div>
                             <div class="col-md-6">
-                                <button type="button" (click)="submitplan()" class="btn btn-primary float-right">{{'Submit'| translate}}</button>
+                                <button type="submit" (click)="submitplan()" class="btn btn-primary float-right">{{'Submit'| translate}}</button>
                             </div>
                         </div>
                     }
