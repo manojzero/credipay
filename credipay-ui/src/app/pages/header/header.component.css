@@ -55,4 +55,7 @@
   /* z-index: 0 !important; */
 }
 
+.nav-link:focus-visible{
+  box-shadow: none !important;
+}
 
