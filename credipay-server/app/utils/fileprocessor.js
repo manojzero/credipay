@@ -8,9 +8,9 @@ const publicFileDir = path.join(
     __dirname,
     "../../public/" + process.env.PUBLIC_FILE_DIRECTORY
 );
-const savePublicPDFFile = async (base64, originalFileName) => {
-    console.log("originalFileName" + originalFileName);
-    let newFileName = uuidv4() + path.extname(originalFileName);
+const savePublicPDFFile = async (base64, originalFileName, filename,dossier_id) => {
+    console.log("originalFileName" + filename);
+    let newFileName = dossier_id+"_"+filename + path.extname(originalFileName);
     let saveLocation = path.join(publicFileDir, newFileName);
     let filePath = "/uploads/" + newFileName;
     const base64Data = base64.replace(/^data:([A-Za-z-+/]+);base64,/, "");

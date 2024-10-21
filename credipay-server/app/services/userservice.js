@@ -3,17 +3,22 @@ const Sequelize = require('sequelize');
 const ApiError = require('../utils/ApiError');
 const httpStatus = require("http-status");
 const OP = Sequelize.Op;
+const dossierService = require('../services/dossier-details.service');
 
-const updateUser = async (id, body) => {
+const updateUser = async (id, body, dossier_id) => {
     try {
         const { debiteurs } = db;
-        console.log("body"+JSON.stringify(body))
-        const resultlist = await debiteurs.update(body, {
+        console.log("body"+JSON.stringify(body.final_form))
+        const resultlist = await debiteurs.update(body.final_form, {
             where: {
                 id: id
             }
         })
         console.log("reutt", resultlist)
+        if(body.log_data.length > 0){
+            await dossierService.updatelogBook(body.log_data, 'user', dossier_id);
+        }
+
         return resultlist;
     } catch (error) {
         console.log("error" + error)

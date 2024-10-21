@@ -24,7 +24,13 @@ const envVarsSchema = Joi.object()
         PAYMENT_SUCCESS_URL: Joi.string().required().description("payment success url"),
         PAYMENT_ERROR_URL: Joi.string().required().description("payment error url"),
         PAYMENT_CANCEL_URL: Joi.string().required().description("payment cancel url"),
-        COOKIE_ID: Joi.string().required().description("auth cookie id")
+        COOKIE_ID: Joi.string().required().description("auth cookie id"),
+        SMTP_HOST: Joi.string().description("Email host"),
+        SMTP_PORT: Joi.number().description("port to connect to the email server"),
+        SMTP_POOL: Joi.boolean().required().description("SMTP server Pool"),
+        SMTP_USERNAME: Joi.string().required().description("username for email server"),
+        SMTP_PASSWORD: Joi.string().required().description("password for password server"),
+        EMAIL_FROM: Joi.string().required().description("the from field in the emails sent by the app"),
     })
     .unknown();   
 
@@ -57,5 +63,26 @@ module.exports = {
         payment_error_url: envVars.PAYMENT_ERROR_URL,
         payment_cancel_url: envVars.PAYMENT_CANCEL_URL
     },
+
+    email: {
+        smtp: {
+          host: envVars.SMTP_HOST,
+          port: envVars.SMTP_PORT,
+          pool: envVars.SMTP_POOL,
+          auth: {
+            user: envVars.SMTP_USERNAME,
+            pass: envVars.SMTP_PASSWORD,
+          },
+        },
+        from: envVars.EMAIL_FROM,
+      },
+
+    eMAIL_USERNAME: envVars.SMTP_USERNAME,
+    eMAIL_PASSWORD: envVars.SMTP_PASSWORD,
+    eMAIL_HOST: envVars.SMTP_HOST,
+    eMAIL_PORT: envVars.SMTP_PORT,
+    eMAIL_POOL: envVars.SMTP_POOL,
+    eMAIL_CC_LIST: envVars.SMTP_MAIL_CC_LIST,
+    eMAIL_FROM: envVars.EMAIL_FROM,
     COOKIE_ID:envVars.COOKIE_ID
 };

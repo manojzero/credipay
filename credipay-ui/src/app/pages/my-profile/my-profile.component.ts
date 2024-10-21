@@ -8,6 +8,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ProfileService } from '../../service/profile.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-my-profile',
   standalone: true,
@@ -22,9 +23,9 @@ export class MyProfileComponent {
   public profileForm: any = FormGroup; message: string = '';
   submitted = false; checkmesage: boolean = false;
   open: boolean = true; dismissible: boolean = true; timeout: number = 5000;
-  data: any;
+  data: any; oldData: any;
 
-  constructor(private formBuilder: FormBuilder, private authService: ProfileService) {
+  constructor(private formBuilder: FormBuilder, private authService: ProfileService, private spinner: NgxSpinnerService) {
 
   }
 
@@ -56,7 +57,8 @@ export class MyProfileComponent {
   }
 
   onSubmit() {
-    console.log("==============", this.profileForm.value);
+    this.spinner.show();
+    // console.log("==============", this.profileForm.value);
     this.message = ''; this.checkmesage = false;
     this.submitted = true;
     if (this.profileForm.invalid) {
@@ -80,8 +82,23 @@ export class MyProfileComponent {
       taal: this.profileForm.get("language").value,
       rekeningnummer: this.profileForm.get("reference_no").value,
     }
-    console.log("==============", final_form);
-    this.authService.updateProfile(final_form.id, final_form).subscribe({
+
+    let logEntries:any = [];
+
+    let updatedData:any = final_form
+
+    Object.keys(updatedData).forEach(key => {
+        if (this.oldData[key] !== updatedData[key]) {
+            logEntries.push(`Field '${key}' changed from '${this.oldData[key]}' to '${updatedData[key]}'`);
+        }
+    });
+
+    let final_json ={
+      final_form : final_form,
+      log_data : logEntries
+    } 
+    this.spinner.show();
+    this.authService.updateProfile(final_form.id, final_json).subscribe({
       next: (value) => {
         this.checkmesage = true;
         console.log(value.message)
@@ -90,7 +107,9 @@ export class MyProfileComponent {
         this.message = err.error.message;
       }, complete: () => {
         setTimeout(() => {
-        }, 2000);
+        this.spinner.hide();
+          this.ngOnInit();
+        }, 1000);
       },
     });
   }
@@ -99,6 +118,7 @@ export class MyProfileComponent {
         next: (data: any) => {
           this.data = data.result
           console.log("data " + data.result);
+          this.oldData = data.result
           this.setprofileformdata();
         },
         error: (err: any) => {

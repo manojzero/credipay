@@ -96,7 +96,7 @@ export class QusDisagreeDisputeComponent  implements OnInit{
         this.spinner.hide();
         Swal.fire({
         
-          text: this.translate.instant('Data_submitted_message'),
+          text: this.translate.instant('Thanks for the details. We will review internally and get back to you'),
           icon: "success"
         }).then(()=>{
           this.router.navigate(['/dossier-details']);

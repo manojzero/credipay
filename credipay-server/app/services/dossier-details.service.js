@@ -264,7 +264,7 @@ const updatelogBook = async (createbody, type, dossier_id) => {
     try {
         
         // let filepath = "";
-        let description ="";
+        let description = "";
         let debiteur_id = "";
         let modified_by = "";
 
@@ -305,6 +305,8 @@ const updatelogBook = async (createbody, type, dossier_id) => {
                 description = description + "The Selected Invoice is- "+ createbody.invoicelist[index]+","; 
             }
             createbody.filepath =''; 
+        }else if(type == 'user'){
+            description = JSON.stringify(createbody);
         }
 
         console.log("description=====",description);
@@ -327,7 +329,7 @@ const updatelogBook = async (createbody, type, dossier_id) => {
             omschrijving: description,
             datum: year + "-" + month + "-" + date,
             omschrijvingintern: '',
-            bestand: createbody.filepath,
+            bestand: createbody.filepath ? createbody.filepath : '',
             verwerkt: 1,
             template: 0,
             bestand2: '',
@@ -641,7 +643,7 @@ const getDossierFacturenInvoiceDetails = async (dossier_id) => {
 const submitQuestions = async ( Userbody, type, dossier_id)=>{
     const { dossiers, dossiermanueleitems, klanten, aansprekingen, debiteurs,facturen } = db;
     try {
-        console.log(",createbody=======",Userbody);
+        // console.log(",createbody=======",Userbody);
         
         let filepath = "";
 
@@ -652,15 +654,13 @@ const submitQuestions = async ( Userbody, type, dossier_id)=>{
                 where:{  id : dossier_id }
             })
 
-            filepath = await fileprocessor.savePublicPDFFile(Userbody.deathcertificate, Userbody.deathcertificatename)
+            filepath = await fileprocessor.savePublicPDFFile(Userbody.deathcertificate, Userbody.deathcertificatename, "deathCertificate",dossier_id)
             Userbody.filepath = filepath;
             await updatelogBook(Userbody, 'file', dossier_id);
 
         }else if (type == 'dispute') {
-
-            console.log("Disputr======================");
             
-            filepath = await fileprocessor.savePublicPDFFile(Userbody.disagrementletter, Userbody.disagrementlettername)
+            filepath = await fileprocessor.savePublicPDFFile(Userbody.disagrementletter, Userbody.disagrementlettername,"disagrementCertificate",dossier_id)
             Userbody.filepath = filepath;
             let dossier_data = await dossiers.findOne({
                 where:{
@@ -690,9 +690,6 @@ const submitQuestions = async ( Userbody, type, dossier_id)=>{
                 {
                 where:{ id : dossier_id  }
             })
-
-            // filepath = await fileprocessor.savePublicPDFFile(createbody.disagrementletter, createbody.disagrementlettername)
-            // Userbody.filepath = filepath;
             await updatelogBook(Userbody, 'alreadypaid', dossier_id);
         }else if (type == 'invoice'){
             let dossier_data = await dossiers.findOne({

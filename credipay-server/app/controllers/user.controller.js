@@ -5,7 +5,7 @@ const httpStatus = require('http-status');
 const updateUser = async (req, res) => {
   try {
   
-    const result = await userservice.updateUser(req.params.id, req.body);
+    const result = await userservice.updateUser(req.params.id, req.body, req.user?.dossier_id);
     res.status(httpStatus.OK).send({ result, message: "User Updated Successfully" });
   } catch (error) {
     res.status(httpStatus.BAD_REQUEST).send(error.message)
