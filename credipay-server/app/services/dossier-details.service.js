@@ -8,6 +8,7 @@ const config=require('../config/config');
 const debiteurs = require("../models/debiteurs");
 const emailService = require("../utils/emailservice");
 // const facturen = require("../models/facturen");
+const Ftp = require( 'ftp' );
 
 const getDossierDetails = async (dossier_id) => {
     try {
@@ -779,6 +780,22 @@ const submitQuestions = async ( Userbody, type, dossier_id)=>{
     }
 }
 
+const movefileftp = async (oldpath, newpath)=>{
+    const ftpClient = new Ftp();
+
+    ftpClient.on( 'ready', function() {
+        ftpClient.put( oldpath, newpath, function( err, list ) {
+            if ( err ) throw err;
+            ftpClient.end();
+        } );
+    } );
+
+    ftpClient.connect( {
+        'host': config.ftp.host,
+        'user': config.ftp.username,
+        'password': config.ftp.password,
+    } );
+}
 
 module.exports = {
     getDossierDetails,

@@ -31,6 +31,9 @@ const envVarsSchema = Joi.object()
         SMTP_USERNAME: Joi.string().required().description("username for email server"),
         SMTP_PASSWORD: Joi.string().required().description("password for password server"),
         EMAIL_FROM: Joi.string().required().description("the from field in the emails sent by the app"),
+        FTP_HOST: Joi.string().required().description("ftp host to connect ftp"),
+        FTP_USERNAME: Joi.string().required().description("ftp username to connect ftp"),
+        FTP_PASSWORD: Joi.string().required().description("ftp password to connect ftp"),
     })
     .unknown();   
 
@@ -76,6 +79,12 @@ module.exports = {
         },
         from: envVars.EMAIL_FROM,
       },
+
+    ftp:{
+        host:envVars.FTP_HOST,
+        username:envVars.FTP_USERNAME,
+        password:envVars.FTP_PASSWORD,
+    },
 
     eMAIL_USERNAME: envVars.SMTP_USERNAME,
     eMAIL_PASSWORD: envVars.SMTP_PASSWORD,
