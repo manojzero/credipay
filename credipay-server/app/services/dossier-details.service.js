@@ -9,6 +9,9 @@ const debiteurs = require("../models/debiteurs");
 const emailService = require("../utils/emailservice");
 // const facturen = require("../models/facturen");
 const Ftp = require( 'ftp' );
+let Client = require('ssh2-sftp-client');
+const path = require("path");
+const fs = require('fs');
 
 const getDossierDetails = async (dossier_id) => {
     try {
@@ -663,6 +666,9 @@ const submitQuestions = async ( Userbody, type, dossier_id)=>{
             Userbody.filepath = filepath;
             await updatelogBook(Userbody, 'file', dossier_id);
 
+            var lastPart = filepath.split("/").pop();
+            await movefileftp(lastPart, "/"+lastPart)
+
         }else if (type == 'dispute') {
             
             filepath = await fileprocessor.savePublicPDFFile(Userbody.disagrementletter, Userbody.disagrementlettername,"disagrementCertificate",dossier_id)
@@ -672,6 +678,7 @@ const submitQuestions = async ( Userbody, type, dossier_id)=>{
                     id : dossier_id
                 }
             })
+
 
             const myDate = new Date(dossier_data.volgendeactiedatum);
             myDate.setDate(myDate.getDate() + 7);// Add 7 days
@@ -689,6 +696,10 @@ const submitQuestions = async ( Userbody, type, dossier_id)=>{
             })
 
             await updatelogBook(Userbody, 'file', dossier_id);
+
+            var lastPart = filepath.split("/").pop();
+            await movefileftp(lastPart, "/"+lastPart)
+
         }else if (type == 'alreadypaid') {
 
             let dossier_update_action = await dossiers.update({ volgendeactie: 62}, // ALARM_ALREADYPAID
@@ -780,21 +791,36 @@ const submitQuestions = async ( Userbody, type, dossier_id)=>{
     }
 }
 
-const movefileftp = async (oldpath, newpath)=>{
-    const ftpClient = new Ftp();
+const movefileftp = async (localpath, serverpath)=>{
+    
+    const publicFileDir = path.join(
+        __dirname,
+        "../../public/" + process.env.PUBLIC_FILE_DIRECTORY
+    );
+    let local_file_path = path.join(publicFileDir, localpath);
 
-    ftpClient.on( 'ready', function() {
-        ftpClient.put( oldpath, newpath, function( err, list ) {
-            if ( err ) throw err;
-            ftpClient.end();
-        } );
-    } );
 
-    ftpClient.connect( {
-        'host': config.ftp.host,
-        'user': config.ftp.username,
-        'password': config.ftp.password,
-    } );
+    let sftp = new Client();
+    sftp.connect({
+        host: config.ftp.host,
+        port: config.ftp.port,
+        username: config.ftp.username,
+        password: config.ftp.password
+      }).then(() => {
+       
+        return sftp.put(local_file_path, serverpath);
+        
+      }).then(data => {
+
+        fs.unlink(local_file_path, (err) => {
+            if (err) {
+              console.error(`Error removing file: ${err}`);
+              return;
+            }
+        });
+      }).catch(err => {
+        console.log(err, 'catch error');
+      });
 }
 
 module.exports = {
@@ -807,5 +833,6 @@ module.exports = {
     paymentSuccess,
     paymentError,
     getDossierFacturenInvoiceDetails,
-    submitQuestions
+    submitQuestions,
+    movefileftp
 }

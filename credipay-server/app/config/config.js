@@ -34,6 +34,7 @@ const envVarsSchema = Joi.object()
         FTP_HOST: Joi.string().required().description("ftp host to connect ftp"),
         FTP_USERNAME: Joi.string().required().description("ftp username to connect ftp"),
         FTP_PASSWORD: Joi.string().required().description("ftp password to connect ftp"),
+        FTP_PORT: Joi.string().required().description("ftp port to connect ftp"),
     })
     .unknown();   
 
@@ -82,6 +83,7 @@ module.exports = {
 
     ftp:{
         host:envVars.FTP_HOST,
+        port:envVars.FTP_PORT,
         username:envVars.FTP_USERNAME,
         password:envVars.FTP_PASSWORD,
     },
